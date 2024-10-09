@@ -4,8 +4,9 @@ import style from "./google-button.module.css";
 const GoogleButton = () => {
   return (
     <div className={style.button}>
-      <FcGoogle />
+      <FcGoogle className={style.googleLogo} />
       <p>Continuar con Google</p>
+      <div></div>
     </div>
   );
 };

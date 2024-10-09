@@ -15,19 +15,23 @@ import theme from "../../styles/theme.tsx";
 import GoogleButton from "../buttons/GoogleButton.tsx";
 import style from "./login-view.module.css";
 
-const LoginForm = () => {
+const RegisterForm = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("Username:", username);
     console.log("Email:", email);
     console.log("Password:", password);
+    console.log("Confirm Password:", confirmPassword);
   };
 
   return (
@@ -42,13 +46,13 @@ const LoginForm = () => {
         >
           <Typography component="h1" variant="h6">
             <div className={style.title}>
-              <h3>Hola de nuevo,</h3>
-              <p>Por favor inicia sesión</p>
+              <h3>Bienvenido a Waki,</h3>
+              <p>Crea tu cuenta completando los datos</p>
             </div>
           </Typography>
           <Box
             component="form"
-            onSubmit={handleLogin}
+            onSubmit={handleRegister}
             display="flex"
             flexDirection="column"
             alignItems="center"
@@ -62,11 +66,26 @@ const LoginForm = () => {
                 width: "90%",
               }}
               required
-              id="login-email"
-              label="Correo"
-              name="login-email"
-              autoComplete="email"
+              id="register-username"
+              label="Nombre de usuario"
+              name="register-username"
+              autoComplete="username"
               autoFocus
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              sx={{
+                backgroundColor: "#EFEFF0",
+                width: "90%",
+              }}
+              required
+              id="register-email"
+              label="Correo o teléfono"
+              name="register-email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -78,13 +97,38 @@ const LoginForm = () => {
                 width: "90%",
               }}
               required
-              name="login-password"
+              name="register-password"
               label="Contraseña"
               type={showPassword ? "text" : "password"}
-              id="login-password"
+              id="register-password"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={togglePasswordVisibility}>
+                      {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              sx={{
+                backgroundColor: "#EFEFF0",
+                width: "90%",
+              }}
+              required
+              name="register-confirm-password"
+              label="Repetir contraseña"
+              type={showPassword ? "text" : "password"}
+              id="register-confirm-password"
+              autoComplete="current-password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -104,12 +148,12 @@ const LoginForm = () => {
               color="secondary"
               sx={{ mt: 2 }}
             >
-              Iniciar sesión
+              Registrarse
             </Button>
           </Box>
           <section className={style.divider}>
             <div></div>
-            <p>O inicia sesión con</p>
+            <p>O regístrate con</p>
             <div></div>
           </section>
           <GoogleButton />
@@ -119,4 +163,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
