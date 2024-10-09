@@ -1,0 +1,14 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: #efeff0;
+  border: 1px solid #dadce0;
+  border-radius: 25px;
+  color: #3c4043;
+  cursor: pointer;
+  font-family: Roboto, arial, sans-serif;
+  padding-left: 15px;
+  width: 50%;
+}
