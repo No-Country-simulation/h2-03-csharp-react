@@ -1,0 +1,44 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: 2%;
+  width: 100%;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.12);
+    width: 100%;
+  }
+}
+
+.blue {
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.title {
+  margin-left: 5%;
+  h3 {
+    color: var(--primary-color);
+    margin: 0;
+  }
+  p {
+    margin: 0;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  gap: 5%;
+  margin: 3% 0;
+  width: 100%;
+  div {
+    flex: 1;
+    height: 1px;
+    background-color: #616162;
+  }
+}

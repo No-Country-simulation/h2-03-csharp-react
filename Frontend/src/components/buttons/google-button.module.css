@@ -1,0 +1,25 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #efeff0;
+  border: 1px solid #dadce0;
+  border-radius: 50px;
+  color: #3c4043;
+  cursor: pointer;
+  font-family: Roboto, arial, sans-serif;
+  font-size: 1rem;
+  margin: auto;
+  padding: 0 15px;
+  width: 50%;
+  @media screen and (max-width: 600px) {
+    width: 90%;
+  }
+}
+
+.googleLogo {
+  background-color: white;
+  border: 3px solid white;
+  border-radius: 50%;
+  font-size: 2.4rem;
+}
