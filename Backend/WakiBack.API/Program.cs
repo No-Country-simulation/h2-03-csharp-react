@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,13 +34,32 @@ namespace WakiBack.API
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<WebAppContext>();
 
+            var CorsRules = "CorsRules";
+            builder.Services.AddCors(opt =>
+            {
+                opt.AddPolicy(name: CorsRules, builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
+
             ConfigureSwagger();
             ConfigureDependencyInjection();
 
             builder.Services.Configure<IdentityOptions>(
                 options => options.SignIn.RequireConfirmedEmail = true
             );
-         
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; 
+                    options.Cookie.SameSite = SameSiteMode.Strict; 
+                    options.Cookie.Name = "Security"; 
+                    options.Cookie.MaxAge = TimeSpan.FromDays(30); 
+                });
 
             var app = builder.Build();
 
@@ -51,12 +71,15 @@ namespace WakiBack.API
                 SeedDatabase();
             }
 
+            app.UseCors(CorsRules);
+
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+            app.UseRouting();            
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
