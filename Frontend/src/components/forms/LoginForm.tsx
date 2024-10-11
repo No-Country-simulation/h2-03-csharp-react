@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useUserContext } from "../../hooks/UserContext.tsx";
 import { Link } from "react-router-dom";
 import {
   TextField,
@@ -14,20 +15,36 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../styles/theme.tsx";
 import GoogleButton from "../buttons/GoogleButton.tsx";
 import style from "./login-view.module.css";
+import { axiosInstance } from "../../utils/axios.ts";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { dispatch } = useUserContext();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+    const response = await axiosInstance.post("Security/Login", {
+      username,
+      password,
+    });
+    if (response.data.token) {
+      localStorage.setItem("token", response.data.token);
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          token: response.data.token,
+          // email: response.data.email,
+          // username: response.data.username,
+        },
+      });
+      console.log(response.data);
+    }
   };
 
   return (
@@ -35,7 +52,7 @@ const LoginForm = () => {
       <Container maxWidth="sm" sx={{ justifyContent: "center" }}>
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2.5,
             display: "flex",
             flexDirection: "column",
           }}
@@ -67,8 +84,8 @@ const LoginForm = () => {
               name="login-email"
               autoComplete="email"
               autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
               variant="outlined"

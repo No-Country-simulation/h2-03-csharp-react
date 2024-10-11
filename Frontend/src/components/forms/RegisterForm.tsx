@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useUserContext } from "../../hooks/UserContext.tsx";
 import { Link } from "react-router-dom";
 import {
   TextField,
@@ -14,24 +15,54 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../styles/theme.tsx";
 import GoogleButton from "../buttons/GoogleButton.tsx";
 import style from "./login-view.module.css";
+import { axiosInstance } from "../../utils/axios.ts";
 
 const RegisterForm = () => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [secondLastName, setSecondLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isMale, setIsMale] = useState(true);
+  const [isSocialLogin, setIsSocialLogin] = useState(true);
+  const [loginTypeId, setLoginTypeId] = useState(0);
+  const [birthDate, setBirthDate] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const { dispatch } = useUserContext();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
+    const response = await axiosInstance.post("Security/Register", {
+      name: "Wilsconidel",
+      lastName: "Yanez",
+      email: "wius@gmail.com",
+      password: "aA!123456",
+      confirmPassword: "aA!123456",
+      secondLastName: "Litwin",
+      phoneNumber: 935448591,
+      isMale: true,
+      isSocialLogin: true,
+      loginTypeId: 0,
+      birthDate: "25/10/1993",
+    });
+
+    if (response.data.token) {
+      localStorage.setItem("token", response.data.token);
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          token: response.data.token,
+          // email: response.data.email,
+          // username: response.data.username,
+        },
+      });
+      console.log(response.data);
+    }
   };
 
   return (
@@ -39,7 +70,7 @@ const RegisterForm = () => {
       <Container maxWidth="sm" sx={{ justifyContent: "center" }}>
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2.5,
             display: "flex",
             flexDirection: "column",
           }}
@@ -71,8 +102,8 @@ const RegisterForm = () => {
               name="register-username"
               autoComplete="username"
               autoFocus
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <TextField
               variant="outlined"
