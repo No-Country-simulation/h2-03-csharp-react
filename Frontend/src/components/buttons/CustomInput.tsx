@@ -1,24 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import style from "./custom-input.module.css";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
 interface CustomInputProps {
   type: string;
   value?: string;
   placeholder?: string;
-  label?: string;
-  inputName: string;
+  inputName?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  showPasswordIcon?: boolean;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
   type,
   value = undefined,
   placeholder,
-  label = undefined,
   inputName,
   onChange,
+  showPasswordIcon = false,
 }) => {
-  const showPassword = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => {
     if (type === "password") {
       type = "text";
     } else {
@@ -27,23 +29,22 @@ const CustomInput: React.FC<CustomInputProps> = ({
   };
 
   return (
-    <>
-      {label && <label htmlFor={inputName}>{label}</label>}
-      <div>
-        <input
-          type={type}
-          name={inputName}
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-        />
-        {type === "password" ? (
-          <IoEyeOutline onClick={showPassword} />
+    <div className={style.container}>
+      <input
+        type={type}
+        name={inputName}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+      />
+      {showPasswordIcon ? (
+        type === "password" ? (
+          <IoEyeOutline onClick={togglePassword} />
         ) : (
-          <IoEyeOffOutline onClick={showPassword} />
-        )}
-      </div>
-    </>
+          <IoEyeOffOutline onClick={togglePassword} />
+        )
+      ) : null}
+    </div>
   );
 };
 
