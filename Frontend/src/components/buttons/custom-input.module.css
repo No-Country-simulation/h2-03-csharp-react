@@ -12,5 +12,21 @@
     gap: 5px;
     padding: 12px;
     width: 100%;
+    &::placeholder {
+      color: black;
+    }
+    &:focus {
+      outline: none;
+      &::placeholder {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.icon {
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
   }
 }

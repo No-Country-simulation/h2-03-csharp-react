@@ -42,7 +42,9 @@ const LoginForm = () => {
           showPasswordIcon
         />
       </div>
-      <button type="submit">Iniciar sesión</button>
+      <button className={style.button} type="submit">
+        Iniciar sesión
+      </button>
     </form>
   );
 };

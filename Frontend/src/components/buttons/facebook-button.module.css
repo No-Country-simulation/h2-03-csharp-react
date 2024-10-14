@@ -10,4 +10,11 @@
   padding: 14px 18px;
   text-decoration: none;
   width: 49.5%;
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 1;
+    scale: 0.9;
+  }
 }

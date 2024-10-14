@@ -19,29 +19,30 @@ const CustomInput: React.FC<CustomInputProps> = ({
   onChange,
   showPasswordIcon = false,
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(type);
+
   const togglePassword = () => {
-    if (type === "password") {
-      type = "text";
+    if (showPassword === "password") {
+      setShowPassword("text");
     } else {
-      type = "password";
+      setShowPassword("password");
     }
   };
 
   return (
     <div className={style.container}>
       <input
-        type={type}
+        type={showPassword}
         name={inputName}
         value={value}
         placeholder={placeholder}
         onChange={onChange}
       />
       {showPasswordIcon ? (
-        type === "password" ? (
-          <IoEyeOutline onClick={togglePassword} />
+        showPassword === "password" ? (
+          <IoEyeOutline className={style.icon} onClick={togglePassword} />
         ) : (
-          <IoEyeOffOutline onClick={togglePassword} />
+          <IoEyeOffOutline className={style.icon} onClick={togglePassword} />
         )
       ) : null}
     </div>

@@ -8,6 +8,10 @@ import Footer from "../layout/Footer.tsx";
 
 const LoginView = () => {
   const [login, setLogin] = useState(true);
+
+  const toggleFormView = () => {
+    setLogin(!login);
+  };
   return (
     <>
       <div className={style.container}>
@@ -16,23 +20,29 @@ const LoginView = () => {
             <section>
               <h1>WAKI</h1>
             </section>
-            <section className={style.text}>
-              <p>Ingresa usando Google o Facebook</p>
-            </section>
-            <section className={style.buttons}>
-              <GoogleButton />
-              <FacebookButton />
-            </section>
+            {login ? (
+              <>
+                <section className={style.text}>
+                  <p>Ingresa usando Google o Facebook</p>
+                </section>
+                <section className={style.buttons}>
+                  <GoogleButton />
+                  <FacebookButton />
+                </section>
+              </>
+            ) : undefined}
+
             <hr />
           </header>
-          <main className={style.main}>
+          <main className={style.formContainer}>
             <section className={style.options}>
               <div
                 style={
                   login
                     ? { backgroundColor: "white" }
-                    : { backgroundColor: "gray" }
+                    : { backgroundColor: "lightgray" }
                 }
+                onClick={toggleFormView}
               >
                 Ingresa
               </div>
@@ -42,6 +52,7 @@ const LoginView = () => {
                     ? { backgroundColor: "lightgray" }
                     : { backgroundColor: "white" }
                 }
+                onClick={toggleFormView}
               >
                 Regístrate
               </div>
@@ -49,7 +60,7 @@ const LoginView = () => {
             <section className={style.form}>
               {login ? <LoginForm /> : <RegisterForm />}
             </section>
-            <p>¿Olvidaste tu contraseña?</p>
+            <a href="#">¿Olvidaste tu contraseña?</a>
           </main>
         </div>
       </div>
