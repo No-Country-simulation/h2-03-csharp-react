@@ -1,10 +1,9 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --primary-color: #317ef4;
+  --primary-color: #011027;
   --secondary-color: #8e2bff;
   --tertiary-color: #6516bf;
 }
