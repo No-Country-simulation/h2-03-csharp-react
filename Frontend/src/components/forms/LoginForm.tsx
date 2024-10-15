@@ -1,45 +1,49 @@
-// import React, { useState } from "react";
-// import { useUserContext } from "../../hooks/UserContext.tsx";
+import React, { useState } from "react";
+import { useUserContext } from "../../hooks/UserContext.tsx";
 import style from "./login-view.module.css";
-// import { axiosInstance } from "../../utils/axios.ts";
+import { axiosInstance } from "../../utils/axios.ts";
 import CustomInput from "../buttons/CustomInput.tsx";
 
 const LoginForm = () => {
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [showPassword, setShowPassword] = useState(false);
-  // const { dispatch } = useUserContext();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { dispatch } = useUserContext();
 
-  // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const response = await axiosInstance.post("Security/Login", {
-  //     username,
-  //     password,
-  //   });
-  //   if (response.data.token) {
-  //     localStorage.setItem("token", response.data.token);
-  //     dispatch({
-  //       type: "LOGIN_SUCCESS",
-  //       payload: {
-  //         token: response.data.token,
-  //         // email: response.data.email,
-  //         // username: response.data.username,
-  //       },
-  //     });
-  //     console.log(response.data);
-  //   }
-  // };
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response = await axiosInstance.post("Security/Login", {
+      username,
+      password,
+    });
+    if (response.data.token) {
+      localStorage.setItem("token", response.data.token);
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          token: response.data.token,
+          email: response.data.email,
+          username: response.data.username,
+        },
+      });
+      console.log(response.data);
+    }
+  };
 
   return (
-    <form className={style.form}>
+    <form className={style.form} onSubmit={handleLogin}>
       <div>
-        <CustomInput type="text" placeholder="Email" />
+        <CustomInput
+          type="text"
+          placeholder="Email"
+          onChange={(e) => setUsername(e.target.value)}
+        />
       </div>
       <div>
         <CustomInput
           type="password"
           placeholder="Contraseña"
           showPasswordIcon
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
       <button className={style.button} type="submit">

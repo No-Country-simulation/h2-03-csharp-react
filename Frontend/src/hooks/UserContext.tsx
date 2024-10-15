@@ -2,8 +2,8 @@ import React, { createContext, useReducer, useContext } from "react";
 
 interface UserState {
   token: string | null;
-  // email: string | null;
-  // username: string | null;
+  email: string | null;
+  username: string | null;
 }
 
 type UserAction =
@@ -11,16 +11,16 @@ type UserAction =
       type: "LOGIN_SUCCESS";
       payload: {
         token: string;
-        // email: string;
-        // username: string
+        email: string;
+        username: string;
       };
     }
   | { type: "LOGOUT" };
 
 const initialState: UserState = {
   token: null,
-  // email: null,
-  // username: null,
+  email: null,
+  username: null,
 };
 
 const userReducer = (state: UserState, action: UserAction): UserState => {
@@ -29,8 +29,8 @@ const userReducer = (state: UserState, action: UserAction): UserState => {
       return {
         ...state,
         token: action.payload.token,
-        // email: action.payload.email,
-        // username: action.payload.username,
+        email: action.payload.email,
+        username: action.payload.username,
       };
     case "LOGOUT":
       return initialState;

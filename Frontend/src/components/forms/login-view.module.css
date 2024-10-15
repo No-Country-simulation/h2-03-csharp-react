@@ -46,6 +46,7 @@
   font-weight: bold;
   width: 100%;
   .options {
+    cursor: pointer;
     display: grid;
     grid-template-columns: 1fr 3fr;
     text-align: center;
