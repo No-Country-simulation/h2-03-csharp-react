@@ -5,17 +5,19 @@ import { red } from "@mui/material/colors";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#317ef4",
+      light: "#FFFFFFBF",
+      main: "#8F3BEF",
     },
     secondary: {
-      main: "#8e2bff",
+      light: "#8D8D8D",
+      main: "#011027",
     },
     error: {
       main: red.A400,
     },
   },
   typography: {
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    fontFamily: "Poppins, sans-serif",
     h1: {
       fontSize: "2.5rem",
       fontWeight: 500,
