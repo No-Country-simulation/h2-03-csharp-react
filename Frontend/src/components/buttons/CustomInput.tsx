@@ -30,7 +30,13 @@ const CustomInput: React.FC<CustomInputProps> = ({
   };
 
   return (
-    <div className={style.container}>
+    <div
+      className={
+        type === "password"
+          ? `${style.passwordField} ${style.container}`
+          : style.container
+      }
+    >
       <input
         type={showPassword}
         name={inputName}
