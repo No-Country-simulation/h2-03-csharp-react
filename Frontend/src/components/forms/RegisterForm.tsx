@@ -3,6 +3,7 @@ import { useUserContext } from "../../hooks/UserContext.tsx";
 import { axiosInstance } from "../../utils/axios.ts";
 import style from "./login-view.module.css";
 import CustomInput from "../buttons/CustomInput.tsx";
+import FormErrorModal from "../modals/FormErrorModal.tsx";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -17,8 +18,24 @@ const RegisterForm = () => {
   // const [loginTypeId, setLoginTypeId] = useState(0);
   const [birthDate, setBirthDate] = useState("");
   // const [showPassword, setShowPassword] = useState(false);
-  const { dispatch } = useUserContext();
   // errors {BirthDate: ["The date format must be DD/MM/YYYY", "The Birthdate must be a valid Date"]}
+
+  const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const { dispatch } = useUserContext();
+
+  const validateEmail = (email: string) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const showTemporaryModal = () => {
+    setShowModal(true);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 3000);
+  };
 
   const formatDate = (date: string) => {
     const [day, month, year] = date.split("-");
@@ -27,35 +44,56 @@ const RegisterForm = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await axiosInstance.post("Security/Register", {
-      name: name,
-      lastName: lastName,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-      secondLastName: "Litwin",
-      phoneNumber: phoneNumber,
-      isMale: true,
-      isSocialLogin: true,
-      loginTypeId: 0,
-      birthDate: formatDate(birthDate),
-    });
-
-    if (response.data.token) {
-      localStorage.setItem("token", response.data.token);
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: {
-          token: response.data.token,
-          email: response.data.email,
-          username: response.data.username,
-        },
+    if (!validateEmail(email)) {
+      setError("Ingrese un correo válido");
+      showTemporaryModal();
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
+      showTemporaryModal();
+      return;
+    }
+    if (!name || !lastName || !email || !password || !confirmPassword) {
+      setError("Complete todos los campos");
+      showTemporaryModal();
+      return;
+    }
+    try {
+      const response = await axiosInstance.post("Security/Register", {
+        name: name,
+        lastName: lastName,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        secondLastName: "Litwin",
+        phoneNumber: phoneNumber,
+        isMale: true,
+        isSocialLogin: true,
+        loginTypeId: 0,
+        birthDate: formatDate(birthDate),
       });
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            token: response.data.token,
+            email: response.data.email,
+            username: response.data.username,
+          },
+        });
+      }
+    } catch (error) {
+      setError(error.response.data);
+      showTemporaryModal();
+      return;
     }
   };
 
   return (
     <form className={style.form} onSubmit={handleRegister}>
+      {showModal && <FormErrorModal error={error} />}
       <div>
         <CustomInput
           type="text"

@@ -1,0 +1,16 @@
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--tertiarty-color);
+  color: red;
+  text-shadow: 0 0 5px black;
+  font-size: 1.5rem;
+  font-weight: bold;
+  left: 0;
+  padding: 1.2% 0;
+  position: fixed;
+  text-align: center;
+  top: 15px;
+  width: 100%;
+}

@@ -3,34 +3,66 @@ import { useUserContext } from "../../hooks/UserContext.tsx";
 import style from "./login-view.module.css";
 import { axiosInstance } from "../../utils/axios.ts";
 import CustomInput from "../buttons/CustomInput.tsx";
+import FormErrorModal from "../modals/FormErrorModal.tsx";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const { dispatch } = useUserContext();
+
+  const validateEmail = (email: string) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const showTemporaryModal = () => {
+    setShowModal(true);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 3000);
+  };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await axiosInstance.post("Security/Login", {
-      username,
-      password,
-    });
-    if (response.data.token) {
-      localStorage.setItem("token", response.data.token);
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: {
-          token: response.data.token,
-          email: response.data.email,
-          username: response.data.username,
-        },
+    if (!username || !password) {
+      setError("Ingrese correo y contraseña");
+      showTemporaryModal();
+      return;
+    }
+    if (!validateEmail(username)) {
+      setError("Ingrese un correo válido");
+      showTemporaryModal();
+      return;
+    }
+    try {
+      const response = await axiosInstance.post("Security/Login", {
+        username,
+        password,
       });
-      console.log(response.data);
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            token: response.data.token,
+            email: response.data.email,
+            username: response.data.username,
+          },
+        });
+        console.log(response.data);
+      }
+    } catch (error) {
+      setError(error.response.data);
+      showTemporaryModal();
     }
   };
 
   return (
     <form className={style.form} onSubmit={handleLogin}>
+      {showModal && <FormErrorModal error={error} />}
       <div>
         <CustomInput
           type="text"
