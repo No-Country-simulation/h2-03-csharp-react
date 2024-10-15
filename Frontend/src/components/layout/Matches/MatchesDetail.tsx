@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { SlArrowDown } from "react-icons/sl";
 import MatchesDetailFilterBar from "./MatchesDetailFilterBar";
-import { leagues } from "../../../utils/Leagues";
+import { leagues } from "../../../utils/leagues";
 
 const MatchesDetail = () => {
   return (
