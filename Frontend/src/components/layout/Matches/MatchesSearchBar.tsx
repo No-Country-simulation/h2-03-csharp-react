@@ -19,6 +19,7 @@ const MatchesSearchBar = () => {
         alignItems: "center",
         gap: 2,
         m: 3,
+        zIndex: 1000
       }}
     >
       <TextField

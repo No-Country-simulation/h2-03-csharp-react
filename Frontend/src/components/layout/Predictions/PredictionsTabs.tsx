@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "@mui/material";
-import dates from "../../../utils/PredictionsTabDates";
+import dates from "../../../utils/predictions-tab-dates";
 
 export interface PredictionsTabsProps {
   value: number;

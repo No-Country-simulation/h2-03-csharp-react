@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "@mui/material";
-import dates from "../../../utils/MatchesTabsDates";
+import dates from "../../../utils/matches-tabs-dates";
 
 interface MatchesTabsProps {
   value: number;

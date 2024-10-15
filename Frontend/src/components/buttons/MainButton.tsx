@@ -3,17 +3,20 @@ import { Button } from "@mui/material";
 interface MainButtonProps {
   children: string;
   disabled?: boolean;
+  onClick?: () => void;
 }
 
 const MainButton: React.FC<MainButtonProps> = ({
   children,
   disabled = false,
+  onClick,
 }) => {
   return (
     <Button
       type="submit"
       variant="contained"
       color="primary"
+      onClick={onClick}
       disabled={disabled}
       sx={{
         textTransform: "none",

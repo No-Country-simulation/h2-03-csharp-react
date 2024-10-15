@@ -40,7 +40,7 @@ const MatchesSearch = () => {
         width: "100%",
         height: "75vh",
         px: 3,
-        backgroundColor: "primary.light",
+        backgroundColor: "white",
       }}
     >
       <Box sx={{ minHeight: "25vh" }}>
