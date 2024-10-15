@@ -27,7 +27,6 @@ const RegisterForm = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formatDate(birthDate));
     const response = await axiosInstance.post("Security/Register", {
       name: name,
       lastName: lastName,
@@ -52,7 +51,6 @@ const RegisterForm = () => {
           username: response.data.username,
         },
       });
-      console.log(response.data);
     }
   };
 

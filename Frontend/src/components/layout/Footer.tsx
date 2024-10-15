@@ -15,9 +15,9 @@ const Footer = () => {
         </section>
         <hr />
         <section className={style.info}>
+          <p>© 2024 WAKI - Todos los Derechos Reservados /</p>
           <p>
-            © 2024 WAKI - Todos los Derechos Reservados /{" "}
-            <a href="#">Aviso legal</a> - <a href="#">Equipo de desarrollo</a>
+            <a href="#"> Aviso legal</a> - <a href="#">Equipo de desarrollo</a>
             {" - "}
             <a href="#">Política de privacidad</a>
           </p>
