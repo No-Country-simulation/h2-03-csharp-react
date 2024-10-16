@@ -8,86 +8,101 @@ Propuesta de aplicación de SportsTech para WAKI, dentro del marco del Hackathon
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
 
-## Equipo de desarrollo H1-15-Python-React
+## Equipo de desarrollo H2-03-CSharp-React
 
 ### Team Lider
 
-![Yefferson Espinoza](images/yefferson_espinoza.png)
+![Diego González]()
 
-### - _Yefferson Espinoza_
+### - _Diego González_
 
 [![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)]()
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/espinozayeff/)
-[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://github.com/espinozayff)
-[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:espinozayeff@gmail.com)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)]()
+[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)]()
+[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:)
 
 ### Diseño UI/UX
 
-![Juan Lobo](images/juan_lobo.png)
+![Joaquín Peña]()
 
-#### - _Juan Ignacio Lobo_
+#### - _Joaquín Peña_
 
-[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)](https://juanignaciolobo.myportfolio.com/)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/juaniglobo/)
+[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)]()
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)]()
 [![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)]()
-[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:juanignaciolobo97@gmail.com)
+[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)]()
+
+![Lady Espinoza]()
+
+#### - _Lady Espinoza_
+
+[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)]()
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)]()
+[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)]()
+[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)]()
 
 
 ### Frontend
 
-![Max Cereceda](images/max_cereceda.png)
+![Wilsconidel Yanez]()
 
-#### - _Max Cereceda_
+#### - _Wilsconidel Yanez_
 
-[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)](https://max-cereceda.vercel.app/)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maxcereceda/)
-[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://github.com/cereceda1991)
-[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:cereceda1991@gmail.com)
+[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)]()
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)]()
+[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)]()
+[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)]()
 
-![Rafael Strongoli](images/rafael_strongoli.png)
+![Nicolás Enciso]()
 
-#### - _Rafael Strongoli_
+#### - _Nicolás Enciso_
 
-[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)](https://strongoli-portfolio.vercel.app/)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rafael-strongoli/)
-[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://github.com/rafaric)
-[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:rafaelstrongoli@gmail.com)
-
-![Lautaro Duran](images/lautaro_duran.png)
-
-#### - _Lautaro Duran_
-
-[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)](https://lautaro-duran.netlify.app/)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lautaro-duran/)
-[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://github.com/LautaroLD)
-[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:duranlautarogabriel@gmail.com)
+[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)]()
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)]()
+[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)]()
+[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)]()
 
 
 ### Backend
 
-![Félix Pacheco](images/felix_pacheco.png)
+![Julián Torres]()
 
-#### - _Félix Pacheco_
+#### - _Julián Torres_
 
-[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)](https://porfolio-rho-azure.vercel.app/)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/felix-pacheco-lobos/)
-[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://www.github.com/Thoraker)
-[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:thoraker.dev@gmail.com)
+[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)]()
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)]()
+[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)]()
+[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)]()
 
-![Fernando Suarez](images/fernando_suarez.png)
+![Rodrigo Kohnen]()
 
-#### - _Fernando Suarez_
+#### - _Rodrigo Kohnen_
 
-[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)](https://my-portfolio-fernando-suarez.netlify.app/)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fernandogabrielsuarez/)
-[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://www.github.com/fer-gab-sua)
-[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:fer.gab.sua@gmail.com)
+[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)]()
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)]()
+[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)]()
+[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:)
 
-![Damian Berrojalvis](images/damian_berrojalvis.png)
+
+### QA
+
+![Arnoldo Felce]()
+
+#### - _Arnoldo Felce_
+
+[![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)]()
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)]()
+[![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)]()
+[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:)
+
+
+### Project Manager
+
+![Damian Berrojalvis]()
 
 #### - _Damian Berrojalvis_
 
 [![portfolio](https://img.shields.io/badge/my_portfolio-grey?style=flat&logo=ko-fi&logoColor=white)]()
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dambedev/)
 [![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://www.github.com/DamBeDev)
-[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:d.berrojalvis@gmail.com)
+[![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:d.berrojalvis@dambedev.com)
