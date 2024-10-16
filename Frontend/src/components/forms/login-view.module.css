@@ -1,3 +1,100 @@
+.container {
+  /* Create linear background with these two colors */
+  background-image: linear-gradient(#8f3bef, #011027);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5% 0 10%;
+  width: 100%;
+}
+
+.content {
+  width: 25%;
+  @media (max-width: 850px) {
+    width: 60%;
+  }
+  @media (max-width: 800px) {
+    width: 80%;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  h1 {
+    font-size: 3rem;
+    margin: 0;
+  }
+  .text {
+    width: 100%;
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  hr {
+    border: 1.5px solid white;
+    margin: 12px 0;
+    width: 100%;
+  }
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  width: 100%;
+  .options {
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    text-align: center;
+    width: 100%;
+    div {
+      border-radius: 10px 10px 0 0;
+      padding: 10px 0;
+    }
+  }
+  a {
+    color: white;
+    margin: 2% 0;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.form {
+  width: 100%;
+  button {
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: 0 0 10px 10px;
+    color: white;
+    padding: 12px;
+    width: 100%;
+  }
+}
+
+.button {
+  cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 1;
+    scale: 0.98;
+  }
+}
+/* Versión original
 .navbar {
   display: flex;
   align-items: center;
@@ -41,4 +138,4 @@
     height: 1px;
     background-color: #616162;
   }
-}
+} */
