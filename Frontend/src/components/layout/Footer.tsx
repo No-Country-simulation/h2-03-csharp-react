@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import useWindowSize from "../../hooks/UseWindowSize";
 import style from "./layout.module.css";
+import { Link } from "react-router-dom";
 import ball from "../../assets/ball.svg";
 import coins from "../../assets/coins.svg";
 import cup from "../../assets/cup.svg";
@@ -8,9 +9,42 @@ interface FooterProps {
   selected: number;
 }
 
-const Footer = ({ selected }: FooterProps) => {
+const Footer = () => {
+  const windowWidth = useWindowSize();
+  const isMobile = windowWidth < 768;
+
+  return isMobile ? <MobileFooter selected={1} /> : <DesktopFooter />;
+};
+
+// Desktop version of the Footer
+const DesktopFooter = () => (
+  <footer className={style.footer}>
+    <div>
+      <section className={style.nav}>
+        <a href="#">Inicio</a>
+        <a href="#">Sobre Nosotros</a>
+        <a href="#">Soporte</a>
+        <a href="#">Términos y condiciones</a>
+      </section>
+      <section>
+        <h3>WAKI</h3>
+      </section>
+      <hr />
+      <section className={style.info}>
+        <p>© 2024 WAKI - Todos los Derechos Reservados /</p>
+        <p>
+          <a href="#"> Aviso legal</a> - <a href="#">Equipo de desarrollo</a>
+          {" - "}
+          <a href="#">Política de privacidad</a>
+        </p>
+      </section>
+    </div>
+  </footer>
+);
+
+const MobileFooter = ({ selected }: FooterProps) => {
   return (
-    <footer className={style.footer}>
+    <footer className={style.mobileFooter}>
       <div>
         <Link
           to={"#"}

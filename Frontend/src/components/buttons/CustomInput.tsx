@@ -1,49 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
+import style from "./custom-input.module.css";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
 interface CustomInputProps {
   type: string;
   value?: string;
   placeholder?: string;
-  label?: string;
-  inputName: string;
+  inputName?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  showPasswordIcon?: boolean;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
   type,
   value = undefined,
   placeholder,
-  label = undefined,
   inputName,
   onChange,
+  showPasswordIcon = false,
 }) => {
-  const showPassword = () => {
-    if (type === "password") {
-      type = "text";
+  const [showPassword, setShowPassword] = useState(type);
+
+  const togglePassword = () => {
+    if (showPassword === "password") {
+      setShowPassword("text");
     } else {
-      type = "password";
+      setShowPassword("password");
     }
   };
 
   return (
-    <>
-      {label && <label htmlFor={inputName}>{label}</label>}
-      <div>
-        <input
-          type={type}
-          name={inputName}
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-        />
-        {type === "password" ? (
-          <IoEyeOutline onClick={showPassword} />
+    <div
+      className={
+        type === "password"
+          ? `${style.passwordField} ${style.container}`
+          : style.container
+      }
+    >
+      <input
+        type={showPassword}
+        name={inputName}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+      />
+      {showPasswordIcon ? (
+        showPassword === "password" ? (
+          <IoEyeOutline className={style.icon} onClick={togglePassword} />
         ) : (
-          <IoEyeOffOutline onClick={showPassword} />
-        )}
-      </div>
-    </>
+          <IoEyeOffOutline className={style.icon} onClick={togglePassword} />
+        )
+      ) : null}
+    </div>
   );
 };
 
