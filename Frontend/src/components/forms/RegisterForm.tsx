@@ -4,6 +4,7 @@ import { axiosInstance } from "../../utils/axios.ts";
 import style from "./login-view.module.css";
 import CustomInput from "../buttons/CustomInput.tsx";
 import FormErrorModal from "../modals/FormErrorModal.tsx";
+import axios from "axios";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -85,9 +86,11 @@ const RegisterForm = () => {
         });
       }
     } catch (error) {
-      setError(error.response.data);
-      showTemporaryModal();
-      return;
+      if (axios.isAxiosError(error)) {
+        setError(error?.response?.data);
+        showTemporaryModal();
+        return;
+      }
     }
   };
 

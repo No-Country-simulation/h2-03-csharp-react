@@ -4,6 +4,7 @@ import style from "./login-view.module.css";
 import { axiosInstance } from "../../utils/axios.ts";
 import CustomInput from "../buttons/CustomInput.tsx";
 import FormErrorModal from "../modals/FormErrorModal.tsx";
+import axios from "axios";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -55,8 +56,10 @@ const LoginForm = () => {
         console.log(response.data);
       }
     } catch (error) {
-      setError(error.response.data);
+      if (axios.isAxiosError(error)) {
+      setError(error?.response?.data);
       showTemporaryModal();
+      }
     }
   };
 

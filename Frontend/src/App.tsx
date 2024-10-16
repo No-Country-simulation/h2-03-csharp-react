@@ -18,6 +18,7 @@ function App() {
             <Route path="/predicciones" element={<PredictionsPage />} />
             <Route path="/partidos" element={<MatchesPage />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </UserProvider>
     </>

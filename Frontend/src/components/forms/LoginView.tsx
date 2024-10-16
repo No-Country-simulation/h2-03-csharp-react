@@ -4,7 +4,6 @@ import RegisterForm from "./RegisterForm.tsx";
 import LoginForm from "./LoginForm.tsx";
 import FacebookButton from "../buttons/FacebookButton.tsx";
 import GoogleButton from "../buttons/GoogleButton.tsx";
-import Footer from "../layout/Footer.tsx";
 
 const LoginView = () => {
   const [login, setLogin] = useState(true);
@@ -64,7 +63,6 @@ const LoginView = () => {
           </main>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
