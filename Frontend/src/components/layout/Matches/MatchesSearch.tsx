@@ -36,7 +36,7 @@ const MatchesSearch = () => {
     <Box
       sx={{
         position: "absolute",
-        top: 225,
+        top: 220,
         width: "100%",
         height: "75vh",
         px: 3,
