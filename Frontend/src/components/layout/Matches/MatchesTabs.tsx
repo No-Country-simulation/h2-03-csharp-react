@@ -11,17 +11,21 @@ const MatchesTabs: React.FC<MatchesTabsProps> = ({ value, handleChange }) => {
     <Tabs
       value={value}
       onChange={handleChange}
-      textColor="inherit"
+      indicatorColor="primary"
       variant="scrollable"
-      sx={{
-        width: "100%",
-        "& .MuiTabs-indicator": {
-          backgroundColor: "primary",
-        },
-      }}
     >
       {dates?.map((date, index) => (
-        <Tab key={index} label={date} sx={{ width: "33%" }} />
+        <Tab
+          key={index}
+          label={date}
+          sx={{
+            width: "33%",
+            color: "white",
+            "&.Mui-selected": {
+              color: "primary",
+            },
+          }}
+        />
       ))}
     </Tabs>
   );

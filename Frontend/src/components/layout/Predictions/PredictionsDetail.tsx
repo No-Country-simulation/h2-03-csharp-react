@@ -32,7 +32,7 @@ const PredictionsDetail: React.FC<PredictionsDetailProps> = ({ value }) => {
           justifyContent: "space-between",
           py: 1,
           px: "5%",
-          color: "secondary.light",
+          color: "#8D8D8D",
           borderRadius: 3,
         }}
       >

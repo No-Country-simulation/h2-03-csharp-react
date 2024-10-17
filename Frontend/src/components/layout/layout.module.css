@@ -58,13 +58,14 @@
 .mobileFooter {
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: end;
   position: fixed;
   bottom: 0;
   width: 100%;
   border-radius: 10px 10px 0 0;
   background-color: var(--primary-color);
-  padding: 5% 0;
+  z-index: 1000;
+  padding: 2% 0;
   p {
     margin: 0;
   }
@@ -89,4 +90,11 @@
 
 .selected {
   opacity: 1;
+}
+
+.selected p {
+  background: linear-gradient(53deg, #8f3bef 29.37%, #fff 80.63%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

@@ -19,7 +19,7 @@ const PredictionsHeader: React.FC<PredictionsHeaderProps> = ({
   return (
     <Box
       sx={{
-        background: `linear-gradient(90deg, ${theme.palette.primary.main} -0.04%, ${theme.palette.secondary.main} 99.96%)`,
+        background: `radial-gradient(88.6% 55.7% at 21.5% 50%, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
         width: "100%",
         color: "white",
         py: 3,

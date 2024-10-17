@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, useTheme } from "@mui/material";
 
 interface MainButtonProps {
   children: string;
@@ -11,6 +11,8 @@ const MainButton: React.FC<MainButtonProps> = ({
   disabled = false,
   onClick,
 }) => {
+  const theme = useTheme();
+
   return (
     <Button
       type="submit"
@@ -22,6 +24,7 @@ const MainButton: React.FC<MainButtonProps> = ({
         textTransform: "none",
         minWidth: "fit-content",
         borderRadius: 2,
+        background: `linear-gradient(90deg, ${theme.palette.secondary.main} -0.04%, ${theme.palette.primary.main} 99.96%)`,
         "&.Mui-disabled": {
           backgroundColor: "secondary.light",
           color: "primary.light",
