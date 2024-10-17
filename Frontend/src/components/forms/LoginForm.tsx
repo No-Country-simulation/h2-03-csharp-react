@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { useUserContext } from "../../hooks/UserContext.tsx";
-import style from "./login-view.module.css";
-import { axiosInstance } from "../../utils/axios.ts";
-import CustomInput from "../buttons/CustomInput.tsx";
-import FormErrorModal from "../modals/FormErrorModal.tsx";
+import { useState } from "react";
+import { Box, Button, InputAdornment, TextField } from "@mui/material";
+import { useUserContext } from "../../hooks/UserContext";
+import { axiosInstance } from "../../utils/axios";
+import FormErrorModal from "../modals/FormErrorModal";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import axios from "axios";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const { dispatch } = useUserContext();
@@ -24,6 +25,10 @@ const LoginForm = () => {
     setTimeout(() => {
       setShowModal(false);
     }, 3000);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,42 +58,175 @@ const LoginForm = () => {
             username: response.data.username,
           },
         });
-        console.log(response.data);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-      setError(error?.response?.data);
-      showTemporaryModal();
+        setError(error?.response?.data);
+        showTemporaryModal();
       }
     }
   };
 
   return (
-    <form className={style.form} onSubmit={handleLogin}>
+    <form onSubmit={handleLogin}>
       {showModal && <FormErrorModal error={error} />}
-      <div>
-        <CustomInput
-          type="text"
-          placeholder="Email"
+      <Box mb={0.2}>
+        <TextField
+          label="Email"
+          fullWidth
+          variant="filled"
+          value={username}
           onChange={(e) => setUsername(e.target.value)}
+          sx={{
+            backgroundColor: "white",
+            borderRadius: "0",
+          }}
         />
-      </div>
-      <div>
-        <CustomInput
-          type="password"
-          placeholder="Contraseña"
-          showPasswordIcon
+      </Box>
+      <Box mb={0.2}>
+        <TextField
+          label="Contraseña"
+          type={showPassword ? "text" : "password"}
+          fullWidth
+          variant="filled"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
+          sx={{
+            backgroundColor: "white",
+            borderRadius: "0",
+          }}
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  {!showPassword ? (
+                    <IoEyeOutline
+                      onClick={togglePasswordVisibility}
+                      style={{ cursor: "pointer" }}
+                    />
+                  ) : (
+                    <IoEyeOffOutline
+                      onClick={togglePasswordVisibility}
+                      style={{ cursor: "pointer", width: "100%" }}
+                    />
+                  )}
+                </InputAdornment>
+              ),
+            },
+          }}
         />
-      </div>
-      <button className={style.button} type="submit">
+      </Box>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        fullWidth
+        sx={{
+          borderRadius: "0 0 8px 8px",
+          fontSize: "0.8rem",
+          fontWeight: 400,
+          marginBottom: "10px",
+          padding: "10px 0",
+          textTransform: "none",
+        }}
+      >
         Iniciar sesión
-      </button>
+      </Button>
     </form>
   );
 };
 
 export default LoginForm;
+
+// Versión con solo CSS
+// import React, { useState } from "react";
+// import { useUserContext } from "../../hooks/UserContext.tsx";
+// import style from "./login-view.module.css";
+// import { axiosInstance } from "../../utils/axios.ts";
+// import CustomInput from "../buttons/CustomInput.tsx";
+// import FormErrorModal from "../modals/FormErrorModal.tsx";
+
+// const LoginForm = () => {
+//   const [username, setUsername] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [error, setError] = useState("");
+//   const [showModal, setShowModal] = useState(false);
+//   const { dispatch } = useUserContext();
+
+//   const validateEmail = (email: string) => {
+//     const re =
+//       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//     return re.test(String(email).toLowerCase());
+//   };
+
+//   const showTemporaryModal = () => {
+//     setShowModal(true);
+//     setTimeout(() => {
+//       setShowModal(false);
+//     }, 3000);
+//   };
+
+//   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     if (!username || !password) {
+//       setError("Ingrese correo y contraseña");
+//       showTemporaryModal();
+//       return;
+//     }
+//     if (!validateEmail(username)) {
+//       setError("Ingrese un correo válido");
+//       showTemporaryModal();
+//       return;
+//     }
+//     try {
+//       const response = await axiosInstance.post("Security/Login", {
+//         username,
+//         password,
+//       });
+//       if (response.data.token) {
+//         localStorage.setItem("token", response.data.token);
+//         dispatch({
+//           type: "LOGIN_SUCCESS",
+//           payload: {
+//             token: response.data.token,
+//             email: response.data.email,
+//             username: response.data.username,
+//           },
+//         });
+//         console.log(response.data);
+//       }
+//     } catch (error) {
+//       setError(error.response.data);
+//       showTemporaryModal();
+//     }
+//   };
+
+//   return (
+//     <form className={style.form} onSubmit={handleLogin}>
+//       {showModal && <FormErrorModal error={error} />}
+//       <div>
+//         <CustomInput
+//           type="text"
+//           placeholder="Email"
+//           onChange={(e) => setUsername(e.target.value)}
+//         />
+//       </div>
+//       <div>
+//         <CustomInput
+//           type="password"
+//           placeholder="Contraseña"
+//           showPasswordIcon
+//           onChange={(e) => setPassword(e.target.value)}
+//         />
+//       </div>
+//       <button className={style.button} type="submit">
+//         Iniciar sesión
+//       </button>
+//     </form>
+//   );
+// };
+
+// export default LoginForm;
 
 // Versión original
 // import React, { useState } from "react";

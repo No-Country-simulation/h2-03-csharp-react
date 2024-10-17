@@ -1,26 +1,20 @@
 import React, { useState } from "react";
-import { useUserContext } from "../../hooks/UserContext.tsx";
-import { axiosInstance } from "../../utils/axios.ts";
-import style from "./login-view.module.css";
-import CustomInput from "../buttons/CustomInput.tsx";
-import FormErrorModal from "../modals/FormErrorModal.tsx";
+import { Box, Button, TextField, InputAdornment } from "@mui/material";
+import { useUserContext } from "../../hooks/UserContext";
+import { axiosInstance } from "../../utils/axios";
+import FormErrorModal from "../modals/FormErrorModal";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import axios from "axios";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
-  // const [secondLastName, setSecondLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
-  // const [isMale, setIsMale] = useState(true);
-  // const [isSocialLogin, setIsSocialLogin] = useState(true);
-  // const [loginTypeId, setLoginTypeId] = useState(0);
   const [birthDate, setBirthDate] = useState("");
-  // const [showPassword, setShowPassword] = useState(false);
-  // errors {BirthDate: ["The date format must be DD/MM/YYYY", "The Birthdate must be a valid Date"]}
-
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const { dispatch } = useUserContext();
@@ -29,6 +23,10 @@ const RegisterForm = () => {
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const showTemporaryModal = () => {
@@ -45,13 +43,14 @@ const RegisterForm = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!validateEmail(email)) {
       setError("Ingrese un correo válido");
       showTemporaryModal();
       return;
     }
     if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden");
+      setError("Las contraseñas no coinciden");
       showTemporaryModal();
       return;
     }
@@ -60,20 +59,22 @@ const RegisterForm = () => {
       showTemporaryModal();
       return;
     }
+
     try {
       const response = await axiosInstance.post("Security/Register", {
-        name: name,
-        lastName: lastName,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-        secondLastName: "Litwin",
-        phoneNumber: phoneNumber,
+        name,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        secondLastName: "Prueba",
+        phoneNumber,
         isMale: true,
         isSocialLogin: true,
         loginTypeId: 0,
         birthDate: formatDate(birthDate),
       });
+
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
         dispatch({
@@ -95,67 +96,309 @@ const RegisterForm = () => {
   };
 
   return (
-    <form className={style.form} onSubmit={handleRegister}>
+    <form onSubmit={handleRegister}>
       {showModal && <FormErrorModal error={error} />}
-      <div>
-        <CustomInput
-          type="text"
-          placeholder="Nombre"
+
+      <Box mb={0.2}>
+        <TextField
+          label="Nombre"
+          fullWidth
+          variant="filled"
+          value={name}
           onChange={(e) => setName(e.target.value)}
+          sx={{ backgroundColor: "white" }}
         />
-      </div>
-      <div>
-        <CustomInput
-          type="text"
-          placeholder="Apellido"
+      </Box>
+
+      <Box mb={0.2}>
+        <TextField
+          label="Apellido"
+          fullWidth
+          variant="filled"
+          value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          sx={{ backgroundColor: "white" }}
         />
-      </div>
-      <div>
-        <CustomInput
-          type="text"
-          placeholder="Teléfono"
+      </Box>
+
+      <Box mb={0.2}>
+        <TextField
+          label="Teléfono"
+          fullWidth
+          variant="filled"
+          value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
+          sx={{ backgroundColor: "white" }}
         />
-      </div>
-      <div>
-        <CustomInput
-          type="text"
-          placeholder="Email"
+      </Box>
+
+      <Box mb={0.2}>
+        <TextField
+          label="Email"
+          fullWidth
+          variant="filled"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
+          sx={{ backgroundColor: "white" }}
         />
-      </div>
-      <div>
-        <CustomInput
-          type="password"
-          placeholder="Contraseña"
-          showPasswordIcon
+      </Box>
+
+      <Box mb={0.2}>
+        <TextField
+          label="Contraseña"
+          type={showPassword ? "text" : "password"}
+          fullWidth
+          variant="filled"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
+          sx={{ backgroundColor: "white" }}
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  {!showPassword ? (
+                    <IoEyeOutline
+                      onClick={togglePasswordVisibility}
+                      style={{ cursor: "pointer" }}
+                    />
+                  ) : (
+                    <IoEyeOffOutline
+                      onClick={togglePasswordVisibility}
+                      style={{ cursor: "pointer", width: "100%" }}
+                    />
+                  )}
+                </InputAdornment>
+              ),
+            },
+          }}
         />
-      </div>
-      <div>
-        <CustomInput
-          type="password"
-          placeholder="Repetir contraseña"
-          showPasswordIcon
+      </Box>
+
+      <Box mb={0.2}>
+        <TextField
+          label="Repetir contraseña"
+          type={showPassword ? "text" : "password"}
+          fullWidth
+          variant="filled"
+          value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          sx={{ backgroundColor: "white" }}
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  {!showPassword ? (
+                    <IoEyeOutline
+                      onClick={togglePasswordVisibility}
+                      style={{ cursor: "pointer" }}
+                    />
+                  ) : (
+                    <IoEyeOffOutline
+                      onClick={togglePasswordVisibility}
+                      style={{ cursor: "pointer", width: "100%" }}
+                    />
+                  )}
+                </InputAdornment>
+              ),
+            },
+          }}
         />
-      </div>
-      <div>
-        <CustomInput
+      </Box>
+
+      <Box mb={0.2}>
+        <TextField
+          label="Fecha de nacimiento"
           type="date"
-          placeholder="Fecha de nacimiento"
+          fullWidth
+          variant="filled"
+          value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ backgroundColor: "white" }}
         />
-      </div>
-      <button className={style.button} type="submit">
+      </Box>
+
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        fullWidth
+        sx={{
+          borderRadius: "0 0 8px 8px",
+          fontSize: "0.8rem",
+          fontWeight: 400,
+          marginBottom: "10px",
+          padding: "10px 0",
+          textTransform: "none",
+        }}
+      >
         Registrarse
-      </button>
+      </Button>
     </form>
   );
 };
 
 export default RegisterForm;
+
+// Versión solo CSS
+// import React, { useState } from "react";
+// import { useUserContext } from "../../hooks/UserContext.tsx";
+// import { axiosInstance } from "../../utils/axios.ts";
+// import style from "./login-view.module.css";
+// import CustomInput from "../buttons/CustomInput.tsx";
+// import FormErrorModal from "../modals/FormErrorModal.tsx";
+// import axios from "axios";
+
+// const RegisterForm = () => {
+//   const [name, setName] = useState("");
+//   const [lastName, setLastName] = useState("");
+//   // const [secondLastName, setSecondLastName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [confirmPassword, setConfirmPassword] = useState("");
+//   const [phoneNumber, setPhoneNumber] = useState("");
+//   // const [isMale, setIsMale] = useState(true);
+//   // const [isSocialLogin, setIsSocialLogin] = useState(true);
+//   // const [loginTypeId, setLoginTypeId] = useState(0);
+//   const [birthDate, setBirthDate] = useState("");
+//   // const [showPassword, setShowPassword] = useState(false);
+//   // errors {BirthDate: ["The date format must be DD/MM/YYYY", "The Birthdate must be a valid Date"]}
+
+//   const [error, setError] = useState("");
+//   const [showModal, setShowModal] = useState(false);
+//   const { dispatch } = useUserContext();
+
+//   const validateEmail = (email: string) => {
+//     const re =
+//       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//     return re.test(String(email).toLowerCase());
+//   };
+
+//   const showTemporaryModal = () => {
+//     setShowModal(true);
+//     setTimeout(() => {
+//       setShowModal(false);
+//     }, 3000);
+//   };
+
+//   const formatDate = (date: string) => {
+//     const [day, month, year] = date.split("-");
+//     return `${year}/${month}/${day}`;
+//   };
+
+//   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     if (!validateEmail(email)) {
+//       setError("Ingrese un correo válido");
+//       showTemporaryModal();
+//       return;
+//     }
+//     if (password !== confirmPassword) {
+//       setError("Las contraseñas no coinciden");
+//       showTemporaryModal();
+//       return;
+//     }
+//     if (!name || !lastName || !email || !password || !confirmPassword) {
+//       setError("Complete todos los campos");
+//       showTemporaryModal();
+//       return;
+//     }
+//     try {
+//       const response = await axiosInstance.post("Security/Register", {
+//         name: name,
+//         lastName: lastName,
+//         email: email,
+//         password: password,
+//         confirmPassword: confirmPassword,
+//         secondLastName: "Litwin",
+//         phoneNumber: phoneNumber,
+//         isMale: true,
+//         isSocialLogin: true,
+//         loginTypeId: 0,
+//         birthDate: formatDate(birthDate),
+//       });
+//       if (response.data.token) {
+//         localStorage.setItem("token", response.data.token);
+//         dispatch({
+//           type: "LOGIN_SUCCESS",
+//           payload: {
+//             token: response.data.token,
+//             email: response.data.email,
+//             username: response.data.username,
+//           },
+//         });
+//       }
+//     } catch (error) {
+//       if (axios.isAxiosError(error)) {
+//         setError(error?.response?.data);
+//         showTemporaryModal();
+//         return;
+//       }
+//     }
+//   };
+
+//   return (
+//     <form className={style.form} onSubmit={handleRegister}>
+//       {showModal && <FormErrorModal error={error} />}
+//       <div>
+//         <CustomInput
+//           type="text"
+//           placeholder="Nombre"
+//           onChange={(e) => setName(e.target.value)}
+//         />
+//       </div>
+//       <div>
+//         <CustomInput
+//           type="text"
+//           placeholder="Apellido"
+//           onChange={(e) => setLastName(e.target.value)}
+//         />
+//       </div>
+//       <div>
+//         <CustomInput
+//           type="text"
+//           placeholder="Teléfono"
+//           onChange={(e) => setPhoneNumber(e.target.value)}
+//         />
+//       </div>
+//       <div>
+//         <CustomInput
+//           type="text"
+//           placeholder="Email"
+//           onChange={(e) => setEmail(e.target.value)}
+//         />
+//       </div>
+//       <div>
+//         <CustomInput
+//           type="password"
+//           placeholder="Contraseña"
+//           showPasswordIcon
+//           onChange={(e) => setPassword(e.target.value)}
+//         />
+//       </div>
+//       <div>
+//         <CustomInput
+//           type="password"
+//           placeholder="Repetir contraseña"
+//           showPasswordIcon
+//           onChange={(e) => setConfirmPassword(e.target.value)}
+//         />
+//       </div>
+//       <div>
+//         <CustomInput
+//           type="date"
+//           placeholder="Fecha de nacimiento"
+//           onChange={(e) => setBirthDate(e.target.value)}
+//         />
+//       </div>
+//       <button className={style.button} type="submit">
+//         Registrarse
+//       </button>
+//     </form>
+//   );
+// };
+
+// export default RegisterForm;
 
 // Versión original
 // import React, { useState } from "react";

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ball from "../../assets/ball.svg";
 import coins from "../../assets/coins.svg";
 import cup from "../../assets/cup.svg";
+import { BiUserCircle } from "react-icons/bi";
 
 interface FooterProps {
   selected: number;
@@ -13,7 +14,7 @@ const Footer = () => {
   const windowWidth = useWindowSize();
   const isMobile = windowWidth < 768;
 
-  return isMobile ? <MobileFooter selected={1} /> : <DesktopFooter />;
+  return isMobile ? <MobileFooter selected={0} /> : <DesktopFooter />;
 };
 
 // Desktop version of the Footer
@@ -76,6 +77,18 @@ const MobileFooter = ({ selected }: FooterProps) => {
         >
           <img src={cup} alt="cup" />
           <p>Divisiones</p>
+        </Link>
+      </div>
+      <div>
+        <Link
+          to={"#"}
+          className={
+            selected === 3 ? `${style.link} ${style.selected}` : style.link
+          }
+        >
+          <BiUserCircle className={style.icon} />
+
+          <p>Perfil</p>
         </Link>
       </div>
     </footer>
