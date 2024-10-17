@@ -38,7 +38,7 @@ const MatchesSearch = () => {
         position: "absolute",
         top: 220,
         width: "100%",
-        height: "75vh",
+        height: "120%",
         px: 3,
         backgroundColor: "white",
       }}

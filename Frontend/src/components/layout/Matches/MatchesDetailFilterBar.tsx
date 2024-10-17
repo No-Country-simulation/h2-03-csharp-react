@@ -3,7 +3,15 @@ import MainButton from "../../buttons/MainButton";
 import { useNavigate } from "react-router-dom";
 import MatchesFilterMenu from "./MatchesFilterMenu";
 
-const MatchesDetailFilterBar = () => {
+interface MatchesDetailFilterBarProps {
+  label: string;
+  handle: (label: string) => void
+}
+
+const MatchesDetailFilterBar: React.FC<MatchesDetailFilterBarProps> = ({
+  label,
+  handle
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -16,13 +24,13 @@ const MatchesDetailFilterBar = () => {
         }}
       >
         <Typography variant="subtitle1" sx={{ fontWeight: "400" }}>
-          Ligas
+          {label}
         </Typography>
         <MainButton onClick={() => navigate("/predicciones")}>
           Mis predicciones
         </MainButton>
       </Box>
-      <MatchesFilterMenu />
+      <MatchesFilterMenu selected={label} handleSelect={handle} />
     </Box>
   );
 };

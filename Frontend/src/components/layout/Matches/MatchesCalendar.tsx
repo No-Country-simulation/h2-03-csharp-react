@@ -1,7 +1,7 @@
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { Box, IconButton, Modal, Typography } from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 import {
   ArrowDropDownIcon,
   ArrowLeftIcon,
@@ -39,22 +39,14 @@ const MatchesCalendar: React.FC<MatchesCalendarProps> = ({
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateCalendar
             slots={{
-              leftArrowIcon: (props) => (
-                <IconButton {...props}>
-                  <ArrowLeftIcon sx={{ color: theme.palette.primary.main }} />
-                </IconButton>
+              leftArrowIcon: () => (
+                <ArrowLeftIcon sx={{ color: theme.palette.primary.main }} />
               ),
-              rightArrowIcon: (props) => (
-                <IconButton {...props}>
-                  <ArrowRightIcon sx={{ color: theme.palette.primary.main }} />
-                </IconButton>
+              rightArrowIcon: () => (
+                <ArrowRightIcon sx={{ color: theme.palette.primary.main }} />
               ),
-              switchViewIcon: (props) => (
-                <IconButton {...props}>
-                  <ArrowDropDownIcon
-                    sx={{ color: theme.palette.primary.main }}
-                  />
-                </IconButton>
+              switchViewIcon: () => (
+                <ArrowDropDownIcon sx={{ color: theme.palette.primary.main }} />
               ),
             }}
           />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import PredictionsHeader from "../components/layout/Predictions/PredictionsHeader";
 import PredictionsDetail from "../components/layout/Predictions/PredictionsDetail";
 
@@ -12,10 +12,10 @@ const PredictionsPage = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Stack>
       <PredictionsHeader value={value} handle={handleChange} />
       <PredictionsDetail value={value} />
-    </Box>
+    </Stack>
   );
 };
 

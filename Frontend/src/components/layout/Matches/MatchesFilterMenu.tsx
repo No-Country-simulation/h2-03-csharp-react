@@ -2,14 +2,29 @@ import { useState } from "react";
 import { Box, Button, Divider, Fade, Menu, Typography } from "@mui/material";
 import { LuArrowDownUp, LuClock4, LuListFilter, LuStar } from "react-icons/lu";
 
-const MatchesFilterMenu = () => {
+interface MatchesFilterMenuProps {
+  selected: string;
+  handleSelect: (label: string) => void;
+}
+
+const MatchesFilterMenu: React.FC<MatchesFilterMenuProps> = ({
+  selected,
+  handleSelect,
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSelectAndClose = (label: string) => {
+    handleClose();
+    handleSelect(label);
   };
 
   return (
@@ -72,7 +87,8 @@ const MatchesFilterMenu = () => {
           </Typography>
           <Divider />
           <Button
-            color="primary"
+            onClick={() => handleSelectAndClose("Ligas")}
+            color={selected == "Ligas" ? "primary" : "secondary"}
             startIcon={<LuListFilter />}
             sx={{ textTransform: "none" }}
           >
@@ -80,7 +96,8 @@ const MatchesFilterMenu = () => {
           </Button>
           <Divider />
           <Button
-            color="primary"
+            onClick={() => handleSelectAndClose("Horario")}
+            color={selected == "Horario" ? "primary" : "secondary"}
             startIcon={<LuClock4 />}
             sx={{ textTransform: "none" }}
           >
@@ -88,7 +105,8 @@ const MatchesFilterMenu = () => {
           </Button>
           <Divider />
           <Button
-            color="primary"
+            onClick={() => handleSelectAndClose("Trending")}
+            color={selected == "Trending" ? "primary" : "secondary"}
             startIcon={<LuStar />}
             sx={{ textTransform: "none" }}
           >

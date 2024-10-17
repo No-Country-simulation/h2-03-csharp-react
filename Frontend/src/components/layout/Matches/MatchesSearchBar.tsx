@@ -5,10 +5,16 @@ import MatchesSearch from "./MatchesSearch";
 
 const MatchesSearchBar = () => {
   const [cancel, setCancel] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    console.log(value);
+    setSearchValue(value);
+  };
+
+  const handleCancel = () => {
+    setCancel(false);
+    setSearchValue("");
   };
 
   return (
@@ -19,10 +25,11 @@ const MatchesSearchBar = () => {
         alignItems: "center",
         gap: 2,
         m: 3,
-        zIndex: 1000
+        zIndex: 1000,
       }}
     >
       <TextField
+        value={searchValue}
         placeholder="Busca un jugador"
         color="primary"
         size="small"
@@ -42,7 +49,7 @@ const MatchesSearchBar = () => {
       {cancel && (
         <Button
           color="secondary"
-          onClick={() => setCancel(false)}
+          onClick={handleCancel}
           sx={{ textTransform: "none" }}
         >
           Cancelar
