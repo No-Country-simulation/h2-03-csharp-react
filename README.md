@@ -65,7 +65,7 @@ Propuesta de aplicación de SportsTech para WAKI, dentro del marco del Hackathon
 
 ### Backend
 
-![Julián Torres]()
+![Julián Torres](profile_images/julian_torres.png)
 
 #### - _Julián Torres_
 
