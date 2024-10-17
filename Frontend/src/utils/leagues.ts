@@ -10,7 +10,7 @@ export const leagues = [
     name: "Premiere league",
   },
   {
-    src: "https://i.pinimg.com/736x/2e/86/50/2e86505cb4d1d37b4a40a30b3162169a.jpg",
+    src: "https://th.bing.com/th/id/OIP.S8Me1SQwnv2JPs7wGu1YMAAAAA?rs=1&pid=ImgDetMain",
     country: "Italy",
     name: "Serie A",
   },

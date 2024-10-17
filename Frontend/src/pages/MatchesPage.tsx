@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import MatchesHeader from "../components/layout/Matches/MatchesHeader";
 import MatchesSearch from "../components/layout/Matches/MatchesSearchBar";
 import MatchesDetail from "../components/layout/Matches/MatchesDetail";
@@ -13,11 +13,11 @@ const MatchesPage = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Stack>
       <MatchesHeader value={value} handle={handleChange} />
       <MatchesSearch />
       <MatchesDetail />
-    </Box>
+    </Stack>
   );
 };
 
