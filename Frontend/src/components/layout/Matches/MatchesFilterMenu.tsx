@@ -37,7 +37,7 @@ const MatchesFilterMenu: React.FC<MatchesFilterMenuProps> = ({
         aria-expanded={open ? "true" : undefined}
         sx={{ textTransform: "none" }}
       >
-        <Typography color="secondary">Ordenar por</Typography>
+        <Typography color="primary.dark">Ordenar por</Typography>
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -69,15 +69,15 @@ const MatchesFilterMenu: React.FC<MatchesFilterMenuProps> = ({
           sx={{
             width: 180,
             height: "100%",
-            bgcolor: "#F3F4F5",
+            bgcolor: "secondary.light",
           }}
         >
           <Typography
-            color="secondary"
+            color="primary.dark"
             sx={{
               display: "flex",
               alignItems: "center",
-              bgcolor: "white",
+              bgcolor: "primary.light",
               gap: 1,
               px: 1,
             }}
@@ -90,7 +90,12 @@ const MatchesFilterMenu: React.FC<MatchesFilterMenuProps> = ({
             onClick={() => handleSelectAndClose("Ligas")}
             color={selected == "Ligas" ? "primary" : "secondary"}
             startIcon={<LuListFilter />}
-            sx={{ textTransform: "none" }}
+            sx={{
+              textTransform: "none",
+              "&.MuiButton-colorSecondary": {
+                color: "primary.dark",
+              },
+            }}
           >
             Ligas
           </Button>
@@ -99,7 +104,12 @@ const MatchesFilterMenu: React.FC<MatchesFilterMenuProps> = ({
             onClick={() => handleSelectAndClose("Horario")}
             color={selected == "Horario" ? "primary" : "secondary"}
             startIcon={<LuClock4 />}
-            sx={{ textTransform: "none" }}
+            sx={{
+              textTransform: "none",
+              "&.MuiButton-colorSecondary": {
+                color: "primary.dark",
+              },
+            }}
           >
             Horario
           </Button>
@@ -108,7 +118,12 @@ const MatchesFilterMenu: React.FC<MatchesFilterMenuProps> = ({
             onClick={() => handleSelectAndClose("Trending")}
             color={selected == "Trending" ? "primary" : "secondary"}
             startIcon={<LuStar />}
-            sx={{ textTransform: "none" }}
+            sx={{
+              textTransform: "none",
+              "&.MuiButton-colorSecondary": {
+                color: "primary.dark",
+              },
+            }}
           >
             Trending
           </Button>

@@ -1,9 +1,9 @@
 import useWindowSize from "../../hooks/UseWindowSize";
 import style from "./layout.module.css";
 import { Link } from "react-router-dom";
-import ball from "../../assets/ball.svg";
-import coins from "../../assets/coins.svg";
-import cup from "../../assets/cup.svg";
+import ball from "../../assets/icons/ball.svg";
+import coins from "../../assets/icons/coins.svg";
+import cup from "../../assets/icons/cup.svg";
 
 interface FooterProps {
   selected: number;

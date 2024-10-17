@@ -4,6 +4,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Divider,
   Paper,
   Typography,
 } from "@mui/material";
@@ -28,6 +29,14 @@ const MatchesDetailLeagues = () => {
           key={index}
           expanded={expanded === index}
           onChange={handleChange(index)}
+          sx={{
+            "&:not(:last-child)": {
+              borderBottom: 0,
+            },
+            "&::before": {
+              display: "none",
+            },
+          }}
         >
           <AccordionSummary
             expandIcon={
@@ -44,8 +53,14 @@ const MatchesDetailLeagues = () => {
               <Typography variant="caption">{league.name}</Typography>
             </Box>
           </AccordionSummary>
-          <AccordionDetails sx={{ backgroundColor: "#F3F4F5" }}>
-            <MatchesMatchBadge matchData={matches[0]} />
+          <AccordionDetails sx={{ minHeight: 150, p: 0 }}>
+            {matches &&
+              matches.map((match, index) => (
+                <div key={index}>
+                  <MatchesMatchBadge matchData={match} />
+                  <Divider sx={{ border: "1px solid grey" }} />
+                </div>
+              ))}
           </AccordionDetails>
         </Accordion>
       ))}

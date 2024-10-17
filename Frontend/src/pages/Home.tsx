@@ -8,14 +8,14 @@ const Home = () => {
         width: "100%",
         height: "100vh",
         justifyContent: "center",
-        background: `linear-gradient(180deg, ${theme.palette.primary.main} -0.04%, ${theme.palette.secondary.main} 99.96%)`,
+        background: `linear-gradient(180deg, ${theme.palette.secondary.main} -0.04%, ${theme.palette.primary.main} 99.96%)`,
       }}
     >
       <Typography
-        variant="h1"
         align="center"
         color="primary.light"
         fontWeight="bolder"
+        sx={{ fontSize: 67 }}
       >
         WAKI
       </Typography>

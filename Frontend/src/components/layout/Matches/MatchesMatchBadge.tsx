@@ -25,6 +25,7 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
+        bgcolor: "secondary.light"
       }}
     >
       <Stack
