@@ -14,17 +14,15 @@ Propuesta de aplicación de SportsTech para WAKI, dentro del marco del Hackathon
 
 ## Equipo de desarrollo H2-03-CSharp-React
 
-### Team Lider
-
+## Team Lider
 
 <img src="profile_images/default_picture.png" alt="Diego González" height="100px"/>
 
 ### - _Diego González_
 
-<hr size="5px"/>
+<hr size="8px"/>
 
-### Diseño UI/UX
-
+## Diseño UI/UX
 
 <img src="profile_images/joaquin_pena.png" alt="Joaquín Peña" height="100px"/>
 
@@ -46,10 +44,9 @@ Propuesta de aplicación de SportsTech para WAKI, dentro del marco del Hackathon
 [![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)]()
 [![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:ladyrut@gmail.com)
 
-<hr size="5px"/>
+<hr size="8px"/>
 
-### Frontend
-
+## Frontend
 
 <img src="profile_images/wilsconidel_yanez.png" alt="Wilsconidel Yanez" height="100px"/>
 
@@ -71,10 +68,9 @@ Propuesta de aplicación de SportsTech para WAKI, dentro del marco del Hackathon
 [![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://github.com/nicoenciso)
 [![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:enectrl@gmail.com)
 
-<hr size="5px"/>
+<hr size="8px"/>
 
-### Backend
-
+## Backend
 
 <img src="profile_images/julian_torres.png" alt="Julián Torres" height="100px"/>
 
@@ -96,10 +92,9 @@ Propuesta de aplicación de SportsTech para WAKI, dentro del marco del Hackathon
 [![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://github.com/rodrikohnen)
 [![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:rodrikohnen@gmail.com)
 
-<hr size="5px"/>
+<hr size="8px"/>
 
-### QA
-
+## QA
 
 <img src="profile_images/arnoldo_felce.png" alt="Arnoldo Felce" height="100px"/>
 
@@ -110,9 +105,9 @@ Propuesta de aplicación de SportsTech para WAKI, dentro del marco del Hackathon
 [![github](https://img.shields.io/badge/github-grey?style=flat&logo=github&logoColor=white)](https://github.com/afelce)
 [![mail](https://img.shields.io/badge/Gmail-D14836?style=flat&logo=gmail&logoColor=white)](mailto:arnoldfelce2@gmail.com)
 
-<hr size="5px"/>
+<hr size="8px"/>
 
-### Project Manager
+## Project Manager
 
 
 <img src="profile_images/damian_berrojalvis.jpg" alt="Damián Berrojalvis" height="100px"/>
