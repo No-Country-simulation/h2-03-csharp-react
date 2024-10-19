@@ -26,7 +26,10 @@ const PredictionsHeader: React.FC<PredictionsHeaderProps> = ({
       }}
     >
       <Typography variant="caption" sx={{ ml: 2, color: "primary.light" }}>
-        <NavLink to="/partidos" style={{ textDecoration: "none", color: "inherit" }}>
+        <NavLink
+          to="/partidos"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <FaArrowLeftLong /> <span>Partidos</span>
         </NavLink>
       </Typography>
