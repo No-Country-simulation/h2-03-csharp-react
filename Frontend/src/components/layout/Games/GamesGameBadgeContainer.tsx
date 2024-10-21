@@ -2,14 +2,16 @@ import { ReactNode } from "react";
 import { Paper, Stack, Typography } from "@mui/material";
 import { leagues } from "../../../utils/leagues";
 
-interface MatchesMatchBadgeContainerProps {
+interface GamesGameBadgeContainerProps {
   children: ReactNode;
-  league: string;
+  league?: string;
+  label?: string;
 }
 
-const MatchesMatchBadgeContainer: React.FC<MatchesMatchBadgeContainerProps> = ({
+const GamesGameBadgeContainer: React.FC<GamesGameBadgeContainerProps> = ({
   children,
   league,
+  label,
 }) => {
   const getLeagueIcon = () => {
     let leagueIcon = "";
@@ -37,11 +39,14 @@ const MatchesMatchBadgeContainer: React.FC<MatchesMatchBadgeContainerProps> = ({
         }}
       >
         <img width={18} height={18} src={icon} />
-        <Typography variant="caption">{league}</Typography>
+        <Typography variant="caption">
+          {league}
+          {label}
+        </Typography>
       </Stack>
       {children}
     </Paper>
   );
 };
 
-export default MatchesMatchBadgeContainer;
+export default GamesGameBadgeContainer;

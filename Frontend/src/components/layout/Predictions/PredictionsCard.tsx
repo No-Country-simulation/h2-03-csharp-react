@@ -32,11 +32,11 @@ const PredictionsCard: React.FC<PredictionsCardProps> = ({
         </Box>
         <Box>
           <PredictionsCardTeam
-            imageSrc="https://s3-alpha-sig.figma.com/img/ab4b/173b/81ec863d62c7a815a787cfc6538195bd?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=dmuUZ4O0VU5GUZ1vfmCqYOsJQqPi7QnPMKOVd5X2H~gwUzOys5Vs5UVbf05MBrJMKbOUz-Rxndw8~YzpgLjfTFZnHvHds4QrKTzD34crI~lsTp~Whl834jGz6Wjch2BFXTrv4qXW08ZkSXQocEXlxomQ~9Q0ZYftdOWalDOL~fknGhLI0nZ~0eCfhiJcWSvkRy~krrRUuirAjcGjL~JT3FkMGqj4Wb3MnahzIYZCK6HwHhkvZYBwXXNk5s~qc5GauxN1gILJXEz8SS~2J5JqFbWLcjhLo1-5-HbpJYyUfiyWa1LAZFC0MUqZtJzzZynjCdVOFKKPt3lGpBb0PmDdzg__"
+            imageSrc="https://s3-alpha-sig.figma.com/img/ab4b/173b/81ec863d62c7a815a787cfc6538195bd?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=X9VjPKfOpoFCnmuIN3~~Yzp~kGPGmnufGf3A-GqYDop555eG~jSP7FL0eubFawZcB4zah0BEpfBr3T-L8SDvNomhHUPKs-Dh5A3Lbe~Ran3YnfLLaa05PCiYhwd7zw7vZuvwDHqnXnkFt6zfda5fA3J6JBqQ3TVDy2KxwM1iC5ZscBe4i9~cFRao~vArXFz9MW-CmFvKJXc1cdYLQ69BoZWJjb2PCSczE7v42CnV6p5xZN51RBJRl-MnjruqwJp5gKPKcmWjURDpCPMmna3OGeQg8xNjQ0qy~xcwD1YyDhLxzcQRRQXs2GNXiFdtNe2OUjQLUWjtLUAxpKG-GaOREg__"
             label="Barcelona"
           />
           <PredictionsCardTeam
-            imageSrc="https://s3-alpha-sig.figma.com/img/7d4c/b9ed/431290fcfc98939b4de374071c11bd75?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TJOASV9DPSflRQ9LwDAyRsBd3fgedB-oJ60K-Y21-GpAVRlUYvv8ShiP55J8MhbiKkca5jOUkJKbX-n8gJ~UJ~o6OYwJQqX089pdbhw6mq6wdFBdcgLP6k34DuDgiW7N1i2~4Nj-vnfG5XjHRfyn0P1okOmYvgbX5Uc6XsxhO0OtpGcOSPbwMwzja-~Y~WfbBpuQ6WwuPB5QV9mxMfub~HJyXjmdeWZGiJJRiAw3tndSs9Q8os~rj2NqEHvNkHqsOCpRRF~CiDOSaMnXMSikWgIrT0Pgq1kF~mytnDVz8trH7ZDoSqPx-kQLJIGuqI27l1fVizwFODQJnqNWAXq7fg__"
+            imageSrc="https://s3-alpha-sig.figma.com/img/7d4c/b9ed/431290fcfc98939b4de374071c11bd75?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PRY3zgFyP4mdZF885fmPqNGGVD2vyNYkZSPRDJ7JAuA8dT1QisieZ6pz0dqOVw1JaMOJCQzk-HpvnPD12s0~i9V4pnd0i6uzxpJAF22845412dTYpyei75AH1BHmxbbrZDFvFLu~Eq0lP~27RiVyNc3NmQFxEx1iRrne9hr4I4FONDBsgiACkLat9aYvtoC6SnLbjjCWLtjifIiyDeECNbg2TDR2buyVlggzbXE5a2WDTnT9eG-eV3gju5puQdb6Au5lKqufjmoR3kNxrcbvdgsap1ZBUKSPgNNLArVjwoy4vuL720tyyY00eK0drm1-x~Gk77an2XiOOk9vGyxTUQ__"
             label="Osasuna"
           />
         </Box>
@@ -46,10 +46,10 @@ const PredictionsCard: React.FC<PredictionsCardProps> = ({
             color: "primary.main",
             ...(status == "UnearnedPoints" && {
               textDecoration: "line-through",
-              color: "secondary.main"
+              color: "secondary.dark"
             }),
             ...(status == "PointsEarned" && {
-              color: "blue"
+              color: "secondary.main"
             })
           }}
         >

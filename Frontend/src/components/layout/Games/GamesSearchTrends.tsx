@@ -1,11 +1,11 @@
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import { BsArrowUpRight } from "react-icons/bs";
 
-interface MatchesSearchTrends {
+interface GamesSearchTrends {
   data: string[];
 }
 
-const MatchesSearchTrends: React.FC<MatchesSearchTrends> = ({ data }) => {
+const GamesSearchTrends: React.FC<GamesSearchTrends> = ({ data }) => {
   return (
     <Paper elevation={4} sx={{ mt: 1, px: 2, borderRadius: 3 }}>
       {data.map((result: string, index: number) => (
@@ -30,4 +30,4 @@ const MatchesSearchTrends: React.FC<MatchesSearchTrends> = ({ data }) => {
   );
 };
 
-export default MatchesSearchTrends;
+export default GamesSearchTrends;

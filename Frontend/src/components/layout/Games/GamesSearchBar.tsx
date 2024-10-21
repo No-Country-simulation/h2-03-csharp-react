@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Box, Button, InputAdornment, TextField } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
-import MatchesSearch from "./MatchesSearch";
+import GamesSearch from "./GamesSearch";
 
-const MatchesSearchBar = () => {
+const GamesSearchBar = () => {
   const [cancel, setCancel] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -55,9 +55,9 @@ const MatchesSearchBar = () => {
           Cancelar
         </Button>
       )}
-      {cancel && <MatchesSearch />}
+      {cancel && <GamesSearch />}
     </Box>
   );
 };
 
-export default MatchesSearchBar;
+export default GamesSearchBar;
