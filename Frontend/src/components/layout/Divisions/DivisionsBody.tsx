@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import Rankings from "./Rankings";
 import Rewards from "./Rewards";
-import Quests from "./Quests";
+import Missions from "./Missions";
 
 interface DivisionProps {
   view: string;
@@ -14,8 +14,8 @@ const DivisionsBody: React.FC<DivisionProps> = ({ view }) => {
     bodyComponent = <Rankings />;
   } else if (view === "rewards") {
     bodyComponent = <Rewards />;
-  } else if (view === "quests") {
-    bodyComponent = <Quests />;
+  } else if (view === "missions") {
+    bodyComponent = <Missions />;
   }
   return (
     <Box
