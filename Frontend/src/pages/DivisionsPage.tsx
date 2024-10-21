@@ -9,7 +9,7 @@ const DivisionsPage = () => {
     <Stack>
       <DivisionsHeader choice={choice} setChoice={setChoice} />{" "}
       <DivisionsBody
-        view={choice === 0 ? "rankings" : choice === 1 ? "rewards" : "quests"}
+        view={choice === 0 ? "rankings" : choice === 1 ? "rewards" : "missions"}
       />
     </Stack>
   );

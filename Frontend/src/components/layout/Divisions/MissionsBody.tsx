@@ -6,7 +6,11 @@ const MissionsBody = () => {
     <Box
       display={"flex"}
       flexDirection={"column"}
-      sx={{ borderRadius: "10px", width: "30%" }}
+      sx={{
+        borderRadius: "10px",
+        width: "30%",
+        "@media (max-width: 800px)": { width: "100%" },
+      }}
     >
       <Typography sx={{ margin: "12px 0" }}>Logros</Typography>
       <Paper elevation={4} sx={{ borderRadius: "10px", width: "100%" }}>

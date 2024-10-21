@@ -1,5 +1,4 @@
 import { Box, Paper, Typography } from "@mui/material";
-import React from "react";
 import { useTheme } from "@mui/material/styles";
 import { IoIosArrowForward } from "react-icons/io";
 import gold from "../../../assets/gold.png";
@@ -22,6 +21,9 @@ const RewardsDivisionsCard = () => {
         margin: "2% auto 0",
         padding: "0 10px 8px",
         width: "30%",
+        "@media (max-width: 800px)": {
+          width: "100%",
+        },
       }}
     >
       <Box

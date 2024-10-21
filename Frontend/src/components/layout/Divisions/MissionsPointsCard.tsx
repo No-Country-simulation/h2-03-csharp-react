@@ -10,7 +10,14 @@ const MissionsPointsCard = () => {
 
   const theme = useTheme();
   return (
-    <Paper elevation={4} sx={{ borderRadius: "10px", width: "30%" }}>
+    <Paper
+      elevation={4}
+      sx={{
+        borderRadius: "10px",
+        width: "30%",
+        "@media (max-width: 800px)": { width: "100%" },
+      }}
+    >
       <Box
         display={"flex"}
         flexDirection={"column"}

@@ -65,13 +65,13 @@ const RankingsBody = () => {
           width: "70%",
           overflow: "hidden",
           marginBottom: 8,
-          borderRadius: 7,
+          borderRadius: 4,
           "@media (max-width: 600px)": {
             width: "100%",
           },
         }}
       >
-        <TableContainer sx={{ borderRadius: 7 }}>
+        <TableContainer sx={{ borderRadius: 4 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
