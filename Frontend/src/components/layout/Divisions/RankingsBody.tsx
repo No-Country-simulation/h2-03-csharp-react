@@ -10,19 +10,19 @@ import TableRow from "@mui/material/TableRow";
 interface Column {
   id: "position" | "name" | "points";
   label: string;
-  minWidth?: number;
   align?: "right";
+  maxWidth?: string;
   format?: (value: number) => string;
 }
 
 const columns: readonly Column[] = [
-  { id: "position", label: "#", minWidth: 20 },
-  { id: "name", label: "Nombre", minWidth: 100 },
+  { id: "position", label: "#", maxWidth: "8%" },
+  { id: "name", label: "Nombre", maxWidth: "78%" },
   {
     id: "points",
     label: "Puntos",
-    minWidth: 50,
     align: "right",
+    maxWidth: "14%",
     format: (value: number) => value.toLocaleString("en-US"),
   },
 ];
@@ -52,10 +52,24 @@ const rows = [
 
 const RankingsBody = () => {
   return (
-    <Box p={1} sx={{ width: "100%" }}>
+    <Box
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      p={1}
+      sx={{ width: "100%" }}
+    >
       <Paper
-        elevation={0}
-        sx={{ width: "100%", overflow: "hidden", marginBottom: 8 }}
+        elevation={3}
+        sx={{
+          width: "70%",
+          overflow: "hidden",
+          marginBottom: 8,
+          borderRadius: 7,
+          "@media (max-width: 600px)": {
+            width: "100%",
+          },
+        }}
       >
         <TableContainer sx={{ borderRadius: 7 }}>
           <Table stickyHeader aria-label="sticky table">
@@ -65,7 +79,7 @@ const RankingsBody = () => {
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth }}
+                    style={{ width: column.maxWidth }}
                     sx={{ backgroundColor: "primary.dark", color: "white" }}
                   >
                     {column.label}

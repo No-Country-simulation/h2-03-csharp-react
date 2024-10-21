@@ -2,22 +2,26 @@ import { Box, Divider, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 interface DivisionsHeaderProps {
-  selected: number;
+  choice: number;
+  setChoice: (choice: number) => void;
 }
-
-const DivisionsHeader: React.FC<DivisionsHeaderProps> = ({ selected }) => {
+const DivisionsHeader: React.FC<DivisionsHeaderProps> = ({
+  choice,
+  setChoice,
+}) => {
   const theme = useTheme();
   return (
     <Box
+      component="header"
+      width={"100%"}
+      pt={3}
       sx={{
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         background: `${theme.palette.primary.dark}}`,
-        width: "100%",
         color: "white",
-        py: 3,
       }}
     >
       <Box>
@@ -31,66 +35,96 @@ const DivisionsHeader: React.FC<DivisionsHeaderProps> = ({ selected }) => {
           display: "flex",
           justifyContent: "space-around",
           alignItems: "center",
-          margin: "3% 0 2%",
+          cursor: "pointer",
         }}
       >
-        <Typography
-          variant="caption"
+        <Box
+          width={"33.3%"}
+          onClick={() => setChoice(0)}
           sx={{
-            ml: 2,
-            color: selected === 0 ? "primary.main" : "primary.light",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            alignItems: "center",
           }}
         >
-          Ranking
-        </Typography>
-        <Typography
-          variant="caption"
+          <Typography
+            variant="caption"
+            mb={3}
+            mt={3}
+            sx={{
+              ml: 2,
+              color: choice === 0 ? "primary.main" : "primary.light",
+            }}
+          >
+            Ranking
+          </Typography>
+          <Divider
+            sx={{
+              width: "100%",
+              color: choice === 0 ? "primary.main" : "secondary.dark",
+              border: "2px solid",
+            }}
+          />
+        </Box>
+        <Box
+          width={"33.3%"}
+          onClick={() => setChoice(1)}
           sx={{
-            ml: 2,
-            color: selected === 1 ? "primary.main" : "primary.light",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            alignItems: "center",
           }}
         >
-          Recompensas
-        </Typography>
-        <Typography
-          variant="caption"
+          <Typography
+            mb={3}
+            mt={3}
+            variant="caption"
+            sx={{
+              ml: 2,
+              color: choice === 1 ? "primary.main" : "primary.light",
+            }}
+          >
+            Recompensas
+          </Typography>
+          <Divider
+            sx={{
+              width: "100%",
+              color: choice === 1 ? "primary.main" : "secondary.dark",
+              border: "2px solid",
+            }}
+          />
+        </Box>
+        <Box
+          width={"33.3%"}
+          onClick={() => setChoice(2)}
           sx={{
-            ml: 2,
-            color: selected === 2 ? "primary.main" : "primary.light",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            alignItems: "center",
           }}
         >
-          Misiones
-        </Typography>
-      </Box>
-      <Box
-        width={"100%"}
-        sx={{
-          display: "flex",
-          justifyContent: "space-around",
-          alignItems: "center",
-        }}
-      >
-        <Divider
-          sx={{
-            width: "33%",
-            color: selected === 0 ? "primary.main" : "secondary.dark",
-            border: "2px solid",
-          }}
-        />
-        <Divider
-          sx={{
-            width: "33%",
-            color: selected === 1 ? "primary.main" : "secondary.dark",
-            border: "2px solid",
-          }}
-        />
-        <Divider
-          sx={{
-            width: "33%",
-            color: selected === 2 ? "primary.main" : "secondary.dark",
-            border: "2px solid",
-          }}
-        />
+          <Typography
+            mb={3}
+            mt={3}
+            variant="caption"
+            sx={{
+              ml: 2,
+              color: choice === 2 ? "primary.main" : "primary.light",
+            }}
+          >
+            Misiones
+          </Typography>
+          <Divider
+            sx={{
+              width: "100%",
+              color: choice === 2 ? "primary.main" : "secondary.dark",
+              border: "2px solid",
+            }}
+          />
+        </Box>
       </Box>
     </Box>
   );
