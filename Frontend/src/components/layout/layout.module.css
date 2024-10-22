@@ -91,10 +91,3 @@
 .selected {
   opacity: 1;
 }
-
-.selected p {
-  background: linear-gradient(53deg, #8f3bef 29.37%, #fff 80.63%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
