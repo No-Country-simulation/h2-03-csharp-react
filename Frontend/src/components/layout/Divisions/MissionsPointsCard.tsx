@@ -4,9 +4,12 @@ import ProgressBar from "../../progress bars/ProgressBar";
 import { useTheme } from "@mui/material/styles";
 
 const MissionsPointsCard = () => {
-  const [points, setPoints] = useState(200);
-  const [division, setDivision] = useState("bronze");
-  const [pointsToNextDivision, setPointsToNextDivision] = useState(300);
+  const [points] = useState(200);
+  // const [points, setPoints] = useState(200);
+  const [division] = useState("bronze");
+  // const [division, setDivision] = useState("bronze");
+  const [pointsToNextDivision] = useState(300);
+  // const [pointsToNextDivision, setPointsToNextDivision] = useState(300);
 
   const theme = useTheme();
   return (

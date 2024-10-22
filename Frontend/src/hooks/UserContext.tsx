@@ -46,7 +46,6 @@ const UserContext = createContext<{
 
 export const useUserContext = () => useContext(UserContext);
 
-// Create the provider component
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
