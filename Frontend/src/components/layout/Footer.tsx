@@ -6,7 +6,6 @@ import ball from "../../assets/icons/ball.svg";
 import coins from "../../assets/icons/coins.svg";
 import cup from "../../assets/icons/cup.svg";
 
-
 interface FooterProps {
   selected: number;
 }
@@ -23,10 +22,11 @@ const DesktopFooter = () => (
   <footer className={style.footer}>
     <div>
       <section className={style.nav}>
-        <a href="#">Inicio</a>
-        <a href="#">Sobre Nosotros</a>
-        <a href="#">Soporte</a>
-        <a href="#">Términos y condiciones</a>
+        <Link to={"/ingresar"}>Ingresar</Link>
+        <Link to={"/predicciones"}>Predicciones</Link>
+        <Link to={"/partidos"}>Partidos</Link>
+        <Link to={"/divisiones"}>Divisiones</Link>
+        <Link to={"/perfil"}>Perfil</Link>
       </section>
       <section>
         <h3>WAKI</h3>
@@ -49,7 +49,7 @@ const MobileFooter = ({ selected }: FooterProps) => {
     <footer className={style.mobileFooter}>
       <div>
         <Link
-          to={"#"}
+          to={"/predicciones"}
           className={
             selected === 0 ? `${style.link} ${style.selected}` : style.link
           }
@@ -60,7 +60,7 @@ const MobileFooter = ({ selected }: FooterProps) => {
       </div>
       <div>
         <Link
-          to={"#"}
+          to={"/partidos"}
           className={
             selected === 1 ? `${style.link} ${style.selected}` : style.link
           }
@@ -71,7 +71,7 @@ const MobileFooter = ({ selected }: FooterProps) => {
       </div>
       <div>
         <Link
-          to={"#"}
+          to={"/divisiones"}
           className={
             selected === 2 ? `${style.link} ${style.selected}` : style.link
           }
@@ -82,7 +82,7 @@ const MobileFooter = ({ selected }: FooterProps) => {
       </div>
       <div>
         <Link
-          to={"#"}
+          to={"/perfil"}
           className={
             selected === 3 ? `${style.link} ${style.selected}` : style.link
           }

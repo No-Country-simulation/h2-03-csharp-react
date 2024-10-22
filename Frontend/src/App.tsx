@@ -6,10 +6,12 @@ import { GameProvider } from "./context/GameContext";
 import { PredictionsProvider } from "./context/PredictionsContext";
 
 import Home from "./pages/Home";
-import Login from "./pages/Access";
+import Login from "./pages/LoginPage";
 import PredictionsPage from "./pages/PredictionsPage";
 import GamesPage from "./pages/GamesPage";
 import GameDetailPage from "./pages/GameDetailPage";
+import DivisionsPage from "./pages/DivisionsPage";
+import ProfilePage from "./pages/ProfilePage";
 import Footer from "./components/layout/Footer";
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
               <Route path="/predicciones" element={<PredictionsPage />} />
               <Route path="/partidos" element={<GamesPage />} />
               <Route path="/partidos/:partidoId" element={<GameDetailPage />} />
+              <Route path="/divisiones" element={<DivisionsPage />} />
+              <Route path="/perfil" element={<ProfilePage />} />
             </Routes>
             <Footer />
           </BrowserRouter>
