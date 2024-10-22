@@ -4,14 +4,18 @@ import GameDetailHeader from "../components/layout/GameDetail/GameDetailHeader";
 import GameDetailTabs from "../components/layout/GameDetail/GameDetailTabs";
 import GameDetailPredictions from "../components/layout/GameDetail/GameDetailPredictions";
 import { useGameContext } from "../hooks/useGameContext";
+import { useEffect } from "react";
 
-const MatchDetailPage = () => {
+const GameDetailPage = () => {
   const { partidoId } = useParams();
 
   const { game, setGameData } = useGameContext();
-  if (partidoId) {
-    setGameData(partidoId);
-  }
+
+  useEffect(() => {
+    if (partidoId) {
+      setGameData(partidoId);
+    }
+  }, [partidoId, setGameData]);
 
   return (
     game && (
@@ -24,4 +28,4 @@ const MatchDetailPage = () => {
   );
 };
 
-export default MatchDetailPage;
+export default GameDetailPage;

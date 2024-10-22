@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import GameNavButton from "../../buttons/GameNavButton";
 import GameDetailResult from "./GameDetailResult";
 
@@ -17,9 +17,7 @@ const GameDetailHeader = () => {
     >
       <GameNavButton />
       <Stack>
-        <Typography align="center">
-          <GameDetailResult />
-        </Typography>
+        <GameDetailResult />
       </Stack>
     </Box>
   );

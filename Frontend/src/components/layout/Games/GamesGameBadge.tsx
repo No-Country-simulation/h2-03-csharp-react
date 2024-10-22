@@ -1,19 +1,35 @@
-import { Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import { IconButton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { GameData } from "../../../context/GameContext";
 import { FaCircle } from "react-icons/fa6";
-import { IoIosStar } from "react-icons/io";
+import { IoStatsChartSharp } from "react-icons/io5";
+import GameStatsModal from "../../modals/GameStatsModal";
 
 interface GamesGameBadgeProps {
   gameData: GameData;
 }
 
 const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
-  //const date = new Date().toLocaleTimeString();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const navigate = useNavigate();
 
+  const handleGameDetail = () => {
+    if (!open) {
+      navigate(`/partidos/${gameData.id}`);
+    }
+  };
+
+  const handleShowStats = (event: React.MouseEvent<HTMLButtonElement>) => {
+    handleOpen();
+    event.stopPropagation();
+  };
+
   return (
-    <div onClick={() => navigate(`/partidos/${gameData.id}`)}>
+    <div onClick={handleGameDetail}>
       <Stack
         sx={{
           height: 150,
@@ -52,10 +68,13 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               position: "absolute",
             }}
           >
-            <Stack direction="row" sx={{ alignItems: "center" }}>
-              <IoIosStar color="orange" style={{ width: 12, marginRight: 2 }} />
-              <Typography variant="caption">{gameData.score}</Typography>
-            </Stack>
+            <IconButton
+              onClick={handleShowStats}
+              size="small"
+              sx={{ color: "primary.main" }}
+            >
+              <IoStatsChartSharp />
+            </IconButton>
             <Typography variant="h6" fontWeight="bold">
               {gameData.result}
             </Typography>
@@ -134,6 +153,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
           </Stack>
         </Stack>
       </Stack>
+      <GameStatsModal open={open} handleClose={handleClose} game={gameData} />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PredictionsTabs from "./PredictionsTabs";
 import PredictionsBuyPaper from "./PredictionsBuyPaper";
-import MatchNavButton from "../../buttons/GameNavButton";
+import GameNavButton from "../../buttons/GameNavButton";
 
 interface PredictionsHeaderProps {
   value: number;
@@ -24,7 +24,7 @@ const PredictionsHeader: React.FC<PredictionsHeaderProps> = ({
         py: 3,
       }}
     >
-      <MatchNavButton />
+      <GameNavButton />
       <Box
         sx={{
           display: "flex",
