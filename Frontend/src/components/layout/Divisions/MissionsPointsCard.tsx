@@ -12,6 +12,7 @@ const MissionsPointsCard = () => {
   // const [pointsToNextDivision, setPointsToNextDivision] = useState(300);
 
   const theme = useTheme();
+
   return (
     <Paper
       elevation={4}
@@ -22,22 +23,22 @@ const MissionsPointsCard = () => {
       }}
     >
       <Box
-        display={"flex"}
-        flexDirection={"column"}
-        justifyContent={"center"}
-        alignItems={"center"}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
         sx={{
           backgroundColor: theme.palette.primary.dark,
           border: "2px solid purple",
           borderRadius: "10px",
           color: "white",
-          padding: 2,
+          p: 2,
           width: "100%",
         }}
       >
         <Typography variant="h5">Tus puntos</Typography>
         <Typography variant="h3">{points}</Typography>
-        <Typography sx={{ marginLeft: "20px", width: "100%" }}>
+        <Typography sx={{ ml: 2, width: "100%" }}>
           {points} de {pointsToNextDivision} puntos
         </Typography>
         <ProgressBar

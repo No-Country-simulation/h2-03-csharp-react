@@ -5,11 +5,13 @@ import MissionsBody from "./MissionsBody";
 const Missions = () => {
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      mb={9}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 9,
+      }}
     >
       <MissionsPointsCard />
       <MissionsBody />
