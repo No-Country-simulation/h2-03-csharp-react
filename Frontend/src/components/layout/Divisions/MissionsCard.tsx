@@ -18,25 +18,23 @@ const MissionsCard: React.FC<MissionsCardProps> = ({
   return (
     <Box>
       <Box
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        sx={{ gap: 5, padding: 2, width: "100%" }}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ gap: 5, p: 2, width: "100%" }}
       >
-        <Box>
-          <PiHandCoinsBold fontSize={40} />
-        </Box>
+        <PiHandCoinsBold fontSize={40} />
         <Box
-          display={"flex"}
-          flexDirection={"column"}
-          justifyContent={"center"}
-          alignItems={"center"}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
           sx={{ width: "80%" }}
         >
           <Box
-            display={"flex"}
-            justifyContent={"space-between"}
-            sx={{ padding: "0 6px 0 2px", width: "100%" }}
+            display="flex"
+            justifyContent="space-between"
+            sx={{ px: 1, width: "100%" }}
           >
             <Typography>{mission}</Typography>
             <Typography>{reward} puntos</Typography>

@@ -51,11 +51,13 @@ const rows = [
 ];
 
 const RankingsBody = () => {
+  // Aquí se incluirá la API call para obtener información de las tablas y la posición del usuario
+  // Hay que agregar una tabla extra en caso que el usuario no clasifique entre los primeros 10
   return (
     <Box
-      display={"flex"}
-      justifyContent={"center"}
-      alignItems={"center"}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
       p={1}
       sx={{ width: "100%" }}
     >
@@ -64,7 +66,7 @@ const RankingsBody = () => {
         sx={{
           width: "70%",
           overflow: "hidden",
-          marginBottom: 8,
+          mb: 8,
           borderRadius: 4,
           "@media (max-width: 600px)": {
             width: "100%",
