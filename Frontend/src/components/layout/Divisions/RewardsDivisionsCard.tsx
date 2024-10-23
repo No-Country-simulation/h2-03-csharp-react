@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import { alpha } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
@@ -5,9 +6,20 @@ import { IoIosArrowForward } from "react-icons/io";
 import gold from "../../../assets/gold.png";
 import silver from "../../../assets/silver.png";
 import bronze from "../../../assets/bronze.png";
+import DivisionsRewardsDetails from "./Divisions Rewards/DivisionsRewardsDetails";
 
 const RewardsDivisionsCard = () => {
   const theme = useTheme();
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   const cardStyles = {
     display: "flex",
@@ -24,6 +36,7 @@ const RewardsDivisionsCard = () => {
     "@media (max-width: 768px)": {
       padding: "0.6rem 0.8rem",
     },
+    cursor: "pointer",
   };
 
   return (
@@ -100,7 +113,7 @@ const RewardsDivisionsCard = () => {
           zIndex: 1,
         }}
       >
-        <Box sx={cardStyles}>
+        <Box sx={cardStyles} onClick={handleOpenModal}>
           <Box sx={{ display: "flex" }}>
             <img src={gold} alt="gold reward" height={90} width={70} />
           </Box>
@@ -119,7 +132,7 @@ const RewardsDivisionsCard = () => {
             />
           </Box>
         </Box>
-        <Box sx={cardStyles}>
+        <Box sx={cardStyles} onClick={handleOpenModal}>
           <Box sx={{ display: "flex" }}>
             <img src={silver} alt="silver reward" height={90} width={70} />
           </Box>
@@ -138,7 +151,7 @@ const RewardsDivisionsCard = () => {
             />
           </Box>
         </Box>
-        <Box sx={cardStyles}>
+        <Box sx={cardStyles} onClick={handleOpenModal}>
           <Box sx={{ display: "flex" }}>
             <img src={bronze} alt="bronze reward" height={90} width={70} />
           </Box>
@@ -158,6 +171,7 @@ const RewardsDivisionsCard = () => {
           </Box>
         </Box>
       </Box>
+      <DivisionsRewardsDetails open={modalOpen} onClose={handleCloseModal} />
     </Paper>
   );
 };
