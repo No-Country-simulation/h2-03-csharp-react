@@ -253,14 +253,14 @@ namespace WakiBack.BLL
 
         public List<string> LeagueIdList = new List<string>
         {
-            //IssuerId  //Issuer Name, NumberofCards
+            //LeagueId      //League Name
 
-            "297",      // La Liga (España) 
-            //"228",      // Premier (Inglaterra)                    
-            //"241",      // Bundesliga (Alemania)
-            //"235",      // Ligue 1 (Francia)
-            //"215",      // Serie A (Brasil)                    
-            //"206",      // Liga Argentina (Argentina)
+            "297",          // La Liga (España) 
+            "228",        // Premier (Inglaterra)                    
+            "241",        // Bundesliga (Alemania)
+            "235",        // Ligue 1 (Francia)
+            "215",        // Serie A (Brasil)                    
+            "206",        // Liga Argentina (Argentina)
         };
     }
     
