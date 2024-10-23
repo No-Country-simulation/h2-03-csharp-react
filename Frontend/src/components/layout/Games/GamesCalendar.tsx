@@ -9,12 +9,12 @@ import {
 } from "@mui/x-date-pickers";
 import { useTheme } from "@mui/material/styles";
 
-interface MatchesCalendarProps {
+interface GameCalendarProps {
   open: boolean;
   handleClose: () => void;
 }
 
-const MatchesCalendar: React.FC<MatchesCalendarProps> = ({
+const GamesCalendar: React.FC<GameCalendarProps> = ({
   open,
   handleClose,
 }) => {
@@ -56,4 +56,4 @@ const MatchesCalendar: React.FC<MatchesCalendarProps> = ({
   );
 };
 
-export default MatchesCalendar;
+export default GamesCalendar;

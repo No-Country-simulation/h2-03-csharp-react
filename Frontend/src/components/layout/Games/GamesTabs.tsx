@@ -1,12 +1,12 @@
 import { Tab, Tabs } from "@mui/material";
-import dates from "../../../utils/matches-tabs-dates";
+import dates from "../../../utils/games-tabs-dates";
 
-interface MatchesTabsProps {
+interface GamesTabsProps {
   value: number;
   handleChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-const MatchesTabs: React.FC<MatchesTabsProps> = ({ value, handleChange }) => {
+const GamesTabs: React.FC<GamesTabsProps> = ({ value, handleChange }) => {
   return (
     <Tabs
       value={value}
@@ -31,4 +31,4 @@ const MatchesTabs: React.FC<MatchesTabsProps> = ({ value, handleChange }) => {
   );
 };
 
-export default MatchesTabs;
+export default GamesTabs;

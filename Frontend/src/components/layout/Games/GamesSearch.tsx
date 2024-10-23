@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
-import MatchesRecentSearches from "./MatchesRecentSearches";
-import MatchesSearchTrends from "./MatchesSearchTrends";
+import GamesRecentSearches from "./GamesRecentSearches";
+import GamesSearchTrends from "./GamesSearchTrends";
 import { useState } from "react";
 
 const recentSearches = [
@@ -18,7 +18,7 @@ const trends = [
   "Cristiano Ronaldo",
 ];
 
-const MatchesSearch = () => {
+const GamesSearch = () => {
   const [data, setData] = useState({ recentSearches, trends });
 
   const handleClearRecentSearches = () => {
@@ -61,7 +61,7 @@ const MatchesSearch = () => {
           </Button>
         </Box>
         {data.recentSearches && (
-          <MatchesRecentSearches
+          <GamesRecentSearches
             data={data.recentSearches}
             handle={handleDeleteRecentSearch}
           />
@@ -69,10 +69,10 @@ const MatchesSearch = () => {
       </Box>
       <Box sx={{ mt: 3 }}>
         <Typography>Busquedas en tendencia</Typography>
-        {data.trends && <MatchesSearchTrends data={data.trends} />}
+        {data.trends && <GamesSearchTrends data={data.trends} />}
       </Box>
     </Box>
   );
 };
 
-export default MatchesSearch;
+export default GamesSearch;

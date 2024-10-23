@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useWindowSize from "../../hooks/UseWindowSize";
 import style from "./layout.module.css";
 import { Link } from "react-router-dom";
@@ -6,15 +7,11 @@ import ball from "../../assets/icons/ball.svg";
 import coins from "../../assets/icons/coins.svg";
 import cup from "../../assets/icons/cup.svg";
 
-interface FooterProps {
-  selected: number;
-}
-
 const Footer = () => {
   const windowWidth = useWindowSize();
   const isMobile = windowWidth < 768;
 
-  return isMobile ? <MobileFooter selected={0} /> : <DesktopFooter />;
+  return isMobile ? <MobileFooter /> : <DesktopFooter />;
 };
 
 // Desktop version of the Footer
@@ -44,12 +41,15 @@ const DesktopFooter = () => (
   </footer>
 );
 
-const MobileFooter = ({ selected }: FooterProps) => {
+const MobileFooter = () => {
+  const [selected, setSelected] = useState(0);
+
   return (
     <footer className={style.mobileFooter}>
       <div>
         <Link
           to={"/predicciones"}
+          onClick={() => setSelected(0)}
           className={
             selected === 0 ? `${style.link} ${style.selected}` : style.link
           }
@@ -61,6 +61,7 @@ const MobileFooter = ({ selected }: FooterProps) => {
       <div>
         <Link
           to={"/partidos"}
+          onClick={() => setSelected(1)}
           className={
             selected === 1 ? `${style.link} ${style.selected}` : style.link
           }
@@ -72,6 +73,7 @@ const MobileFooter = ({ selected }: FooterProps) => {
       <div>
         <Link
           to={"/divisiones"}
+          onClick={() => setSelected(2)}
           className={
             selected === 2 ? `${style.link} ${style.selected}` : style.link
           }
@@ -83,6 +85,7 @@ const MobileFooter = ({ selected }: FooterProps) => {
       <div>
         <Link
           to={"/perfil"}
+          onClick={() => setSelected(3)}
           className={
             selected === 3 ? `${style.link} ${style.selected}` : style.link
           }

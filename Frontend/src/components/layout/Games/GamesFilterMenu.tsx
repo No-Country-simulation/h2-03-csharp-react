@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Box, Button, Divider, Fade, Menu, Typography } from "@mui/material";
 import { LuArrowDownUp, LuClock4, LuListFilter, LuStar } from "react-icons/lu";
 
-interface MatchesFilterMenuProps {
+interface GamesFilterMenuProps {
   selected: string;
   handleSelect: (label: string) => void;
 }
 
-const MatchesFilterMenu: React.FC<MatchesFilterMenuProps> = ({
+const GamesFilterMenu: React.FC<GamesFilterMenuProps> = ({
   selected,
   handleSelect,
 }) => {
@@ -133,4 +133,4 @@ const MatchesFilterMenu: React.FC<MatchesFilterMenuProps> = ({
   );
 };
 
-export default MatchesFilterMenu;
+export default GamesFilterMenu;

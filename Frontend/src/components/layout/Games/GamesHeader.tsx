@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { IconButton, Grid2, Paper, Typography } from "@mui/material";
-import MatchesTabs from "./MatchesTabs";
-import MatchesCalendar from "./MatchesCalendar";
+import GamesTabs from "./GamesTabs";
+import GamesCalendar from "./GamesCalendar";
 import calendarIcon from "../../../assets/icons/calendar.svg";
 
-interface MatchesHeaderProps {
+interface GamesHeaderProps {
   value: number;
   handle: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-const MatchesHeader: React.FC<MatchesHeaderProps> = ({ value, handle }) => {
+const GamesHeader: React.FC<GamesHeaderProps> = ({ value, handle }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -48,10 +48,10 @@ const MatchesHeader: React.FC<MatchesHeaderProps> = ({ value, handle }) => {
           </IconButton>
         </Grid2>
       </Grid2>
-      <MatchesTabs value={value} handleChange={handle} />
-      <MatchesCalendar open={open} handleClose={handleClose} />
+      <GamesTabs value={value} handleChange={handle} />
+      <GamesCalendar open={open} handleClose={handleClose} />
     </Paper>
   );
 };
 
-export default MatchesHeader;
+export default GamesHeader;

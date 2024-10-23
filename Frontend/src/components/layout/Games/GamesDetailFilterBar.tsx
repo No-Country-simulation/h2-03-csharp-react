@@ -1,14 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import MainButton from "../../buttons/MainButton";
 import { useNavigate } from "react-router-dom";
-import MatchesFilterMenu from "./MatchesFilterMenu";
+import GamesFilterMenu from "./GamesFilterMenu";
 
-interface MatchesDetailFilterBarProps {
+interface GamesDetailFilterBarProps {
   label: string;
   handle: (label: string) => void
 }
 
-const MatchesDetailFilterBar: React.FC<MatchesDetailFilterBarProps> = ({
+const GamesDetailFilterBar: React.FC<GamesDetailFilterBarProps> = ({
   label,
   handle
 }) => {
@@ -30,9 +30,9 @@ const MatchesDetailFilterBar: React.FC<MatchesDetailFilterBarProps> = ({
           Mis predicciones
         </MainButton>
       </Box>
-      <MatchesFilterMenu selected={label} handleSelect={handle} />
+      <GamesFilterMenu selected={label} handleSelect={handle} />
     </Box>
   );
 };
 
-export default MatchesDetailFilterBar;
+export default GamesDetailFilterBar;

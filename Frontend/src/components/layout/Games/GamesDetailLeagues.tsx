@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { SlArrowDown } from "react-icons/sl";
 import { leagues } from "../../../utils/leagues";
-import MatchesMatchBadge from "./MatchesMatchBadge";
-import { matches } from "../../../utils/matches";
+import { games } from "../../../utils/games";
+import GamesGameBadge from "./GamesGameBadge";
 
-const MatchesDetailLeagues = () => {
+const GamesDetailLeagues = () => {
   const [expanded, setExpanded] = useState<number | false>(false);
 
   const handleChange =
@@ -54,13 +54,15 @@ const MatchesDetailLeagues = () => {
             </Box>
           </AccordionSummary>
           <AccordionDetails sx={{ minHeight: 150, p: 0 }}>
-            {matches &&
-              matches.map((match, index) => (
-                <div key={index}>
-                  <MatchesMatchBadge matchData={match} />
-                  <Divider sx={{ border: "1px solid grey" }} />
-                </div>
-              ))}
+            {games &&
+              games
+                .filter((game) => game.league === league.name)
+                .map((game, index) => (
+                  <div key={index}>
+                    <GamesGameBadge gameData={game} />
+                    <Divider sx={{ border: "1px solid grey" }} />
+                  </div>
+                ))}
           </AccordionDetails>
         </Accordion>
       ))}
@@ -68,4 +70,4 @@ const MatchesDetailLeagues = () => {
   );
 };
 
-export default MatchesDetailLeagues;
+export default GamesDetailLeagues;

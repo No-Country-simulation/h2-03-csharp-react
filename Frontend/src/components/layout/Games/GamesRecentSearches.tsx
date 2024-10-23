@@ -2,12 +2,12 @@ import { Box, Divider, IconButton, Paper, Typography } from "@mui/material";
 import { LuClock9 } from "react-icons/lu";
 import { RxCross2 } from "react-icons/rx";
 
-interface MatchesRecentSearchesProps {
+interface GamesRecentSearchesProps {
   data: string[];
   handle: (index: number) => void;
 }
 
-const MatchesRecentSearches: React.FC<MatchesRecentSearchesProps> = ({
+const GamesRecentSearches: React.FC<GamesRecentSearchesProps> = ({
   data,
   handle,
 }) => {
@@ -38,4 +38,4 @@ const MatchesRecentSearches: React.FC<MatchesRecentSearchesProps> = ({
   );
 };
 
-export default MatchesRecentSearches;
+export default GamesRecentSearches;
