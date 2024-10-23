@@ -1,14 +1,20 @@
 ﻿
-namespace WakiBack.Models;
-    public class CustomerEF : IPublicKeyEntity, IAuditEntity
+
+
+namespace WakiBack.Models
+{
+    public class Prediction : IAuditEntity, IPublicKeyEntity
     {
         public int Id { get; set; }
-        public int? UserEFId { get; set; }
-        public UserEF? User { get; set; }
-        public int? Points { get; set; }
+        public DateTime DateFirstBetOfDay { get; set; } // every 24 hours is new prediction for every customer
+        public int? CustomerEFId { get; set; }
+        public virtual CustomerEF? CustomerEF { get; set; }
+        public int CountBets { get; set; } = 0;
+        public List<Bet>? BetList { get; set; }
         #region IPublicKeyEntity
         public Guid EntityPublicKey { get; set; }
         #endregion        
+
         #region IAuditEntity
         public DateTime Created { get; set; }
         public int CreatedBy { get; set; }
@@ -20,4 +26,4 @@ namespace WakiBack.Models;
         public int? LockedBy { get; set; }
         #endregion
     }
-
+}

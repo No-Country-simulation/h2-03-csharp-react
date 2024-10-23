@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace WakiBack.DAL
 {
-    public class PaginatedRepository<T> : IRepository<T> where T : class, IDisplayNameEntity, IAuditEntity, IIdentifierEntity
+    public class PaginatedRepository<T> : IRepository<T>  where T : class, IDisplayNameEntity, IAuditEntity, IIdentifierEntity 
     {
         private readonly WebAppContext _appContext;
         internal DbSet<T> dbSet;
@@ -67,7 +67,7 @@ namespace WakiBack.DAL
         {
             await dbSet.AddRangeAsync(entities);
         }
-
+        
         public async Task<IEnumerable<T>> GetPaginatedAsync(PaginationVM<T> model)
         {
             var isDisplay = typeof(T).GetInterfaces().Contains(typeof(IDisplayNameEntity));
@@ -112,6 +112,7 @@ namespace WakiBack.DAL
 
             return await command.ToListAsync();
         }
+        
         #endregion
     }
 }

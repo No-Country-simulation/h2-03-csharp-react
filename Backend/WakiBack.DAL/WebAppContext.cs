@@ -16,7 +16,15 @@ namespace WakiBack.DAL
         #region Entities
         public new DbSet<UserEF>? Users { get; set; }
         public DbSet<ContactEF>? Contacts { get; set; }
-        public DbSet<CustomerEF>? Customers { get; set; }    
+        public DbSet<CustomerEF>? Customers { get; set; }
+        public DbSet<Prediction>? Predictions { get; set; }
+        public DbSet<Bet>? Bets { get; set; }
+        public DbSet<MatchPrediction>? MatchPredictions { get; set; }
+        public DbSet<LeagueAPI>? Leagues { get; set; }
+        public DbSet<MatchAPI>? Matchs { get; set; }
+        public DbSet<CountryAPI>? Countrys { get; set; }
+        public DbSet<StageAPI>? Stages { get; set; }
+        public DbSet<OddsAPI>? Odds { get; set; }
 
         #endregion
         #region Configuration        

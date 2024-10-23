@@ -1,14 +1,26 @@
 ﻿
-namespace WakiBack.Models;
-    public class CustomerEF : IPublicKeyEntity, IAuditEntity
+
+using Microsoft.EntityFrameworkCore;
+
+namespace WakiBack.Models
+{
+    public class MatchPrediction : IAuditEntity, IPublicKeyEntity
     {
         public int Id { get; set; }
-        public int? UserEFId { get; set; }
-        public UserEF? User { get; set; }
-        public int? Points { get; set; }
+        public int? BetId { get; set; }
+        public virtual Bet? Bet { get; set; }
+        public int? MatchId { get; set; }
+        public MatchAPI? Match { get; set; }
+        public string? WinnerPrediction { get; set; } //home, draw, away
+        public string? OverUnderScorePrediction {  get; set; }
+        [Precision(6, 2)]
+        public decimal? RatioOfPrediction { get; set; }
+
+       
         #region IPublicKeyEntity
         public Guid EntityPublicKey { get; set; }
         #endregion        
+
         #region IAuditEntity
         public DateTime Created { get; set; }
         public int CreatedBy { get; set; }
@@ -19,5 +31,6 @@ namespace WakiBack.Models;
         public DateTime? Locked { get; set; }
         public int? LockedBy { get; set; }
         #endregion
-    }
 
+    }
+}

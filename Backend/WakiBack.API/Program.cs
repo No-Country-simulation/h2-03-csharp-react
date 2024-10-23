@@ -1,4 +1,6 @@
 
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -43,6 +45,26 @@ namespace WakiBack.API
                 });
             });
 
+            //Configuracion Automapper
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+            // Configure Hangfire Connection to SQL Server
+            builder.Services.AddHangfire(configuration => configuration
+             .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+             .UseSimpleAssemblyNameTypeSerializer()
+             .UseRecommendedSerializerSettings()
+             .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+             {
+                CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                QueuePollInterval = TimeSpan.FromMinutes(5),
+                UseRecommendedIsolationLevel = true,
+                DisableGlobalLocks = true
+             }));
+
+            // Add Hangfire server
+
+            builder.Services.AddHangfireServer(x => x.SchedulePollingInterval = TimeSpan.FromMinutes(5));
 
             ConfigureSwagger();
             ConfigureDependencyInjection();
@@ -80,6 +102,19 @@ namespace WakiBack.API
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            // Hangfire Dashboard 
+            app.UseHangfireDashboard();
+
+           // Add CronJob To UpdateCardsDatabase
+            RecurringJob.AddOrUpdate<PredictionDataService>(
+                "UpdateCardCatalog",
+               x => x.UpdateDatabase(),
+                "00 00 * * *", // Cron expression for every day at 12 PM --  "Min Hour DayOfMonth Month DayOfTheWeek" UTC
+               new RecurringJobOptions
+                {
+                  TimeZone = TimeZoneInfo.Local
+             }); 
 
             app.MapControllers();
 
@@ -132,6 +167,10 @@ namespace WakiBack.API
                 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
                 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
                 builder.Services.AddScoped<IJwtSecurityManager, JwtSecurityManager>();
+
+                //Services
+                builder.Services.AddScoped<IPredictionDataService, PredictionDataService>();
+                
 
             }
 
