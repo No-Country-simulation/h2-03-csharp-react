@@ -5,26 +5,37 @@ import { GameData } from "../../../context/GameContext";
 import { FaCircle } from "react-icons/fa6";
 import { IoStatsChartSharp } from "react-icons/io5";
 import GameStatsModal from "../../modals/GameStatsModal";
+import PredictionsModal from "../../modals/PredictionsModal";
 
 interface GamesGameBadgeProps {
   gameData: GameData;
 }
 
 const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openStats, setOpenStats] = useState(false);
+  const [openPredic, setOpenPredic] = useState(false);
+
+  const handleOpenStats = () => setOpenStats(true);
+  const handleCloseStats = () => setOpenStats(false);
+
+  const handleOpenPredic = () => setOpenPredic(true);
+  const handleClosePredic = () => setOpenPredic(false);
 
   const navigate = useNavigate();
 
   const handleGameDetail = () => {
-    if (!open) {
+    if (!openStats && !openPredic) {
       navigate(`/partidos/${gameData.id}`);
     }
   };
 
   const handleShowStats = (event: React.MouseEvent<HTMLButtonElement>) => {
-    handleOpen();
+    handleOpenStats();
+    event.stopPropagation();
+  };
+
+  const handleShowPredic = (event: React.MouseEvent<HTMLButtonElement>) => {
+    handleOpenPredic();
     event.stopPropagation();
   };
 
@@ -123,7 +134,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               border: "1px solid grey",
             }}
           >
-            <Typography variant="caption">{gameData.localRatio}</Typography>
+            <Typography onClick={handleShowPredic} variant="caption">{gameData.localRatio}</Typography>
           </Stack>
           <Stack
             sx={{
@@ -153,7 +164,12 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
           </Stack>
         </Stack>
       </Stack>
-      <GameStatsModal open={open} handleClose={handleClose} game={gameData} />
+      <GameStatsModal
+        open={openStats}
+        handleClose={handleCloseStats}
+        game={gameData}
+      />
+      <PredictionsModal open={openPredic} handleClose={handleClosePredic} game={gameData} />
     </div>
   );
 };
