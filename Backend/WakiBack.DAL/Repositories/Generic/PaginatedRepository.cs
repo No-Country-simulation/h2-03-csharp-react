@@ -96,7 +96,7 @@ namespace WakiBack.DAL
             if (!String.IsNullOrEmpty(model.SearchString))
             {
                 command = command
-                .Where(e => e.Deleted == null && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%"))
+                .Where(e => e.Deleted == null && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%") && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%"))
                 .Skip(skip)
                 .Take(size)
                 .OrderBy(e => e.Id);

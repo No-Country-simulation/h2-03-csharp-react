@@ -3,7 +3,7 @@
 
 namespace WakiBack.Models
 {
-    public class RegisterVM
+    public class RegisterVM 
     {
         [Required(ErrorMessage = "Name is required")]
         public string? Name { get; set; }

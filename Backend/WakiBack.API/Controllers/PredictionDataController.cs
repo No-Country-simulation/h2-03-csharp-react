@@ -12,12 +12,12 @@ namespace WakiBack.API.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Dev,Admin")]
-    public class PredictionDataController : ControllerBase
+    public class PredictionDataAdminController : ControllerBase
     {
         private readonly IPredictionDataService _predictionDataService;
         private readonly IBackgroundJobClient _backgroundJobClient;
 
-        public PredictionDataController(IPredictionDataService predictionDataService, IBackgroundJobClient backgroundJobClient)
+        public PredictionDataAdminController(IPredictionDataService predictionDataService, IBackgroundJobClient backgroundJobClient)
         {
             _predictionDataService = predictionDataService;
             _backgroundJobClient = backgroundJobClient;

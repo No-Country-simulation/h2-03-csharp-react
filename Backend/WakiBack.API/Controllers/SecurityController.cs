@@ -85,8 +85,8 @@ namespace WakiBack.API.Controllers
                         {
                             EntityPublicKey = Guid.NewGuid(),
                             UserEFId = user.Id,
-                            User = user                       
-
+                            User = user,
+                            Points = 0
                         };
                         await _unitOfWork.Customers.AddAsync(customer);
 

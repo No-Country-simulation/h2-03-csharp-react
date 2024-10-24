@@ -1,6 +1,7 @@
 ﻿
 
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -11,13 +12,14 @@ using WakiBack.Models.APIRequest;
 
 namespace WakiBack.BLL
 {
-    public class PredictionDataService : IPredictionDataService
+    public class PredictionDataService : BaseManagerGF, IPredictionDataService
     {
         private readonly IConfiguration _configuration;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<PredictionDataService> _logger;         
 
-        public PredictionDataService(IConfiguration configuration, IUnitOfWork unitOfWork, ILogger<PredictionDataService> logger)
+
+        public PredictionDataService(IConfiguration configuration, IUnitOfWork unitOfWork, ILogger<PredictionDataService> logger, IHttpContextAccessor httpContextAccessor) : base (httpContextAccessor)
         {
             _configuration = configuration;
             _unitOfWork = unitOfWork;
@@ -25,7 +27,7 @@ namespace WakiBack.BLL
         }
 
       
-        public async Task SeedDatabase()
+        public async Task<BusinessResponse> SeedDatabase()
         {
            
             var check = await _unitOfWork.Leagues.GetAllAsync();            
@@ -43,12 +45,14 @@ namespace WakiBack.BLL
                     _logger.LogInformation($"The database creation process has successfully completed.");
 
                 }
-                else _logger.LogInformation("Failed to data from external API");
+                else _logger.LogInformation("Failed to get data from external API");
+                return GetBusinessResponse(HttpStatusCode.NotFound,"Failed to get data from external API");
             }
             else _logger.LogInformation("The database has already been created.");
+            return GetBusinessResponse(HttpStatusCode.BadRequest, "The database has already been created.");
         }
 
-        public async Task UpdateDatabase()
+        public async Task<BusinessResponse> UpdateDatabase()
         {
             _logger.LogInformation("The credit card database update process is in progress.");
 
@@ -100,16 +104,19 @@ namespace WakiBack.BLL
                             dbMatch.AwayFtGoals = apiMatch.AwayFtGoals;
                                         
                             await _unitOfWork.Matches.UpdateData(dbMatch); // Actualización en la base de datos
-                            _logger.LogInformation($"Se actualizo el match con id : {dbMatch.MatchId}");
+                            _logger.LogInformation($"Se actualizo el match con id : {dbMatch.MatchId}");                           
                         }
                     }
 
                     await _unitOfWork.SaveAsync();
+                    return GetBusinessResponse(HttpStatusCode.OK, "Created Succesfully");
                 }
-                else _logger.LogInformation("Failed to data from external API");
+                else _logger.LogInformation("Failed to get data from external API");
+                return GetBusinessResponse(HttpStatusCode.NotFound, "Failed to get data from external API");
             }
             else _logger.LogInformation("The initial database seed has not been created yet.");
-       
+            return GetBusinessResponse(HttpStatusCode.BadRequest, "The initial database seed has not been created yet.");
+
         }
               
             
@@ -161,7 +168,7 @@ namespace WakiBack.BLL
                                         Name = string.IsNullOrEmpty(item.LeagueName) ? null : item.LeagueName,
                                         LeagueId = item.LeagueId,
                                         Country = item.Country != null ? ValidationHelper.CleanCountry(item.Country) : null,
-                                        StageList = item.Stage != null ? ValidationHelper.CleanStage(item.Stage) : null,
+                                        StageList = item.Stage != null ? ValidationHelper.CleanStage(item) : null,
                                        
                                     };
 
@@ -203,18 +210,18 @@ namespace WakiBack.BLL
                 return cleanCountry;
             }
 
-            public static List<StageAPI> CleanStage(List<Stage> stage)
+            public static List<StageAPI> CleanStage(Welcome welcome)
             {
                 var cleanListStage = new List<StageAPI>();
 
-                foreach (var element in stage)
+                foreach (var element in welcome.Stage!)
                 {
                     var item = new StageAPI()
                     {                        
                         StageId = element.StageId,
                         Name = string.IsNullOrEmpty(element.StageName) ? null : element.StageName,
                         IsActive = string.IsNullOrEmpty(element.IsActive) ? null : element.IsActive,
-                        MatchList = element.Matches != null ? ValidationHelper.CleanMatches(element) : null
+                        MatchList = element.Matches != null ? ValidationHelper.CleanMatches(element, welcome) : null
                     };
 
                     cleanListStage.Add(item);
@@ -222,7 +229,7 @@ namespace WakiBack.BLL
                 return cleanListStage;
             }
 
-            public static List<MatchAPI> CleanMatches(Stage stage)
+            public static List<MatchAPI> CleanMatches(Stage stage, Welcome welcome)
             {
                 var cleanListMatches = new List<MatchAPI>();
 
@@ -238,7 +245,9 @@ namespace WakiBack.BLL
                         OddsAPI = new OddsAPI(){ Home = element.Odds!.MatchWinner!.Home, Away = element.Odds!.MatchWinner!.Away, Draw = element.Odds!.MatchWinner!.Draw },
                         HomeFtGoals = element.Goals!.HomeFtGoals,
                         AwayFtGoals = element.Goals!.AwayFtGoals,
-                        EntityPublicKey = Guid.NewGuid()
+                        EntityPublicKey = Guid.NewGuid(),
+                        LeagueId = welcome.LeagueId,
+                        LeagueName = welcome.LeagueName
                     };
 
                     cleanListMatches.Add(item);

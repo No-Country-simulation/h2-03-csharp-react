@@ -101,49 +101,7 @@ namespace WakiBack.DAL
 
             _userManager.CreateAsync(user, "Test1234!").GetAwaiter().GetResult();
 
-            _userManager.AddToRoleAsync(user, UserRole.Test.ToString()).GetAwaiter().GetResult();        
-            
-            email = "dev2024@gmail.com";
-
-            contact = new ContactEF
-            {
-                FirstName = "Dev",
-                FirstLastName = "Dev",
-                SecondLastName = "Second",
-                Birthdate = DateTime.Now,             
-                ContactTypeId = (int)ContactType.Person,
-                IsMainContact = true,
-                
-            };
-
-            contact.DisplayName = contact.FullName;
-
-            SetSecurityDefaults(contact, dateNow, true);
-
-            user = new UserEF
-            {
-                Email = email,
-                Contact = contact,
-                UserName = email,
-                EmailConfirmed = true,
-                LoginTypeId = (int)LoginType.Email,
-            };
-
-            SetSecurityDefaults(user, dateNow, true);
-
-            _userManager.CreateAsync(user, "ksjkjvbsdkvnkjsA123!").GetAwaiter().GetResult();
-
-            _userManager.AddToRoleAsync(user, UserRole.Customer.ToString()).GetAwaiter().GetResult();
-
-            
-            var customer = new CustomerEF
-            {
-                User = user,
-            };
-
-            SetSecurityDefaults(customer, dateNow, true);
-
-            _webAppContext.Customers!.Add(customer);
+            _userManager.AddToRoleAsync(user, UserRole.Test.ToString()).GetAwaiter().GetResult();                              
             
 
             email = "pedro@rodridev.net";
@@ -174,6 +132,37 @@ namespace WakiBack.DAL
             _userManager.CreateAsync(user, "ASDAXCVx21!").GetAwaiter().GetResult();
             
             _userManager.AddToRoleAsync(user, UserRole.Admin.ToString()).GetAwaiter().GetResult();
+
+            email = "admin@example.com";
+            dateNow = DateTime.Now;
+
+            contact = new ContactEF
+            {
+                FirstName = "admin",
+                FirstLastName = "Admin",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact.FullName;
+
+            SetSecurityDefaults(contact, dateNow, true);
+
+            // Password hash: AQAAAAEAACcQAAAAEIJ7Rv2vR7F6tKMWXaWME0t9if+RqXU0mSUmo58ulhjDHrft/jN2mztwRTkk3KmRqg==
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
 
             #endregion
 

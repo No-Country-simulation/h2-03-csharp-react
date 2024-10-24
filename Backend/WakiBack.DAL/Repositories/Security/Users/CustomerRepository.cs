@@ -32,7 +32,7 @@ namespace WakiBack.DAL
             return await command.FirstOrDefaultAsync();
         }
 
-        public async Task<CustomerEF?> GetByUserEmailAsync(string email, bool fullCustomer)
+        public async Task<CustomerEF?> GetByUserEmailAsync(string email)
         {
             return await _appContext
             .Customers!

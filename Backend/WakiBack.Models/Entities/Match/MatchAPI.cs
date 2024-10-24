@@ -5,7 +5,8 @@ namespace WakiBack.Models
     {
         public int Id { get; set; }
         public int? MatchId { get; set; }
-        public string? Date { get; set; }        
+        public string? Date { get; set; }
+        public int? StageApiId { get; set; }
         public StageAPI? StageAPI { get; set; }
         public string? Home { get; set; }
         public string? Away { get; set; }
@@ -14,6 +15,8 @@ namespace WakiBack.Models
         public OddsAPI? OddsAPI { get; set; }
         public int? HomeFtGoals { get; set; } //FullTime Goals
         public int? AwayFtGoals { get; set; }
+        public int? LeagueId { get; set; }
+        public string? LeagueName { get; set; }
 
         public string? DisplayName
         {
