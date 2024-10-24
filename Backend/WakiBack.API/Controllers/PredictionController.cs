@@ -32,10 +32,17 @@ namespace WakiBack.API.Controllers
 
                 model.Items = await _matchService.GetAllPaginatedAsync(model, league_id);
 
-                DateTime today = DateTime.Now;
-                DateTime nextWeek = today.AddDays(7);
+                DateTime today = DateTime.UtcNow.Date;  
+                DateTime nextWeek = today.AddDays(7);  
 
-                model.Items = model.Items.Where(m => DateTime.TryParse(m.Date, out DateTime parsedDate) && parsedDate >= today && parsedDate <= nextWeek && m.OddsAPI!.Home != null).ToList();
+                var cultureInfo = new System.Globalization.CultureInfo("es-ES"); // o la cultura que corresponda al formato DD/MM/YYYY
+                model.Items = model.Items
+                    .Where(m => DateTime.TryParseExact(m.Date, "dd/MM/yyyy", cultureInfo, System.Globalization.DateTimeStyles.None, out DateTime parsedDate)
+                                && parsedDate >= today
+                                && parsedDate <= nextWeek
+                                && m.OddsAPI!.Home != null)
+                    .ToList();
+                
 
                 if (model.Items.Count() == 0) return NotFound("No matches were found with the provided search parameters. Please review the criteria and try again.");
 

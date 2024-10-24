@@ -27,7 +27,5 @@ namespace WakiBack.BLL
             return _mapper.Map<IEnumerable<ShowLeagueAPIVM>>(items);
         }
 
-
-
     }
 }
