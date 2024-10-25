@@ -3,15 +3,17 @@ import { IoIosArrowForward } from "react-icons/io";
 
 interface profileHeaderTabProps {
   icon: string;
-  text: string;
-  bgColor: string;
+  text: string | React.ReactNode;
+  backgroundColor?: string;
+  color?: string;
   onClick: () => void;
 }
 
 const ProfileHeaderTab: React.FC<profileHeaderTabProps> = ({
   icon,
   text,
-  bgColor,
+  backgroundColor,
+  color = "white",
   onClick,
 }) => {
   return (
@@ -20,7 +22,7 @@ const ProfileHeaderTab: React.FC<profileHeaderTabProps> = ({
         display: "grid",
         gridTemplateColumns: "1fr 5fr 1fr",
         alignItems: "center",
-        backgroundColor: { bgColor },
+        backgroundColor: { backgroundColor },
         cursor: "pointer",
         padding: "10px 8px 10px 24px",
         textAlign: "center",
@@ -33,7 +35,9 @@ const ProfileHeaderTab: React.FC<profileHeaderTabProps> = ({
     >
       <Box component="img" src={icon} />
 
-      <Typography sx={{ color: "white", textAlign: "left" }}>{text}</Typography>
+      <Typography sx={{ color: { color }, textAlign: "left" }}>
+        {text}
+      </Typography>
       <Box>
         <IoIosArrowForward color="white" />
       </Box>

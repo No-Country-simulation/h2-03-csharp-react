@@ -46,7 +46,6 @@ const ProfileHomeBody: React.FC<ProfileHomeBodyProps> = ({ onClick }) => {
         <ProfileHeaderTab
           icon={friendActivityIcon}
           text="Actividad de amigos"
-          bgColor="primary.light"
           onClick={() => onClick("activities")}
         ></ProfileHeaderTab>
         <Divider
@@ -55,7 +54,6 @@ const ProfileHomeBody: React.FC<ProfileHomeBodyProps> = ({ onClick }) => {
         <ProfileHeaderTab
           icon={friendsIcon}
           text="Amigos"
-          bgColor="primary.light"
           onClick={() => onClick("friends")}
         ></ProfileHeaderTab>
         <Divider
@@ -65,7 +63,6 @@ const ProfileHomeBody: React.FC<ProfileHomeBodyProps> = ({ onClick }) => {
         <ProfileHeaderTab
           icon={addFriendIcon}
           text="Agregar amigos"
-          bgColor="primary.light"
           onClick={() => onClick("addFriend")}
         ></ProfileHeaderTab>
       </Paper>
@@ -85,7 +82,6 @@ const ProfileHomeBody: React.FC<ProfileHomeBodyProps> = ({ onClick }) => {
         <ProfileHeaderTab
           icon={userDataIcon}
           text="Mis datos"
-          bgColor="primary.light"
           onClick={() => onClick("profileData")}
         ></ProfileHeaderTab>
         <Divider
@@ -94,7 +90,6 @@ const ProfileHomeBody: React.FC<ProfileHomeBodyProps> = ({ onClick }) => {
         <ProfileHeaderTab
           icon={walletIcon}
           text="Mi cuenta"
-          bgColor="primary.light"
           onClick={() => onClick("profileSettings")}
         ></ProfileHeaderTab>
         <Divider
@@ -102,8 +97,15 @@ const ProfileHomeBody: React.FC<ProfileHomeBodyProps> = ({ onClick }) => {
         />
         <ProfileHeaderTab
           icon={walletIcon}
-          text="Mi cuenta"
-          bgColor="primary.light"
+          text="Configuraciones"
+          onClick={() => onClick("profileSettings")}
+        ></ProfileHeaderTab>
+        <Divider
+          sx={{ border: "none", borderTop: "1px solid white", width: "100%" }}
+        />
+        <ProfileHeaderTab
+          icon={walletIcon}
+          text="Cerrar sesión"
           onClick={() => onClick("profileSettings")}
         ></ProfileHeaderTab>
       </Paper>

@@ -15,7 +15,6 @@ const Profile = () => {
   const [predictions] = useState(24);
   const [wins] = useState(14);
   const [tokens] = useState(2);
-  // Need to make a variable that is equal to the name of the component that you want to show
   let component;
 
   if (view === "home") {
