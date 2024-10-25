@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using WakiBack.Models;
 
+
 namespace WakiBack.DAL
 {
     public class WebAppContext : IdentityDbContext<UserEF, Role, int>
@@ -25,6 +26,10 @@ namespace WakiBack.DAL
         public DbSet<CountryAPI>? Countrys { get; set; }
         public DbSet<StageAPI>? Stages { get; set; }
         public DbSet<OddsAPI>? Odds { get; set; }
+        public DbSet<TeamsAPI>? TeamsAPI { get; set; }
+        public DbSet<TeamAPI>? TeamAPI { get; set; }
+        public DbSet<AwayAPI>? AwayAPI { get; set; }
+        public DbSet<HomeAPI>? HomeAPI { get; set; }
 
         #endregion
         #region Configuration        
@@ -33,9 +38,11 @@ namespace WakiBack.DAL
         {         
 
             modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
+     
             base.OnModelCreating(modelBuilder);
-        }
+        }       
+
+
         #endregion
 
         #region Methods        

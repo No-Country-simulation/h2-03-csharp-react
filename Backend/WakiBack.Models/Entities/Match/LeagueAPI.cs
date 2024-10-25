@@ -10,6 +10,7 @@ namespace WakiBack.Models
         public int ? CountryAPIId { get; set; }
         public CountryAPI? Country { get; set; }
         public List<StageAPI>? StageList { get; set; }
+        public string ? LogoUrl {  get; set; }
         public string? DisplayName
         {
             get => Name; // Retorna el valor de Name

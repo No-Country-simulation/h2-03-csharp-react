@@ -19,10 +19,10 @@
     </PackageReference>
   </ItemGroup>
 	<ItemGroup>
-		<Folder Include="Configurations\" />
+	  <ProjectReference Include="..\WakiBack.Models\WakiBack.Models.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\WakiBack.Models\WakiBack.Models.csproj" />
+	  <Folder Include="Configurations\" />
 	</ItemGroup>
 
 </Project>

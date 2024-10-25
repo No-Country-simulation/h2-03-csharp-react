@@ -29,24 +29,23 @@ namespace WakiBack.BLL
       
         public async Task<BusinessResponse> SeedDatabase()
         {
-           
-            var check = await _unitOfWork.Leagues.GetAllAsync();            
-                
+
+            var check = await _unitOfWork.Leagues.GetAllAsync();
+
             bool exists = check.Any(c => c.DisplayName != null);
             if (!exists)
             {
                 var leagues = await GetAllFromAPI();
                 if (leagues != null && leagues.Any())
-                {
-                    var leagueList = await GetAllFromAPI();
-
-                    await _unitOfWork.Leagues.AddRangeAsync(leagueList);
+                {                       
+                
+                    await _unitOfWork.Leagues.AddRangeAsync(leagues);
                     await _unitOfWork.SaveAsync();
                     _logger.LogInformation($"The database creation process has successfully completed.");
 
                 }
                 else _logger.LogInformation("Failed to get data from external API");
-                return GetBusinessResponse(HttpStatusCode.NotFound,"Failed to get data from external API");
+                return GetBusinessResponse(HttpStatusCode.NotFound, "Failed to get data from external API");
             }
             else _logger.LogInformation("The database has already been created.");
             return GetBusinessResponse(HttpStatusCode.BadRequest, "The database has already been created.");
@@ -96,8 +95,7 @@ namespace WakiBack.BLL
                                
 
                             dbMatch.StageAPI = apiMatch.StageAPI;
-                            dbMatch.Home = apiMatch.Home;
-                            dbMatch.Away = apiMatch.Away;
+                            dbMatch.TeamsAPI = apiMatch.TeamsAPI;                            
                             dbMatch.Winner = apiMatch.Winner;
                             dbMatch.OddsAPI = apiMatch.OddsAPI;
                             dbMatch.HomeFtGoals = apiMatch.HomeFtGoals;
@@ -130,8 +128,11 @@ namespace WakiBack.BLL
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
         public async Task<List<LeagueAPI>> GetAllFromAPI()
         {
-
-            var listLeagueAPI = new List<LeagueAPI>();            
+           
+            var listLeagueAPI = new List<LeagueAPI>();
+            var existingTeamAPIList = await _unitOfWork.TeamAPI.GetAllAsync();
+            var teamAPIList = new List<TeamAPI>();
+            var processedTeamIds = new HashSet<int>(existingTeamAPIList.Select(t => t.TeamId));
 
             var soccerAPIBaseUrl = _configuration["SoccerAPIBaseUrl"];
             var soccerAPIKey = _configuration["SoccerAPIKey"];
@@ -143,7 +144,8 @@ namespace WakiBack.BLL
 
                 foreach (var element in LeagueIdList)
                 {
-                   
+                    
+
                     var responseSoccerAPI = await requestSoccerAPI.GetAsync($"matches/?league_id={element}&{soccerAPIKey}");
 
                     if (responseSoccerAPI.IsSuccessStatusCode)
@@ -168,7 +170,7 @@ namespace WakiBack.BLL
                                         Name = string.IsNullOrEmpty(item.LeagueName) ? null : item.LeagueName,
                                         LeagueId = item.LeagueId,
                                         Country = item.Country != null ? ValidationHelper.CleanCountry(item.Country) : null,
-                                        StageList = item.Stage != null ? ValidationHelper.CleanStage(item) : null,
+                                        StageList = item.Stage != null ? ValidationHelper.CleanStage(item, processedTeamIds, teamAPIList) : null,
                                        
                                     };
 
@@ -192,7 +194,10 @@ namespace WakiBack.BLL
                     }
                     
                 }
-            }                           
+            }
+
+            await _unitOfWork.TeamAPI.AddRangeAsync(teamAPIList);
+            await _unitOfWork.SaveAsync();
 
             return listLeagueAPI!;
         }
@@ -210,7 +215,7 @@ namespace WakiBack.BLL
                 return cleanCountry;
             }
 
-            public static List<StageAPI> CleanStage(Welcome welcome)
+            public static List<StageAPI> CleanStage(Welcome welcome, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList)
             {
                 var cleanListStage = new List<StageAPI>();
 
@@ -218,10 +223,11 @@ namespace WakiBack.BLL
                 {
                     var item = new StageAPI()
                     {                        
+
                         StageId = element.StageId,
                         Name = string.IsNullOrEmpty(element.StageName) ? null : element.StageName,
                         IsActive = string.IsNullOrEmpty(element.IsActive) ? null : element.IsActive,
-                        MatchList = element.Matches != null ? ValidationHelper.CleanMatches(element, welcome) : null
+                        MatchList = element.Matches != null ? ValidationHelper.CleanMatches(element, welcome, processedTeamIds, teamAPIList) : null
                     };
 
                     cleanListStage.Add(item);
@@ -229,18 +235,28 @@ namespace WakiBack.BLL
                 return cleanListStage;
             }
 
-            public static List<MatchAPI> CleanMatches(Stage stage, Welcome welcome)
+            public static List<MatchAPI> CleanMatches(Stage stage, Welcome welcome, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList)
             {
                 var cleanListMatches = new List<MatchAPI>();
 
                 foreach (var element in stage!.Matches!)
                 {
+                    
                     var item = new MatchAPI()
                     {
                         MatchId = element.Id,
                         Date = string.IsNullOrEmpty(element.Date) ? null : element.Date,
-                        Home = string.IsNullOrEmpty(element.Teams!.Home!.Name) ? null : element.Teams.Home.Name,
-                        Away = string.IsNullOrEmpty(element.Teams!.Away!.Name) ? null : element.Teams.Away.Name,
+                        TeamsAPI = new TeamsAPI()
+                        {
+                            HomeAPI = new HomeAPI()
+                            {
+                                TeamAPI = element.Teams!.Home != null ? ValidationHelper.CleanTeamHome(element.Teams.Home, processedTeamIds, teamAPIList).TeamAPI : null,
+                            },
+                            AwayAPI = new AwayAPI()
+                            {
+                                TeamAPI = element.Teams.Away != null ? ValidationHelper.CleanTeamAway(element.Teams.Away, processedTeamIds, teamAPIList).TeamAPI : null
+                            }
+                        },                                              
                         Winner = string.IsNullOrEmpty(element.Winner) ? null : element.Winner,
                         OddsAPI = new OddsAPI(){ Home = element.Odds!.MatchWinner!.Home, Away = element.Odds!.MatchWinner!.Away, Draw = element.Odds!.MatchWinner!.Draw },
                         HomeFtGoals = element.Goals!.HomeFtGoals,
@@ -255,6 +271,72 @@ namespace WakiBack.BLL
                 
                 return cleanListMatches;
             }
+         
+
+            public static HomeAPI CleanTeamHome(Team team, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList)
+            {
+                var homeResult = new HomeAPI();
+
+                //llamar teams get all para ver si esta repetido por el nombre function elike if
+                if (team.Id.HasValue && !processedTeamIds.Contains(team.Id.Value))
+                {
+                    var newteam = new TeamAPI
+                    {
+                        TeamId = team.Id.Value,
+                        Name = string.IsNullOrEmpty(team.Name) ? null : team.Name,
+                    };
+                    teamAPIList.Add(newteam);
+                    processedTeamIds.Add(team.Id.Value); // Añadir el nuevo TeamId al HashSet
+
+                    homeResult.TeamAPI = newteam;
+
+                    return homeResult;
+                }
+                else
+                {
+
+                    var teamResult  = teamAPIList.FirstOrDefault(t => t.TeamId == team.Id!.Value);
+
+                    homeResult.TeamAPI = teamResult;
+
+                    return homeResult;
+                    
+                }                    
+                
+            }
+
+            public static AwayAPI CleanTeamAway(Team team, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList)
+            {
+                var awayResult = new AwayAPI();
+
+                //llamar teams get all para ver si esta repetido por el nombre function elike if
+                if (team.Id.HasValue && !processedTeamIds.Contains(team.Id.Value))
+                {
+                    var newteam = new TeamAPI
+                    {
+                        TeamId = team.Id.Value,
+                        Name = string.IsNullOrEmpty(team.Name) ? null : team.Name,
+                    };
+                    teamAPIList.Add(newteam);
+                    processedTeamIds.Add(team.Id.Value); // Añadir el nuevo TeamId al HashSet
+
+                    awayResult.TeamAPI = newteam;
+
+                    return awayResult;
+                }
+                else
+                {
+
+                    var teamResult = teamAPIList.FirstOrDefault(t => t.TeamId == team.Id!.Value);
+
+                    awayResult.TeamAPI = teamResult;
+
+                    return awayResult;
+
+                }
+
+            }
+
 
         }
 
@@ -265,11 +347,11 @@ namespace WakiBack.BLL
             //LeagueId      //League Name
 
             "297",          // La Liga (España) 
-            "228",        // Premier (Inglaterra)                    
-            "241",        // Bundesliga (Alemania)
-            "235",        // Ligue 1 (Francia)
-            "215",        // Serie A (Brasil)                    
-            "206",        // Liga Argentina (Argentina)
+            //"228",        // Premier (Inglaterra)                    
+            //"241",        // Bundesliga (Alemania)
+            //"235",        // Ligue 1 (Francia)
+            //"215",        // Serie A (Brasil)                    
+            //"206",        // Liga Argentina (Argentina)
         };
     }
     

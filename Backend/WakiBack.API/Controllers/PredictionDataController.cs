@@ -11,7 +11,7 @@ namespace WakiBack.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Dev,Admin")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Dev,Admin")]
     public class PredictionDataAdminController : ControllerBase
     {
         private readonly IPredictionDataService _predictionDataService;

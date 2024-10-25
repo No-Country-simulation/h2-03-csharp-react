@@ -45,11 +45,16 @@ namespace WakiBack.DAL
             {
                 command = command
                 .Where(e => e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%") ||
-                    e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.Away!, "%" + model.SearchString + "%") ||
-                    e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.Home!, "%" + model.SearchString + "%"))                
+                    e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%") ||
+                    e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))                
                 .Include(m => m.StageAPI)
                 .Include(m=>m.StageAPI!.LeagueAPI)
                 .Include(m => m.OddsAPI)
+                .Include(m => m.TeamsAPI)
+                .Include(m => m.TeamsAPI!.AwayAPI)
+                .Include(m => m.TeamsAPI!.HomeAPI)
+                .Include(m => m.TeamsAPI!.AwayAPI!.TeamAPI)
+                .Include(m => m.TeamsAPI!.HomeAPI!.TeamAPI)
                 .Skip(skip)
                 .Take(size)
                 .OrderBy(e => e.Id);
@@ -61,6 +66,11 @@ namespace WakiBack.DAL
                 .Include(m => m.StageAPI)
                 .Include(m => m.StageAPI!.LeagueAPI)
                 .Include(m => m.OddsAPI)
+                .Include(m => m.TeamsAPI)
+                .Include(m => m.TeamsAPI!.HomeAPI)
+                .Include(m => m.TeamsAPI!.AwayAPI)
+                .Include(m => m.TeamsAPI!.AwayAPI!.TeamAPI)
+                .Include(m => m.TeamsAPI!.HomeAPI!.TeamAPI)
                 .Skip(skip)
                 .Take(size)
                 .OrderBy(e => e.Id);

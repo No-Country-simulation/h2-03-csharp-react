@@ -7,9 +7,9 @@ namespace WakiBack.Models
         public int? MatchId { get; set; }
         public string? Date { get; set; }
         public int? StageApiId { get; set; }
-        public StageAPI? StageAPI { get; set; }
-        public string? Home { get; set; }
-        public string? Away { get; set; }
+        public StageAPI? StageAPI { get; set; }  
+        public int? TeamsAPIId { get; set; }
+        public TeamsAPI? TeamsAPI { get; set; }
         public string? Winner { get; set; } //tbd or home, draw, away        
         public int? OddsApiId { get; set; }
         public OddsAPI? OddsAPI { get; set; }

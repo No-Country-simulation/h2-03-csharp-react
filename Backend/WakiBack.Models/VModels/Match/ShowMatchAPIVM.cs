@@ -6,8 +6,7 @@ namespace WakiBack.Models
     {                
         public string? Date { get; set; }        
         public ShowStageAPIVM? StageAPI { get; set; }
-        public string? Home { get; set; }
-        public string? Away { get; set; }
+        public ShowTeamsAPIVM? TeamsAPI { get; set; }
         public string? Winner { get; set; } //tbd or home, draw, away                                                 
         public ShowOddsAPIVM? OddsAPI { get; set; }
         public int? HomeFtGoals { get; set; } //FullTime Goals

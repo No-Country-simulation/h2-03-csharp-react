@@ -9,6 +9,8 @@ namespace WakiBack.DAL
         ICustomerRepository Customers { get; }
         ILeagueAPIRepository Leagues { get; }
         IMatchAPIRepository Matches { get; }
+        ITeamAPIRepository TeamAPI {  get; }
+        ITeamsAPIRepository TeamsAPI { get; }
 
         #region Methods
         void Save();
@@ -27,6 +29,8 @@ namespace WakiBack.DAL
         public ICustomerRepository Customers { get; private set; }
         public ILeagueAPIRepository Leagues { get; private set; }
         public IMatchAPIRepository Matches { get; private set; }
+        public ITeamAPIRepository  TeamAPI { get; private set; }
+        public ITeamsAPIRepository TeamsAPI { get; private set; }
         public UnitOfWork(WebAppContext webAppContext)
         {
             _webAppContext = webAppContext;
@@ -35,6 +39,8 @@ namespace WakiBack.DAL
             Customers = new CustomerRepository(webAppContext);     
             Leagues = new LeagueAPIRepository(webAppContext);
             Matches = new MatchAPIRepository(webAppContext);
+            TeamAPI = new TeamAPIRepository(webAppContext);
+            TeamsAPI = new TeamsAPIRepository(webAppContext);
         }
 
         #region Methods        
