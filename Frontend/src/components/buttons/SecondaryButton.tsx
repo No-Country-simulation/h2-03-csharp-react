@@ -1,20 +1,18 @@
-import { Button, useTheme } from "@mui/material";
+import { Button } from "@mui/material";
 
-interface MainButtonProps {
+interface SecondaryButtonProps {
   children: string;
   disabled?: boolean;
   width?: string | number;
   onClick?: () => void;
 }
 
-const MainButton: React.FC<MainButtonProps> = ({
+const SecondaryButton: React.FC<SecondaryButtonProps> = ({
   children,
   disabled = false,
   width,
   onClick,
 }) => {
-  const theme = useTheme();
-
   return (
     <Button
       type="submit"
@@ -27,7 +25,7 @@ const MainButton: React.FC<MainButtonProps> = ({
         width: width,
         minWidth: "fit-content",
         borderRadius: 2,
-        background: `linear-gradient(90deg, ${theme.palette.secondary.main} -0.04%, ${theme.palette.primary.main} 99.96%)`,
+        background: "rgba(49, 126, 244, 0.31)",
         "&.Mui-disabled": {
           backgroundColor: "secondary.light",
           color: "primary.light",
@@ -39,4 +37,4 @@ const MainButton: React.FC<MainButtonProps> = ({
   );
 };
 
-export default MainButton;
+export default SecondaryButton;
