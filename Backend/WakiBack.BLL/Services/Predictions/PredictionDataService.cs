@@ -347,11 +347,11 @@ namespace WakiBack.BLL
             //LeagueId      //League Name
 
             "297",          // La Liga (España) 
-            //"228",        // Premier (Inglaterra)                    
-            //"241",        // Bundesliga (Alemania)
-            //"235",        // Ligue 1 (Francia)
-            //"215",        // Serie A (Brasil)                    
-            //"206",        // Liga Argentina (Argentina)
+            "228",        // Premier (Inglaterra)                    
+            "241",        // Bundesliga (Alemania)
+            "235",        // Ligue 1 (Francia)
+            "215",        // Serie A (Brasil)                    
+            "206",        // Liga Argentina (Argentina)
         };
     }
     
