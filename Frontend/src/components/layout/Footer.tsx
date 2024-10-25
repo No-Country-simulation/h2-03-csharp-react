@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useWindowSize from "../../hooks/UseWindowSize";
 import style from "./layout.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
 import ball from "../../assets/icons/ball.svg";
 import coins from "../../assets/icons/coins.svg";
@@ -42,13 +42,32 @@ const DesktopFooter = () => (
 );
 
 const MobileFooter = () => {
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState<number>();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/scoutplayers":
+        setSelected(0);
+        break;
+      case "/partidos":
+        setSelected(1);
+        break;
+      case "/divisiones":
+        setSelected(2);
+        break;
+      case "/perfil":
+        setSelected(3);
+        break;
+    }
+  }, [location]);
 
   return (
     <footer className={style.mobileFooter}>
       <div>
         <Link
-          to={"/predicciones"}
+          to={"/scoutplayers"}
           onClick={() => setSelected(0)}
           className={
             selected === 0 ? `${style.link} ${style.selected}` : style.link

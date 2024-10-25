@@ -14,6 +14,7 @@ interface GamesGameBadgeProps {
 const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
   const [openStats, setOpenStats] = useState(false);
   const [openPredic, setOpenPredic] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
 
   const handleOpenStats = () => setOpenStats(true);
   const handleCloseStats = () => setOpenStats(false);
@@ -34,8 +35,12 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
     event.stopPropagation();
   };
 
-  const handleShowPredic = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleShowPredic = (
+    event: React.MouseEvent<HTMLSpanElement>,
+    selected: string | null
+  ) => {
     handleOpenPredic();
+    setSelected(selected);
     event.stopPropagation();
   };
 
@@ -124,6 +129,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
           }}
         >
           <Stack
+            onClick={(event) => handleShowPredic(event, "local")}
             sx={{
               bgcolor: "white",
               width: 70,
@@ -132,11 +138,13 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
               borderRadius: 1,
               border: "1px solid grey",
+              cursor: "pointer"
             }}
           >
-            <Typography onClick={handleShowPredic} variant="caption">{gameData.localRatio}</Typography>
+            <Typography variant="caption">{gameData.localRatio}</Typography>
           </Stack>
           <Stack
+            onClick={(event) => handleShowPredic(event, "draw")}
             sx={{
               bgcolor: "white",
               width: 70,
@@ -145,11 +153,13 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
               borderRadius: 1,
               border: "1px solid grey",
+              cursor: "pointer"
             }}
           >
             <Typography variant="caption">{gameData.drawRatio}</Typography>
           </Stack>
           <Stack
+            onClick={(event) => handleShowPredic(event, "visit")}
             sx={{
               bgcolor: "white",
               width: 70,
@@ -158,6 +168,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
               borderRadius: 1,
               border: "1px solid grey",
+              cursor: "pointer"
             }}
           >
             <Typography variant="caption">{gameData.visitRatio}</Typography>
@@ -169,7 +180,13 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
         handleClose={handleCloseStats}
         game={gameData}
       />
-      <PredictionsModal open={openPredic} handleClose={handleClosePredic} game={gameData} />
+      <PredictionsModal
+        selected={selected}
+        setSelected={setSelected}
+        open={openPredic}
+        handleClose={handleClosePredic}
+        game={gameData}
+      />
     </div>
   );
 };
