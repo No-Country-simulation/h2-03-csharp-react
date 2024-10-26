@@ -1,5 +1,12 @@
+import Profile from "../components/layout/profile/Profile";
+import { Stack } from "@mui/material";
+
 const ProfilePage = () => {
-  return <div>ProfilePage</div>;
+  return (
+    <Stack>
+      <Profile />
+    </Stack>
+  );
 };
 
 export default ProfilePage;

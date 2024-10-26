@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Box, Paper, Typography, Modal, Divider } from "@mui/material";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import RewardCard from "./RewardCard";
-import headerBG from "../../../../assets/header-top-bg.svg";
+import headerBG from "../../../../assets/division-header-top-bg.svg";
 // import bronze from "../../../../assets/bronze.png";
 import silver from "../../../../assets/silver.png";
 // import gold from "../../../../assets/gold.png";
@@ -30,7 +30,7 @@ const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
     },
     {
       icon: dolarIcon,
-      text: "Participa en el sorteo mensual por el premio de la división oro",
+      text: "asdafa",
     },
   ]);
   // const [players, setPlayers] = useState([{ name: "", tokens: 0, price: 0 }]);
