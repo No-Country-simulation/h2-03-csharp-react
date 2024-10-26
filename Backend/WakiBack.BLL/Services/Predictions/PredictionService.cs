@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using WakiBack.DAL;
 using WakiBack.Models;
 
@@ -57,7 +56,7 @@ namespace WakiBack.BLL
                     BetList = new List<Bet>(),
                     CustomerEF = customer,
                     EntityPublicKey = Guid.NewGuid(),
-                    ExistPreviously = false
+                    ExistPreviously = false                    
                 };
             }
             else 
@@ -140,6 +139,7 @@ namespace WakiBack.BLL
             newBet.ListMatch = listMatchForPrediction;
             newBet.EntityPublicKey = Guid.NewGuid();
             newBet.RatioOfPredictionCombined = combinedRatio;
+            newBet.CheckforWin = false;
 
             predictionForDay.BetList!.Add(newBet);
 
@@ -171,6 +171,7 @@ namespace WakiBack.BLL
             return _mapper.Map<IEnumerable<ShowPredictionVM>>(myPredictions);
 
         }
+
 
     }
 }

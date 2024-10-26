@@ -23,5 +23,6 @@ namespace WakiBack.Models
                     : Math.Round(RatioOfPredictionCombined!.Value * 10, 2);
             }
         }
+        public bool? CheckforWin { get; set; }
     }
 }

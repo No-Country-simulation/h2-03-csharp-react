@@ -6,6 +6,7 @@ namespace WakiBack.Models
         public int Id { get; set; }
         public int? MatchId { get; set; }
         public string? Date { get; set; }
+        public string? Time { get; set; }
         public int? StageApiId { get; set; }
         public StageAPI? StageAPI { get; set; }  
         public int? TeamsAPIId { get; set; }

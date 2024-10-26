@@ -107,7 +107,7 @@ namespace WakiBack.BLL
                     }
 
                     await _unitOfWork.SaveAsync();
-                    return GetBusinessResponse(HttpStatusCode.OK, "Created Succesfully");
+                    return GetBusinessResponse(HttpStatusCode.OK, "Updated Succesfully");
                 }
                 else _logger.LogInformation("Failed to get data from external API");
                 return GetBusinessResponse(HttpStatusCode.NotFound, "Failed to get data from external API");
@@ -143,8 +143,7 @@ namespace WakiBack.BLL
                 requestSoccerAPI.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
 
                 foreach (var element in LeagueIdList)
-                {
-                    
+                {                    
 
                     var responseSoccerAPI = await requestSoccerAPI.GetAsync($"matches/?league_id={element}&{soccerAPIKey}");
 
@@ -246,6 +245,7 @@ namespace WakiBack.BLL
                     {
                         MatchId = element.Id,
                         Date = string.IsNullOrEmpty(element.Date) ? null : element.Date,
+                        Time = string.IsNullOrEmpty(element.Time) ? null : element.Time,
                         TeamsAPI = new TeamsAPI()
                         {
                             HomeAPI = new HomeAPI()

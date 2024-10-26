@@ -121,7 +121,7 @@ namespace WakiBack.API.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Customer")]
-        public async Task<IActionResult> GetAllMyPredictions()
+        public async Task<IActionResult> GetAllMyPredictionsOfDay()
         {
 
             if (ModelState.IsValid)
@@ -140,7 +140,7 @@ namespace WakiBack.API.Controllers
                 }
             }
             return BadRequest();
-        }
+        }     
 
 
     }
