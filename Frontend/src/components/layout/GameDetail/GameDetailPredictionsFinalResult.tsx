@@ -43,9 +43,9 @@ const GameDetailFinalResult = () => {
           p: 2,
         }}
       >
-        <BadgeContent label={game?.local.name} number={48} />
+        <BadgeContent label={game?.teamsAPI.homeAPI.teamAPI.name} number={48} />
         <BadgeContent label="Empate" number={12} />
-        <BadgeContent label={game?.visit.name} number={40} />
+        <BadgeContent label={game?.teamsAPI.awayAPI.teamAPI.name} number={40} />
       </Stack>
     </Paper>
   );

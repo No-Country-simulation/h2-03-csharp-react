@@ -39,7 +39,12 @@ const PredictionsModal: React.FC<PredictionsModalProps> = ({
         }}
       >
         <Stack sx={{ flexWrap: "wrap", px: 3, color: "white" }}>
-          <Typography variant="h5" align="right" onClick={handleClose} sx={{cursor: "pointer"}}>
+          <Typography
+            variant="h5"
+            align="right"
+            onClick={handleClose}
+            sx={{ cursor: "pointer" }}
+          >
             <RxCross1 />
           </Typography>
           <Typography variant="h5" align="center">
@@ -85,11 +90,17 @@ const PredictionsModal: React.FC<PredictionsModalProps> = ({
                 backgroundColor:
                   selected == "local" ? "secondary.main" : "white",
                 color: selected == "local" ? "white" : "black",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
             >
-              <img src={game.local.shield} width={48} height={48} />
-              <Typography fontWeight="bold">{game.local.name}</Typography>
+              <img
+                src={game.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
+                width={48}
+                height={48}
+              />
+              <Typography fontWeight="bold">
+                {game.teamsAPI.homeAPI.teamAPI.name}
+              </Typography>
               <Typography variant="caption">15</Typography>
             </Stack>
             <Stack
@@ -103,11 +114,17 @@ const PredictionsModal: React.FC<PredictionsModalProps> = ({
                 backgroundColor:
                   selected == "visit" ? "secondary.main" : "white",
                 color: selected == "visit" ? "white" : "black",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
             >
-              <img src={game.visit.shield} width={48} height={48} />
-              <Typography fontWeight="bold">{game.visit.name}</Typography>
+              <img
+                src={game.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
+                width={48}
+                height={48}
+              />
+              <Typography fontWeight="bold">
+                {game.teamsAPI.awayAPI.teamAPI.name}
+              </Typography>
               <Typography variant="caption">10</Typography>
             </Stack>
           </Stack>
@@ -164,11 +181,19 @@ const PredictionsModal: React.FC<PredictionsModalProps> = ({
         >
           <Typography>Resumen:</Typography>
           <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
-            <Typography>{game.local.name}</Typography>
-            <img src={game.local.shield} width={18} height={18} />
+            <Typography>{game.teamsAPI.homeAPI.teamAPI.name}</Typography>
+            <img
+              src={game.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
+              width={18}
+              height={18}
+            />
             <Typography>vs</Typography>
-            <img src={game.visit.shield} width={18} height={18} />
-            <Typography>{game.visit.name}</Typography>
+            <img
+              src={game.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
+              width={18}
+              height={18}
+            />
+            <Typography>{game.teamsAPI.awayAPI.teamAPI.name}</Typography>
           </Stack>
           <Typography>Resultado final:</Typography>
           <Divider

@@ -6,6 +6,7 @@ import { FaCircle } from "react-icons/fa6";
 import { IoStatsChartSharp } from "react-icons/io5";
 import GameStatsModal from "../../modals/GameStatsModal";
 import PredictionsModal from "../../modals/PredictionsModal";
+import { useGameContext } from "../../../hooks/useGameContext";
 
 interface GamesGameBadgeProps {
   gameData: GameData;
@@ -24,10 +25,13 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
 
   const navigate = useNavigate();
 
+  const { setGameData } = useGameContext();
+
   const handleGameDetail = () => {
     if (!openStats && !openPredic) {
-      navigate(`/partidos/${gameData.id}`);
+      navigate(`/partidos/${gameData.entityPublicKey}`);
     }
+    setGameData(gameData);
   };
 
   const handleShowStats = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -72,9 +76,13 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
             }}
           >
-            <img src={gameData.local.shield} width={55} height={55} />
-            <Typography noWrap variant="caption">
-              {gameData.local.name}
+            <img
+              src={gameData.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
+              width={55}
+              height={55}
+            />
+            <Typography noWrap variant="caption" sx={{ maxWidth: 120 }}>
+              {gameData.teamsAPI.homeAPI.teamAPI.name}
             </Typography>
           </Stack>
           <Stack
@@ -92,14 +100,14 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               <IoStatsChartSharp />
             </IconButton>
             <Typography variant="h6" fontWeight="bold">
-              {gameData.result}
+              {gameData.homeFtGoals} - {gameData.awayFtGoals}
             </Typography>
             <Typography variant="caption">
-              {gameData.state == "Finalizado" && "FT"}
-              {gameData.state == "En vivo" && (
+              {gameData.winner != "tbd" && "FT"}
+              {gameData.winner == "tbd" && (
                 <span>
                   <FaCircle color="red" style={{ width: 6, marginRight: 2 }} />
-                  {gameData.schedule}
+                  40:00
                 </span>
               )}
             </Typography>
@@ -112,9 +120,13 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
             }}
           >
-            <img src={gameData.visit.shield} width={55} height={55} />
-            <Typography noWrap variant="caption">
-              {gameData.visit.name}
+            <img
+              src={gameData.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
+              width={55}
+              height={55}
+            />
+            <Typography noWrap variant="caption" sx={{ maxWidth: 120 }}>
+              {gameData.teamsAPI.awayAPI.teamAPI.name}
             </Typography>
           </Stack>
         </Stack>
@@ -138,10 +150,10 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
               borderRadius: 1,
               border: "1px solid grey",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
-            <Typography variant="caption">{gameData.localRatio}</Typography>
+            <Typography variant="caption">{gameData.oddsAPI.home}</Typography>
           </Stack>
           <Stack
             onClick={(event) => handleShowPredic(event, "draw")}
@@ -153,10 +165,10 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
               borderRadius: 1,
               border: "1px solid grey",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
-            <Typography variant="caption">{gameData.drawRatio}</Typography>
+            <Typography variant="caption">{gameData.oddsAPI.draw}</Typography>
           </Stack>
           <Stack
             onClick={(event) => handleShowPredic(event, "visit")}
@@ -168,10 +180,10 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
               borderRadius: 1,
               border: "1px solid grey",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
-            <Typography variant="caption">{gameData.visitRatio}</Typography>
+            <Typography variant="caption">{gameData.oddsAPI.away}</Typography>
           </Stack>
         </Stack>
       </Stack>

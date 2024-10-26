@@ -59,8 +59,16 @@ const GameStatsModal: React.FC<GameStatsModalProps> = ({
               <TbCards />
             </Typography>
           </Stack>
-          <img src={game.local.shield} width={26} height={26} />
-          <img src={game.visit.shield} width={26} height={26} />
+          <img
+            src={game.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
+            width={26}
+            height={26}
+          />
+          <img
+            src={game.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
+            width={26}
+            height={26}
+          />
         </Stack>
       </Paper>
     </Modal>

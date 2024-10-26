@@ -1,18 +1,39 @@
 import { ReactNode, createContext, useState } from "react";
-import { games } from "../utils/games";
 
 export interface GameData {
-  id: number;
-  league: string;
-  score: number;
-  result: string;
-  schedule: string;
-  state: string;
-  local: { name: string; shield: string };
-  visit: { name: string; shield: string };
-  localRatio: number;
-  drawRatio: number;
-  visitRatio: number;
+  date: string;
+  stageAPI: {
+    name: string;
+    isActive: boolean;
+    leagueAPI: {
+      leagueId: number;
+      name: string;
+      logoUrl: string | null;
+    };
+  };
+  teamsAPI: {
+    homeAPI: {
+      teamAPI: {
+        name: string;
+        logoUrl: string | null;
+      };
+    };
+    awayAPI: {
+      teamAPI: {
+        name: string;
+        logoUrl: string | null;
+      };
+    };
+  };
+  winner: string;
+  oddsAPI: {
+    home: number;
+    draw: number;
+    away: number;
+  };
+  homeFtGoals: number;
+  awayFtGoals: number;
+  entityPublicKey: string;
 }
 
 interface GameProviderProps {
@@ -21,7 +42,7 @@ interface GameProviderProps {
 
 interface GameContextProps {
   game: GameData | undefined;
-  setGameData: (gameId: string) => void;
+  setGameData: (game: GameData) => void;
 }
 
 const GameContext = createContext<GameContextProps>({
@@ -32,9 +53,8 @@ const GameContext = createContext<GameContextProps>({
 const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [game, setGame] = useState<GameData | undefined>();
 
-  const setGameData = (gameId: string) => {
-    const gameData = games.find((game) => game.id === Number(gameId));
-    setGame(gameData);
+  const setGameData = (game: GameData) => {
+    setGame(game);
   };
 
   return (

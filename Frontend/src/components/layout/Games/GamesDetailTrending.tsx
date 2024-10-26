@@ -1,6 +1,5 @@
 import { Stack } from "@mui/material";
 import GamesGameBadge from "./GamesGameBadge";
-import { games } from "../../../utils/games";
 import GamesGameBadgeContainer from "./GamesGameBadgeContainer";
 
 const GamesDetailTrending = () => {

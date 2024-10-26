@@ -31,7 +31,7 @@ const PredictionsProvider: React.FC<PredictionsProviderProps> = ({
 
   useEffect(() => {
     const predictionsData = predictionsAll.filter(
-      (prediction) => prediction.game === Number(game?.id)
+      (prediction) => prediction.game === Number(game?.entityPublicKey)
     );
     setPredictions(predictionsData);
   }, [game]);
