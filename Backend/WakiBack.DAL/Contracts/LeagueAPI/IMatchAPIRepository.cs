@@ -1,5 +1,6 @@
 ﻿
 
+using System.Linq.Expressions;
 using WakiBack.Models;
 
 namespace WakiBack.DAL
@@ -8,5 +9,6 @@ namespace WakiBack.DAL
     {
         Task<IEnumerable<MatchAPI>> GetPaginatedAsync(PaginationVM<MatchAPI, ShowMatchAPIVM> model, int? leagueId);
         Task UpdateData(MatchAPI match);
+        Task<MatchAPI> GetFirstOrDefaultMatchAsync(Expression<Func<MatchAPI, bool>> expression);
     }
 }

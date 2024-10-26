@@ -11,6 +11,7 @@ namespace WakiBack.Models
         public virtual CustomerEF? CustomerEF { get; set; }
         public int CountBets { get; set; } = 0;
         public List<Bet>? BetList { get; set; }
+        public bool ExistPreviously {  get; set; }
         #region IPublicKeyEntity
         public Guid EntityPublicKey { get; set; }
         #endregion        

@@ -8,14 +8,13 @@ namespace WakiBack.Models
     {
         public int Id { get; set; }
         public int? BetId { get; set; }
-        public virtual Bet? Bet { get; set; }
+        public Bet? Bet { get; set; }
         public int? MatchId { get; set; }
         public MatchAPI? Match { get; set; }
+        public Guid? MatchPublicKey { get; set; }        
         public string? WinnerPrediction { get; set; } //home, draw, away
-        public string? OverUnderScorePrediction {  get; set; }
-        [Precision(6, 2)]
-        public decimal? RatioOfPrediction { get; set; }
-
+        public string? OverUnderScorePrediction {  get; set; }        
+        public double? RatioOfPrediction { get; set; }
        
         #region IPublicKeyEntity
         public Guid EntityPublicKey { get; set; }

@@ -1,6 +1,7 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using WakiBack.Models;
 
 namespace WakiBack.DAL
@@ -40,43 +41,97 @@ namespace WakiBack.DAL
             int skip = (page - 1) * size;
 
             IQueryable<MatchAPI> command = dbSet;
-
-            if (!String.IsNullOrEmpty(model.SearchString))
+            if (leagueId != null)
             {
-                command = command
-                .Where(e => e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%") ||
-                    e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%") ||
-                    e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))                
-                .Include(m => m.StageAPI)
-                .Include(m=>m.StageAPI!.LeagueAPI)
-                .Include(m => m.OddsAPI)
-                .Include(m => m.TeamsAPI)
-                .Include(m => m.TeamsAPI!.AwayAPI)
-                .Include(m => m.TeamsAPI!.HomeAPI)
-                .Include(m => m.TeamsAPI!.AwayAPI!.TeamAPI)
-                .Include(m => m.TeamsAPI!.HomeAPI!.TeamAPI)
-                .Skip(skip)
-                .Take(size)
-                .OrderBy(e => e.Id);
+                if (!String.IsNullOrEmpty(model.SearchString))
+                {
+                    command = command
+                    .Where(e => e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%") ||
+                        e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%") ||
+                        e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
+                    .Include(m => m.StageAPI)
+                    .Include(m => m.StageAPI!.LeagueAPI)
+                    .Include(m => m.StageAPI!.LeagueAPI!.Country)
+                    .Include(m => m.OddsAPI)
+                    .Include(m => m.TeamsAPI)
+                    .Include(m => m.TeamsAPI!.AwayAPI)
+                    .Include(m => m.TeamsAPI!.HomeAPI)
+                    .Include(m => m.TeamsAPI!.AwayAPI!.TeamAPI)
+                    .Include(m => m.TeamsAPI!.HomeAPI!.TeamAPI)
+                    .Skip(skip)
+                    .Take(size)
+                    .OrderBy(e => e.Id);
+                }
+                else
+                {
+                    command = command
+                    .Where(e => e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId)
+                    .Include(m => m.StageAPI)
+                    .Include(m => m.StageAPI!.LeagueAPI)
+                    .Include(m => m.StageAPI!.LeagueAPI!.Country)
+                    .Include(m => m.OddsAPI)
+                    .Include(m => m.TeamsAPI)
+                    .Include(m => m.TeamsAPI!.HomeAPI)
+                    .Include(m => m.TeamsAPI!.AwayAPI)
+                    .Include(m => m.TeamsAPI!.AwayAPI!.TeamAPI)
+                    .Include(m => m.TeamsAPI!.HomeAPI!.TeamAPI)
+                    .Skip(skip)
+                    .Take(size)
+                    .OrderBy(e => e.Id);
+                }
             }
             else
             {
-                command = command
-                .Where(e => e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId)
-                .Include(m => m.StageAPI)
-                .Include(m => m.StageAPI!.LeagueAPI)
-                .Include(m => m.OddsAPI)
-                .Include(m => m.TeamsAPI)
-                .Include(m => m.TeamsAPI!.HomeAPI)
-                .Include(m => m.TeamsAPI!.AwayAPI)
-                .Include(m => m.TeamsAPI!.AwayAPI!.TeamAPI)
-                .Include(m => m.TeamsAPI!.HomeAPI!.TeamAPI)
-                .Skip(skip)
-                .Take(size)
-                .OrderBy(e => e.Id);
+                if (!String.IsNullOrEmpty(model.SearchString))
+                {
+                    command = command
+                    .Where(e => e.Deleted == null && e.Winner == "tbd" && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%") ||
+                        e.Deleted == null && e.Winner == "tbd" && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%") ||
+                        e.Deleted == null && e.Winner == "tbd" && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
+                    .Include(m => m.StageAPI)
+                    .Include(m => m.StageAPI!.LeagueAPI)
+                    .Include(m => m.StageAPI!.LeagueAPI!.Country)
+                    .Include(m => m.OddsAPI)
+                    .Include(m => m.TeamsAPI)
+                    .Include(m => m.TeamsAPI!.AwayAPI)
+                    .Include(m => m.TeamsAPI!.HomeAPI)
+                    .Include(m => m.TeamsAPI!.AwayAPI!.TeamAPI)
+                    .Include(m => m.TeamsAPI!.HomeAPI!.TeamAPI)
+                    .Skip(skip)
+                    .Take(size)
+                    .OrderBy(e => e.Id);
+                }
+                else
+                {
+                    command = command
+                    .Where(e => e.Deleted == null && e.Winner == "tbd" )
+                    .Include(m => m.StageAPI)
+                    .Include(m => m.StageAPI!.LeagueAPI)
+                    .Include(m => m.StageAPI!.LeagueAPI!.Country)
+                    .Include(m => m.OddsAPI)
+                    .Include(m => m.TeamsAPI)
+                    .Include(m => m.TeamsAPI!.HomeAPI)
+                    .Include(m => m.TeamsAPI!.AwayAPI)
+                    .Include(m => m.TeamsAPI!.AwayAPI!.TeamAPI)
+                    .Include(m => m.TeamsAPI!.HomeAPI!.TeamAPI)
+                    .Skip(skip)
+                    .Take(size)
+                    .OrderBy(e => e.Id);
+                }
             }
 
             return await command.ToListAsync();
+        }
+
+        public async Task<MatchAPI> GetFirstOrDefaultMatchAsync(Expression<Func<MatchAPI, bool>> expression)
+        {
+            IQueryable<MatchAPI> query = dbSet;
+
+            query = query.Where(expression)
+                .Include(m => m.OddsAPI!);            
+                
+
+            return await query.FirstOrDefaultAsync();
         }
 
     }

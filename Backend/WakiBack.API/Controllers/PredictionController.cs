@@ -1,5 +1,9 @@
 ﻿
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Net;
 using WakiBack.BLL;
 using WakiBack.Models;
 
@@ -7,23 +11,23 @@ namespace WakiBack.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Dev,Admin")]
-    public class PredictionController : ControllerBase
+
+    public class PredictionController : BaseAPI
     {
-        private readonly IPredictionDataService _predictionDataService;
         private readonly IMatchService _matchService;
         private readonly ILogger<PredictionController> _logger;
         private readonly ILeagueService _leagueService;
+        private readonly IPredictionService _predictionService;
 
-        public PredictionController(IPredictionDataService predictionDataService, IMatchService matchService, ILogger<PredictionController> logger, ILeagueService leagueService)
+        public PredictionController(IPredictionService predictionService, IMatchService matchService, ILogger<PredictionController> logger, ILeagueService leagueService)
         {
-            _predictionDataService = predictionDataService;
+            _predictionService = predictionService;
             _matchService = matchService;
             _logger = logger;
             _leagueService = leagueService;
         }
 
-        [HttpGet("{league_id}")]
+        [HttpGet]
         public async Task<IActionResult> GetAllMatchesFromLeagueForPredictionsPaginated([FromQuery] PaginationVM<MatchAPI, ShowMatchAPIVM> model, int? league_id)
         {
             try
@@ -32,8 +36,9 @@ namespace WakiBack.API.Controllers
 
                 model.Items = await _matchService.GetAllPaginatedAsync(model, league_id);
 
-                DateTime today = DateTime.UtcNow.Date;  
-                DateTime nextWeek = today.AddDays(7);  
+                //provisional, llevar el filtro de date a la bd cambiar tipo string por DateTime, refactor
+                DateTime today = DateTime.UtcNow.Date;
+                DateTime nextWeek = today.AddDays(7);
 
                 var cultureInfo = new System.Globalization.CultureInfo("es-ES"); // o la cultura que corresponda al formato DD/MM/YYYY
                 model.Items = model.Items
@@ -42,7 +47,7 @@ namespace WakiBack.API.Controllers
                                 && parsedDate <= nextWeek
                                 && m.OddsAPI!.Home != null)
                     .ToList();
-                
+
 
                 if (model.Items.Count() == 0) return NotFound("No matches were found with the provided search parameters. Please review the criteria and try again.");
 
@@ -63,8 +68,8 @@ namespace WakiBack.API.Controllers
         {
             try
             {
-               
-                var result = await _leagueService.GetAllLeagues();               
+
+                var result = await _leagueService.GetAllLeagues();
 
                 if (result.Count() == 0) return NotFound("No leagues were found.");
 
@@ -81,10 +86,61 @@ namespace WakiBack.API.Controllers
 
         }
 
-        //predecir en base a id del match
 
-        //ver predicciones
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Customer")]
+        public async Task<IActionResult> CreateBet(CreateBetVM model)
+        {
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var createResponse = await _predictionService.CreateBet(model, RequestEmail(User));
+
+                    if (!createResponse.Success)
+                    {
+                        if (createResponse.StatusCode.Equals(HttpStatusCode.NotFound)) return NotFound(createResponse.Message);
+
+                        if (createResponse.StatusCode.Equals(HttpStatusCode.BadRequest)) return BadRequest(createResponse.Message);
+                    }                 
+
+                    var response = model.CreateResponse(createResponse.PublicKey!);
+
+                    return Ok(response);
+                }
+                catch (Exception ex)
+                {
+                    return Problem(detail: $"Server error: {ex.Message}");
+                }
+            }
+            return BadRequest();
+         
+
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Customer")]
+        public async Task<IActionResult> GetAllMyPredictions()
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var createResponse = await _predictionService.GetAllMyPredictions(RequestEmail(User));
+
+                    if ( createResponse.Count() == 0) return NotFound("There are no predictions available.");
+                    
+                    return Ok(createResponse);
+                }
+                catch (Exception ex)
+                {
+                    return Problem(detail: $"Server error: {ex.Message}");
+                }
+            }
+            return BadRequest();
+        }
 
 
     }

@@ -173,6 +173,7 @@ namespace WakiBack.API
                 builder.Services.AddScoped<ICustomerService, CustomerService>();
                 builder.Services.AddScoped<IMatchService, MatchService>();
                 builder.Services.AddScoped<ILeagueService, LeagueService>();
+                builder.Services.AddScoped<IPredictionService, PredictionService>();                
 
 
             }

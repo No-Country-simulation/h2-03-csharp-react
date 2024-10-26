@@ -9,10 +9,9 @@ namespace WakiBack.Models
         //usar fecha de creacion como Date para controlar las apuestas diarias
         public int Id { get; set; }        
         public int? PredictionId { get; set; }
-        public virtual Prediction? Prediction { get; set; }
-        public List<MatchPrediction>? ListMatch { get; set; }
-        [Precision(6, 2)]
-        public decimal? RatioOfPredictionCombined { get; set; }
+        public Prediction? Prediction { get; set; }
+        public List<MatchPrediction>? ListMatch { get; set; }        
+        public double? RatioOfPredictionCombined { get; set; }
 
         #region IPublicKeyEntity
         public Guid EntityPublicKey { get; set; }
