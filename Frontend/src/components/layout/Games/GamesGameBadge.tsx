@@ -2,7 +2,6 @@ import { useState } from "react";
 import { IconButton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { GameData } from "../../../context/GameContext";
-import { FaCircle } from "react-icons/fa6";
 import { IoStatsChartSharp } from "react-icons/io5";
 import GameStatsModal from "../../modals/GameStatsModal";
 import PredictionsModal from "../../modals/PredictionsModal";
@@ -87,7 +86,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
           </Stack>
           <Stack
             sx={{
-              justifyContent: "center",
+              justifyContent: "start",
               alignItems: "center",
               position: "absolute",
             }}
@@ -104,12 +103,6 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
             </Typography>
             <Typography variant="caption">
               {gameData.winner != "tbd" && "FT"}
-              {gameData.winner == "tbd" && (
-                <span>
-                  <FaCircle color="red" style={{ width: 6, marginRight: 2 }} />
-                  40:00
-                </span>
-              )}
             </Typography>
           </Stack>
           <Stack
