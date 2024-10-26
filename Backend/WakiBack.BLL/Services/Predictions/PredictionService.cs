@@ -29,6 +29,14 @@ namespace WakiBack.BLL
         {
             if (model.ListMatch!.Count != 0 && model.ListMatch is null) return GetBusinessResponse(HttpStatusCode.BadRequest, "There are no Matchs predictions on the request");
 
+            var duplicatedKeys = model.ListMatch
+           .GroupBy(match => match.MatchPublicKey)
+           .Where(group => group.Count() > 1)
+           .Select(group => group.Key);
+
+            if (duplicatedKeys.Any()) return GetBusinessResponse(HttpStatusCode.BadRequest, "You have already placed a bet on this team in the same combined bet.");
+
+
             var sumMatchPredictions = model.ListMatch.Count;
             var todayDate = DateTime.Now;
             int limitBetsPerDay = 5;
