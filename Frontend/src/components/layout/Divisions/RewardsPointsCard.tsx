@@ -25,15 +25,15 @@ const RewardsPointsCard = () => {
         border: "2px solid purple",
         borderRadius: "10px",
         "@media (max-width: 768px)": { width: "100%" },
-        margin: "auto",
+        margin: "0 auto 1rem",
         width: "30%",
       }}
     >
       <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
         sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
           backgroundColor: theme.palette.primary.dark,
           borderRadius: "9px 9px 0 0",
           color: "white",
@@ -43,27 +43,34 @@ const RewardsPointsCard = () => {
       >
         <Typography
           variant="body2"
-          display={"flex"}
-          alignItems={"center"}
-          gap={1}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
         >
-          <img src={scoreIcon} alt="score-icon" /> Tus puntos
+          <img src={scoreIcon} alt="score-icon" />
+          Tus puntos
         </Typography>
         <Typography variant="h5">{points}</Typography>
       </Box>
       <Box
-        display={"flex"}
-        flexDirection={"column"}
-        justifyContent={"space-around"}
-        alignItems={"center"}
-        p={2}
-        width={"95%"}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          alignItems: "center",
+          p: 2,
+          width: "95%",
+        }}
       >
         <Box
-          display={"flex"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-          width={"100%"}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+          }}
         >
           <Typography>Desbloquear división</Typography>
           <Typography>{points} de 300 puntos</Typography>

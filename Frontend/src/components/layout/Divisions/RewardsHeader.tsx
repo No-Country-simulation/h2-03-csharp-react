@@ -11,17 +11,20 @@ interface RewardsHeaderProps {
 const RewardsHeader: React.FC<RewardsHeaderProps> = ({ division }) => {
   return (
     <Box
-      display={"flex"}
-      flexDirection={"column"}
-      justifyContent={"center"}
-      alignItems={"center"}
-      mb={3}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        mb: 3,
+      }}
     >
       <img
         src={
           division === "bronze" ? bronze : division === "silver" ? silver : gold
         }
-        alt="bronze"
+        alt="division trophy"
+        style={{ maxWidth: "100%" }} // Optional: Ensure the image is responsive
       />
       <Typography
         variant="h6"

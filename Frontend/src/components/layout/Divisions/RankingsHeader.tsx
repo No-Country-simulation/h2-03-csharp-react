@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import styled from "@emotion/styled";
 import bronze from "../../../assets/bronze.png";
 import silver from "../../../assets/silver.png";
 import gold from "../../../assets/gold.png";
@@ -10,33 +11,29 @@ interface RankingsHeaderProps {
   division: string;
 }
 
+const Img = styled.img`
+  width: 7%;
+
+  @media (max-width: 600px) {
+    width: 22%;
+  }
+`;
+
 const RankingsHeader: React.FC<RankingsHeaderProps> = ({ division }) => {
   return (
     <Box>
       <Box
-        margin={"auto"}
-        width={"90%"}
+        margin="auto"
+        width="90%"
         sx={{
           display: "flex",
           justifyContent: "space-evenly",
           mb: 3,
         }}
       >
-        <img
-          src={division === "bronze" ? bronze : silverLocked}
-          alt="bronze"
-          width={"15%"}
-        />
-        <img
-          src={division === "silver" ? silver : silverLocked}
-          alt="silver"
-          width={"15%"}
-        />
-        <img
-          src={division === "gold" ? gold : goldLocked}
-          alt="gold"
-          width={"15%"}
-        />
+        <Img src={division === "bronze" ? bronze : silverLocked} alt="bronze" />
+        <Img src={division === "silver" ? silver : silverLocked} alt="silver" />
+        <Img src={division === "gold" ? gold : goldLocked} alt="gold" />
       </Box>
 
       <Typography
