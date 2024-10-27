@@ -68,7 +68,7 @@ namespace WakiBack.BLL
             .Any(prediction => prediction.BetList!
             .Any(bet => bet.ListMatch!
             .Any(matchPrediction => model.ListMatch
-            .Any(x => matchPrediction.Match!.Winner != "tbd"))));
+            .Any(x => matchPrediction.Match!.Winner != "tbd" && matchPrediction.WinPrediction == null))));
 
             if (hasInvalidMatch)
             {
@@ -140,6 +140,7 @@ namespace WakiBack.BLL
             newBet.EntityPublicKey = Guid.NewGuid();
             newBet.RatioOfPredictionCombined = combinedRatio;
             newBet.CheckforWin = false;
+            newBet.Win = "tbd";
 
             predictionForDay.BetList!.Add(newBet);
 

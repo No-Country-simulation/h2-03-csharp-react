@@ -22,10 +22,13 @@ namespace WakiBack.BLL
 
         public async Task<IEnumerable<ShowLeagueAPIVM>> GetAllLeagues()
         {
-            var items = await _unitOfWork.Leagues.GetAllAsync();
+            var items = await _unitOfWork.Leagues.GetAllLeaguesAsync();
 
             return _mapper.Map<IEnumerable<ShowLeagueAPIVM>>(items);
         }
+
+
+
 
     }
 }

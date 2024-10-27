@@ -24,5 +24,6 @@ namespace WakiBack.Models
             }
         }
         public bool? CheckforWin { get; set; }
+        public string? Win { get; set; } //"tbd", "win" or "lose"
     }
 }
