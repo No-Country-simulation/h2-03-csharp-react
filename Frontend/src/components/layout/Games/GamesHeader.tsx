@@ -4,12 +4,7 @@ import GamesTabs from "./GamesTabs";
 import GamesCalendar from "./GamesCalendar";
 import calendarIcon from "../../../assets/icons/calendar.svg";
 
-interface GamesHeaderProps {
-  value: number;
-  handle: (event: React.SyntheticEvent, newValue: number) => void;
-}
-
-const GamesHeader: React.FC<GamesHeaderProps> = ({ value, handle }) => {
+const GamesHeader = () => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -48,7 +43,7 @@ const GamesHeader: React.FC<GamesHeaderProps> = ({ value, handle }) => {
           </IconButton>
         </Grid2>
       </Grid2>
-      <GamesTabs value={value} handleChange={handle} />
+      <GamesTabs />
       <GamesCalendar open={open} handleClose={handleClose} />
     </Paper>
   );

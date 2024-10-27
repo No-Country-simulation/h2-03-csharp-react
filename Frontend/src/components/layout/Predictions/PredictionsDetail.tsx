@@ -1,13 +1,19 @@
+import { useState } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import MainButton from "../../buttons/MainButton";
 import PredictionsDetailRecord from "./PredictionsDetailRecord";
 import PredictionsDetailActive from "./PredictionsDetailActive";
+import { useGameContext } from "../../../hooks/useGameContext";
+import PredictionsGamesListModal from "../../modals/PredictionsGamesListModal";
 
-interface PredictionsDetailProps {
-  value: number;
-}
+const PredictionsDetail = () => {
+  const [open, setOpen] = useState(false);
 
-const PredictionsDetail: React.FC<PredictionsDetailProps> = ({ value }) => {
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const { dateValue } = useGameContext();
+
   return (
     <Box
       sx={{
@@ -23,7 +29,7 @@ const PredictionsDetail: React.FC<PredictionsDetailProps> = ({ value }) => {
         <Typography variant="h6" sx={{ color: "primary" }}>
           Activas
         </Typography>
-        <MainButton>Hacer predicción</MainButton>
+        <MainButton onClick={handleOpen}>Hacer predicción</MainButton>
       </Box>
       <Paper
         elevation={4}
@@ -41,7 +47,8 @@ const PredictionsDetail: React.FC<PredictionsDetailProps> = ({ value }) => {
         <Typography>Puntos</Typography>
       </Paper>
       <PredictionsDetailActive />
-      {value === 0 && <PredictionsDetailRecord />}
+      {dateValue === "Todos" && <PredictionsDetailRecord />}
+      <PredictionsGamesListModal open={open} handleClose={handleClose} />
     </Box>
   );
 };

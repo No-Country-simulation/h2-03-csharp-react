@@ -3,17 +3,12 @@ import { useTheme } from "@mui/material/styles";
 import PredictionsTabs from "./PredictionsTabs";
 import PredictionsBuyPaper from "./PredictionsBuyPaper";
 import GameNavButton from "../../buttons/GameNavButton";
+import { useGameContext } from "../../../hooks/useGameContext";
+import dates from "../../../utils/predictions-tab-dates"
 
-interface PredictionsHeaderProps {
-  value: number;
-  handle: (event: React.SyntheticEvent, newValue: number) => void;
-}
-
-const PredictionsHeader: React.FC<PredictionsHeaderProps> = ({
-  value,
-  handle,
-}) => {
+const PredictionsHeader = () => {
   const theme = useTheme();
+  const {dateValue} = useGameContext()
 
   return (
     <Box
@@ -40,7 +35,7 @@ const PredictionsHeader: React.FC<PredictionsHeaderProps> = ({
         </Typography>
         <Typography variant="h1">5</Typography>
         <Typography variant="caption" sx={{ color: "primary.light" }}>
-          {value === 0
+          {dateValue === "Todos"
             ? "Predicciones disponibles hoy"
             : "Predicciones disponibles"}
         </Typography>
@@ -53,14 +48,14 @@ const PredictionsHeader: React.FC<PredictionsHeaderProps> = ({
           width: "100%",
         }}
       >
-        <PredictionsTabs value={value} handleChange={handle} />
+        <PredictionsTabs />
         <PredictionsBuyPaper />
         <Typography
           variant="body2"
           align="center"
           sx={{ color: "primary.light", m: 2, maxWidth: 350 }}
         >
-          {value > 1 &&
+          {dateValue !== dates.generateDates()[0] && dateValue !== "Todos"  &&
             "Puedes hacer un máximo de 2 predicciones para días futuros"}
         </Typography>
       </Box>

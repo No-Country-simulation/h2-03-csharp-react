@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -6,48 +6,27 @@ import {
   Box,
   Divider,
   Paper,
-  Skeleton,
   Typography,
 } from "@mui/material";
 import { SlArrowDown } from "react-icons/sl";
 import GamesGameBadge from "./GamesGameBadge";
-import predictions from "../../../services/predictions";
 import { GameData } from "../../../context/GameContext";
-
-interface League {
-  leagueId: number;
-  name: string;
-  logoUrl: string | null;
-}
+import { useGameContext } from "../../../hooks/useGameContext";
+import setLeagueIcon from "../../../utils/league-set-icons";
 
 const GamesDetailLeagues = () => {
   const [expanded, setExpanded] = useState<number | false>(false);
-  const [leagues, setLeagues] = useState<League[]>([]);
-  const [games, setGames] = useState<GameData[]>([]);
-  const [loadingGames, setLoadingGames] = useState(false);
+  const [gamesData, setGamesData] = useState<GameData[] | undefined>([]);
 
-  useEffect(() => {
-    predictions.getLeagues().then((res) => setLeagues(res?.data));
-  }, []);
-
-  const fetchGames = async (index: number) => {
-    const leagueId = leagues[index].leagueId;
-    setLoadingGames(true);
-
-    predictions
-      .getGamesByLeague(leagueId)
-      .then((res) => setGames(res.data.items))
-      .finally(() => setLoadingGames(false));
-  };
+  const { leagues, games, dateValue } = useGameContext();
 
   const handleChange =
-    (panel: number) =>
-    async (event: React.SyntheticEvent, newExpanded: boolean) => {
+    (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
       if (newExpanded) {
-        fetchGames(panel);
+        setGamesData(games);
       } else {
-        setGames([]);
+        setGamesData([]);
       }
       event.preventDefault();
     };
@@ -55,50 +34,55 @@ const GamesDetailLeagues = () => {
   return (
     leagues && (
       <Paper elevation={3}>
-        {leagues.map((league, index) => (
-          <Accordion
-            key={index}
-            expanded={expanded === index}
-            onChange={handleChange(index)}
-            slotProps={{ transition: { unmountOnExit: true } }}
-            sx={{
-              "&:not(:last-child)": {
-                borderBottom: 0,
-              },
-              "&::before": {
-                display: "none",
-              },
-            }}
-          >
-            <AccordionSummary
-              expandIcon={
-                <Typography color="primary">
-                  <SlArrowDown />
-                </Typography>
-              }
+        {leagues.map((league, index) => {
+          const icon = setLeagueIcon(league.name);
+          return (
+            <Accordion
+              key={index}
+              expanded={expanded === index}
+              onChange={handleChange(index)}
+              slotProps={{ transition: { unmountOnExit: true } }}
+              sx={{
+                "&:not(:last-child)": {
+                  borderBottom: 0,
+                },
+                "&::before": {
+                  display: "none",
+                },
+              }}
             >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <img width={32} height={32} src={league.logoUrl || ""} />
-                <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                  {"Pais"}
-                </Typography>
-                <Typography variant="caption">{league.name}</Typography>
-              </Box>
-            </AccordionSummary>
-            <AccordionDetails sx={{ minHeight: 150, p: 0 }}>
-              {loadingGames && (
-                <Skeleton variant="rectangular" width="100%" height={150} />
-              )}
-              {!loadingGames &&
-                games.map((game, index) => (
-                  <div key={index}>
-                    <GamesGameBadge gameData={game} />
-                    <Divider sx={{ border: "1px solid grey" }} />
-                  </div>
-                ))}
-            </AccordionDetails>
-          </Accordion>
-        ))}
+              <AccordionSummary
+                expandIcon={
+                  <Typography color="primary">
+                    <SlArrowDown />
+                  </Typography>
+                }
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  <img width={32} height={32} src={league.logoUrl || icon} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+                    {league.country}
+                  </Typography>
+                  <Typography variant="caption">{league.name}</Typography>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails sx={{ minHeight: 150, p: 0 }}>
+                {gamesData &&
+                  gamesData
+                    .filter((game) => game.date === dateValue)
+                    .filter(
+                      (game) => game.stageAPI.leagueAPI.name === league.name
+                    )
+                    .map((game, index) => (
+                      <div key={index}>
+                        <GamesGameBadge gameData={game} />
+                        <Divider sx={{ border: "1px solid grey" }} />
+                      </div>
+                    ))}
+              </AccordionDetails>
+            </Accordion>
+          );
+        })}
       </Paper>
     )
   );

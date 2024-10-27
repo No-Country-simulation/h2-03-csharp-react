@@ -1,7 +1,17 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
+import predictions from "../services/predictions";
+import dates from "../utils/predictions-tab-dates";
+
+interface LeagueData {
+  leagueId: number;
+  name: string;
+  logoUrl: string | null;
+  country: string | null;
+}
 
 export interface GameData {
   date: string;
+  time: string;
   stageAPI: {
     name: string;
     isActive: boolean;
@@ -9,6 +19,10 @@ export interface GameData {
       leagueId: number;
       name: string;
       logoUrl: string | null;
+      country: {
+        name: string;
+        logoUrl: null;
+      };
     };
   };
   teamsAPI: {
@@ -41,24 +55,56 @@ interface GameProviderProps {
 }
 
 interface GameContextProps {
+  leagues: LeagueData[] | undefined;
+  games: GameData[] | undefined;
   game: GameData | undefined;
   setGameData: (game: GameData) => void;
+  dateValue: string | undefined;
+  handleChangeDate: (event: React.SyntheticEvent, newValue: string) => void;
 }
 
 const GameContext = createContext<GameContextProps>({
+  leagues: undefined,
+  games: undefined,
   game: undefined,
   setGameData: () => null,
+  dateValue: undefined,
+  handleChangeDate: () => null,
 });
 
 const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
+  const dateValues = dates.generateDates();
+
+  const [leagues, setLeagues] = useState<LeagueData[]>([]);
+  const [games, setGames] = useState<GameData[]>([]);
   const [game, setGame] = useState<GameData | undefined>();
+  const [dateValue, setDateValues] = useState<string>(dateValues[0]);
+
+  useEffect(() => {
+    predictions.getLeagues().then((res) => setLeagues(res?.data));
+    predictions.getGames().then((res) => setGames(res.data.items));
+  }, []);
 
   const setGameData = (game: GameData) => {
     setGame(game);
   };
 
+  const handleChangeDate = (event: React.SyntheticEvent, newValue: string) => {
+    setDateValues(newValue);
+    event.preventDefault();
+  };
+
   return (
-    <GameContext.Provider value={{ game, setGameData }}>
+    <GameContext.Provider
+      value={{
+        leagues,
+        games,
+        game,
+        setGameData,
+        dateValue,
+        handleChangeDate,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );

@@ -99,11 +99,9 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               <IoStatsChartSharp />
             </IconButton>
             <Typography variant="h6" fontWeight="bold">
-              {gameData.homeFtGoals} - {gameData.awayFtGoals}
+              {gameData.time}
             </Typography>
-            <Typography variant="caption">
-              {gameData.winner != "tbd" && "FT"}
-            </Typography>
+            <Typography variant="caption">{" - "}</Typography>
           </Stack>
           <Stack
             sx={{

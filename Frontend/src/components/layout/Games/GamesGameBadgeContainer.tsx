@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Paper, Stack, Typography } from "@mui/material";
-import { leagues } from "../../../utils/leagues";
+import setLeagueIcon from "../../../utils/league-set-icons";
 
 interface GamesGameBadgeContainerProps {
   children: ReactNode;
@@ -13,17 +13,8 @@ const GamesGameBadgeContainer: React.FC<GamesGameBadgeContainerProps> = ({
   league,
   label,
 }) => {
-  const getLeagueIcon = () => {
-    let leagueIcon = "";
-    leagues.forEach((element) => {
-      if (league == element.name) {
-        leagueIcon = element.src as string;
-      }
-    });
-    return leagueIcon;
-  };
 
-  const icon = getLeagueIcon();
+  const icon = setLeagueIcon(league);
 
   return (
     <Paper elevation={4} sx={{ borderRadius: 3, mb: 1 }}>

@@ -14,10 +14,10 @@ const getLeagues = async () => {
   }
 };
 
-const getGamesByLeague = async (leagueId: number) => {
+const getGames = async () => {
   try {
     const response = await wakiBack.get(
-      `/Prediction/GetAllMatchesFromLeagueForPredictionsPaginated/${leagueId}`
+      "/Prediction/GetAllMatchesFromLeagueForPredictionsPaginated?PageSize=2000"
     );
     return {
       status: response.status,
@@ -40,5 +40,5 @@ const getGamesByLeague = async (leagueId: number) => {
 
 export default {
   getLeagues,
-  getGamesByLeague,
+  getGames,
 };
