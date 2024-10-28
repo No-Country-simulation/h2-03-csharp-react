@@ -4,11 +4,13 @@ import PredictionsTabs from "./PredictionsTabs";
 import PredictionsBuyPaper from "./PredictionsBuyPaper";
 import GameNavButton from "../../buttons/GameNavButton";
 import { useGameContext } from "../../../hooks/useGameContext";
-import dates from "../../../utils/predictions-tab-dates"
+import dates from "../../../utils/predictions-tab-dates";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 
 const PredictionsHeader = () => {
   const theme = useTheme();
-  const {dateValue} = useGameContext()
+  const { dateValue } = useGameContext();
+  const { predictions } = usePredictionsContext();
 
   return (
     <Box
@@ -33,7 +35,9 @@ const PredictionsHeader = () => {
         <Typography variant="h6" sx={{ mb: 2 }}>
           Tus predicciones
         </Typography>
-        <Typography variant="h1">5</Typography>
+        <Typography variant="h1">
+          {predictions && 5 - predictions[0].countBets}
+        </Typography>
         <Typography variant="caption" sx={{ color: "primary.light" }}>
           {dateValue === "Todos"
             ? "Predicciones disponibles hoy"
@@ -55,7 +59,8 @@ const PredictionsHeader = () => {
           align="center"
           sx={{ color: "primary.light", m: 2, maxWidth: 350 }}
         >
-          {dateValue !== dates.generateDates()[0] && dateValue !== "Todos"  &&
+          {dateValue !== dates.generateDates()[0] &&
+            dateValue !== "Todos" &&
             "Puedes hacer un máximo de 2 predicciones para días futuros"}
         </Typography>
       </Box>

@@ -11,7 +11,7 @@ import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal"
 import ComingSoonModal from "../../modals/Predictions/ComingSoonModal";
 
 const GameDetailPredictions = () => {
-  const { predictions, handleOpenModals } = usePredictionsContext();
+  const { prediction, handleOpenModals } = usePredictionsContext();
 
   const { game } = useGameContext();
 
@@ -24,7 +24,7 @@ const GameDetailPredictions = () => {
         <Typography fontWeight="bold">Tus predicciones</Typography>
         <PredictionsSeeAllButton />
       </Stack>
-      {predictions?.listMatch.length == 0 || !predictions && (
+      {!prediction && (
         <>
           <Paper elevation={4} sx={{ p: 2 }}>
             <Stack
@@ -49,7 +49,7 @@ const GameDetailPredictions = () => {
           </Stack>
         </>
       )}
-      {predictions && <GameDetailPredictionsBadge />}
+      {prediction && <GameDetailPredictionsBadge />}
       <Typography fontWeight="bold" sx={{ my: 3 }}>
         Pronóstico general
       </Typography>

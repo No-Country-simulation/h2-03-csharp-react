@@ -46,7 +46,9 @@ const PredictionResult = ({ game }: { game: GameData }) => {
           <Typography noWrap fontWeight="bold" sx={{ maxWidth: 100 }}>
             {game.teamsAPI.homeAPI.teamAPI.name}
           </Typography>
-          <Typography variant="caption">15</Typography>
+          <Typography variant="caption">
+            {Math.ceil(game.oddsAPI.home * 10)}
+          </Typography>
         </Stack>
         <Stack
           onClick={() => setPredictionWinner("away")}
@@ -69,7 +71,9 @@ const PredictionResult = ({ game }: { game: GameData }) => {
           <Typography noWrap fontWeight="bold" sx={{ maxWidth: 100 }}>
             {game.teamsAPI.awayAPI.teamAPI.name}
           </Typography>
-          <Typography variant="caption">10</Typography>
+          <Typography variant="caption">
+            {Math.ceil(game.oddsAPI.away * 10)}
+          </Typography>
         </Stack>
       </Stack>
       <Stack
@@ -87,7 +91,7 @@ const PredictionResult = ({ game }: { game: GameData }) => {
         }}
       >
         <Typography fontWeight="bold">Empate</Typography>
-        <Typography>21</Typography>
+        <Typography>{Math.ceil(game.oddsAPI.draw * 10)}</Typography>
       </Stack>
     </Stack>
   );

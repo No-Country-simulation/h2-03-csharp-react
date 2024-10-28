@@ -2,7 +2,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import predictions from "../services/games";
 import dates from "../utils/predictions-tab-dates";
 
-interface LeagueData {
+export interface LeagueData {
   leagueId: number;
   name: string;
   logoUrl: string | null;
@@ -87,7 +87,7 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
   useEffect(() => {
     predictions.getLeagues().then((res) => setLeagues(res?.data));
-    predictions.getGames().then((res) => setGames(res.data.items));
+    predictions.getGames().then((res) => setGames(res?.data.items));
   }, []);
 
   const setGameData = (game: GameData) => {

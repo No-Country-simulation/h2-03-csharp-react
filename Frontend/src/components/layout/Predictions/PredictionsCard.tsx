@@ -2,20 +2,54 @@ import { Box, Divider, Paper, Typography } from "@mui/material";
 import PredictionCardLeague from "./PredictionsCardLeague";
 import PredictionsCardTeam from "./PredictionsCardTeam";
 import PredictionsCardStatus from "./PredictionsCardStatus";
-import { PredictionsCardStatusProps } from "./PredictionsCardStatus";
 
-export interface PredictionsCardProps extends PredictionsCardStatusProps {
-  result: string;
+interface PredictionsCardProps {
+  bet: {
+    match: {
+      date: string;
+      time: string;
+      stageAPI: {
+        name: string;
+        isActive: boolean;
+        leagueAPI: string | null;
+      };
+      teamsAPI: {
+        homeAPI: {
+          teamAPI: {
+            name: string;
+            logoUrl: string;
+          };
+        };
+        awayAPI: {
+          teamAPI: {
+            name: string;
+            logoUrl: string;
+          };
+        };
+      };
+      winner: string;
+      oddsAPI: {
+        home: number;
+        draw: number;
+        away: number;
+      };
+      homeFtGoals: number;
+      awayFtGoals: number;
+      entityPublicKey: string;
+    };
+    matchPublicKey: string;
+    winnerPrediction: string;
+    winPrediction: null;
+    ratioOfPrediction: number;
+    entityPublicKey: string;
+    pointsPrediction: number;
+  };
 }
 
-const PredictionsCard: React.FC<PredictionsCardProps> = ({
-  result,
-  points,
-  status,
-}) => {
+const PredictionsCard: React.FC<PredictionsCardProps> = ({ bet }) => {
   return (
     <Paper elevation={4} sx={{ my: 1, py: 1, px: 2, borderRadius: 3 }}>
-      <PredictionCardLeague />
+      <PredictionCardLeague leagueName={bet.match.stageAPI.name} />
       <Divider />
       <Box
         sx={{
@@ -28,36 +62,48 @@ const PredictionsCard: React.FC<PredictionsCardProps> = ({
       >
         <Box sx={{ pl: { sm: 1, md: 2 } }}>
           <Typography variant="caption">Resultado final:</Typography>
-          <Typography variant="h6">{result}</Typography>
+          <Typography variant="h6">
+            {bet.winnerPrediction === "home" &&
+              bet.match.teamsAPI.homeAPI.teamAPI.name}
+            {bet.winnerPrediction === "draw" && "Empate"}
+            {bet.winnerPrediction === "away" &&
+              bet.match.teamsAPI.awayAPI.teamAPI.name}
+          </Typography>
         </Box>
         <Box>
           <PredictionsCardTeam
-            imageSrc="https://s3-alpha-sig.figma.com/img/ab4b/173b/81ec863d62c7a815a787cfc6538195bd?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=X9VjPKfOpoFCnmuIN3~~Yzp~kGPGmnufGf3A-GqYDop555eG~jSP7FL0eubFawZcB4zah0BEpfBr3T-L8SDvNomhHUPKs-Dh5A3Lbe~Ran3YnfLLaa05PCiYhwd7zw7vZuvwDHqnXnkFt6zfda5fA3J6JBqQ3TVDy2KxwM1iC5ZscBe4i9~cFRao~vArXFz9MW-CmFvKJXc1cdYLQ69BoZWJjb2PCSczE7v42CnV6p5xZN51RBJRl-MnjruqwJp5gKPKcmWjURDpCPMmna3OGeQg8xNjQ0qy~xcwD1YyDhLxzcQRRQXs2GNXiFdtNe2OUjQLUWjtLUAxpKG-GaOREg__"
-            label="Barcelona"
+            imageSrc={bet.match.teamsAPI.homeAPI.teamAPI.logoUrl}
+            label={bet.match.teamsAPI.homeAPI.teamAPI.name}
           />
           <PredictionsCardTeam
-            imageSrc="https://s3-alpha-sig.figma.com/img/7d4c/b9ed/431290fcfc98939b4de374071c11bd75?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PRY3zgFyP4mdZF885fmPqNGGVD2vyNYkZSPRDJ7JAuA8dT1QisieZ6pz0dqOVw1JaMOJCQzk-HpvnPD12s0~i9V4pnd0i6uzxpJAF22845412dTYpyei75AH1BHmxbbrZDFvFLu~Eq0lP~27RiVyNc3NmQFxEx1iRrne9hr4I4FONDBsgiACkLat9aYvtoC6SnLbjjCWLtjifIiyDeECNbg2TDR2buyVlggzbXE5a2WDTnT9eG-eV3gju5puQdb6Au5lKqufjmoR3kNxrcbvdgsap1ZBUKSPgNNLArVjwoy4vuL720tyyY00eK0drm1-x~Gk77an2XiOOk9vGyxTUQ__"
-            label="Osasuna"
+            imageSrc={bet.match.teamsAPI.awayAPI.teamAPI.logoUrl}
+            label={bet.match.teamsAPI.awayAPI.teamAPI.name}
           />
         </Box>
         <Typography
           variant="h6"
           sx={{
             color: "primary.main",
-            ...(status == "UnearnedPoints" && {
-              textDecoration: "line-through",
-              color: "secondary.dark"
+            ...(bet.match.winner == "ganado" && {
+              color: "secondary.main",
             }),
-            ...(status == "PointsEarned" && {
-              color: "secondary.main"
-            })
+            ...(bet.match.winner == "perdido" && {
+              textDecoration: "line-through",
+              color: "primary.dark",
+            }),
+            ...(bet.match.winner == "tbd" && {
+              color: "primary.main",
+            }),
           }}
         >
-          {points}
+          {bet.pointsPrediction}
         </Typography>
       </Box>
       <Divider />
-      <PredictionsCardStatus status={status} points={points} />
+      <PredictionsCardStatus
+        status={bet.match.winner}
+        points={bet.pointsPrediction}
+      />
     </Paper>
   );
 };

@@ -22,6 +22,19 @@ const createBet = async (data: createBet) => {
   }
 };
 
+const getAllMyPredictionsOfDay = async () => {
+  try {
+    const response = await wakiBack.get("/Prediction/GetAllMyPredictionsOfDay");
+    return {
+      status: response.status,
+      data: response.data,
+    };
+  } catch (error) {
+    serverError(error);
+  }
+};
+
 export default {
   createBet,
+  getAllMyPredictionsOfDay,
 };

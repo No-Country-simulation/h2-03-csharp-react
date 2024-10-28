@@ -4,7 +4,7 @@ import { FaCheck } from "react-icons/fa6";
 import { MdOutlineCancel } from "react-icons/md";
 
 export interface PredictionsCardStatusProps {
-  status: "Pending" | "PointsEarned" | "UnearnedPoints";
+  status: string;
   points: number;
 }
 
@@ -14,11 +14,11 @@ const PredictionsCardStatus: React.FC<PredictionsCardStatusProps> = ({
 }) => {
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1, pt: 1 }}>
-      {status == "Pending" && <BiLoaderCircle color="purple" />}
+      {status == "tbd" && <BiLoaderCircle color="purple" />}
       {status == "PointsEarned" && <FaCheck color="green" />}
       {status == "UnearnedPoints" && <MdOutlineCancel color="red" />}
       <Typography variant="caption">
-        {status == "Pending" && "Pendiente"}
+        {status == "tbd" && "Pendiente"}
         {status == "PointsEarned" &&
           `Ganaste ${points} puntos con esta predicción`}
         {status == "UnearnedPoints" && "No ganaste puntos con esta predicción"}

@@ -1,6 +1,10 @@
 import axios from "axios";
 
-axios.interceptors.request.use(
+const wakiBack = axios.create({
+  baseURL: `${import.meta.env.VITE_API_URL}/api`,
+});
+
+wakiBack.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -12,9 +16,5 @@ axios.interceptors.request.use(
     Promise.reject(error);
   }
 );
-
-const wakiBack = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/api`,
-});
 
 export default wakiBack;

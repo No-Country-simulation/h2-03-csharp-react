@@ -18,12 +18,13 @@ import PredictionResult from "./PredictionResult";
 
 const PredictionsModal = ({ game }: { game: GameData }) => {
   const theme = useTheme();
+
   const {
     winner,
     predictionType,
     openModals,
     handleCloseModals,
-    handleOpenModals,
+    handleCreateBet
   } = usePredictionsContext();
 
   return (
@@ -95,7 +96,7 @@ const PredictionsModal = ({ game }: { game: GameData }) => {
             }}
           >
             <MainButton
-              onClick={() => handleOpenModals(3)}
+              onClick={handleCreateBet}
               width={150}
               disabled={!winner ? true : false}
             >
@@ -154,7 +155,11 @@ const PredictionsModal = ({ game }: { game: GameData }) => {
                 sx={{ width: 300, justifyContent: "space-between" }}
               >
                 <Typography>Resultado final:</Typography>
-                <Typography>15</Typography>
+                <Typography>
+                  {winner === "home" && Math.ceil(game.oddsAPI.home * 10)}
+                  {winner === "draw" && Math.ceil(game.oddsAPI.draw * 10)}
+                  {winner === "away" && Math.ceil(game.oddsAPI.away * 10)}
+                </Typography>
               </Stack>
             )}
             {winner && (
@@ -174,7 +179,11 @@ const PredictionsModal = ({ game }: { game: GameData }) => {
                 sx={{ width: 300, justifyContent: "space-between" }}
               >
                 <Typography variant="h6">Puntos totales</Typography>
-                <Typography variant="h6">15</Typography>
+                <Typography variant="h6">
+                  {winner === "home" && Math.ceil(game.oddsAPI.home * 10)}
+                  {winner === "draw" && Math.ceil(game.oddsAPI.draw * 10)}
+                  {winner === "away" && Math.ceil(game.oddsAPI.away * 10)}
+                </Typography>
               </Stack>
             )}
           </Stack>
