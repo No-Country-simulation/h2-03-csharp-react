@@ -1,7 +1,18 @@
+import { useEffect, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { FaCircle, FaRegCircle } from "react-icons/fa6";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 
 const PredictionsCount = () => {
+  const [countBets, setCountBets] = useState<number>(0)
+  const {predictions}= usePredictionsContext()
+
+  useEffect(()=>{
+    if (predictions) {
+      setCountBets(predictions[0].countBets)
+    }
+  },[predictions])
+
   return (
     <Stack
       direction="row"
@@ -22,11 +33,12 @@ const PredictionsCount = () => {
         direction="row"
         sx={{ color: "primary.main", gap: 1, fontSize: 10 }}
       >
-        <FaCircle />
-        <FaRegCircle />
-        <FaRegCircle />
-        <FaRegCircle />
-        <FaRegCircle />
+        {Array.from({length: countBets},(_,index)=>(
+          <FaCircle key={index}/>
+        ))}
+        {Array.from({length: 5 - countBets},(_,index)=>(
+          <FaRegCircle key={index}/>
+        ))}
       </Stack>
     </Stack>
   );

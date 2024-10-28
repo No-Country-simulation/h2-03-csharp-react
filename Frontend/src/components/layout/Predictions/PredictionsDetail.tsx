@@ -9,6 +9,7 @@ import PredictionsByDayModal from "../../modals/Predictions/PredictionsByDayModa
 import PredictionsModal from "../../modals/Predictions/PredictionsModal";
 import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
 import ComingSoonModal from "../../modals/Predictions/ComingSoonModal";
+import PredictionStopModal from "../../modals/Predictions/PredictionStopModal";
 
 const PredictionsDetail = () => {
   const { dateValue } = useGameContext();
@@ -57,6 +58,7 @@ const PredictionsDetail = () => {
       {game && <PredictionsModal game={game} />}
       <PredictionAddedModal />
       <ComingSoonModal />
+      <PredictionStopModal />
     </Box>
   );
 };

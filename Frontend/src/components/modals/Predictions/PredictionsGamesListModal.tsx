@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Backdrop,
   Divider,
@@ -18,13 +19,19 @@ import { GameData } from "../../../context/GameContext";
 
 const PredictionsGamesListModal = () => {
   const theme = useTheme();
-  const { games, dateValue, setGameData } = useGameContext();
-  const { openModals, handleCloseModals, handleOpenModals } =
+  const { game, games, dateValue, setGameData } = useGameContext();
+  const { openModals, handleCloseModals, handleOpenModals, setPredictionDataByParam } =
     usePredictionsContext();
+
+    useEffect(() => {
+      if (game) {
+        setPredictionDataByParam(game?.entityPublicKey);
+      }
+    }, [game, setPredictionDataByParam]);
 
   const handleSetGameAndOpenNext = (game: GameData) => {
     setGameData(game);
-    handleOpenModals(1);
+      handleOpenModals(1); 
   };
 
   return (

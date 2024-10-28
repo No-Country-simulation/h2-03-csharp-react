@@ -21,11 +21,16 @@ const PredictionsByDayModal = () => {
     handlePredictionType,
     handleCloseModals,
     handleOpenModals,
+    prediction,
   } = usePredictionsContext();
 
   const selectPrediction = (type: string) => {
     handlePredictionType(type);
-    handleOpenModals(2);
+    if (prediction && type == "result") {
+      handleOpenModals(5)
+    } else {
+      handleOpenModals(2);
+    }
   };
 
   return (
