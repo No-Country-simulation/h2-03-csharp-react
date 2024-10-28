@@ -24,34 +24,31 @@ const GameDetailPredictions = () => {
         <Typography fontWeight="bold">Tus predicciones</Typography>
         <PredictionsSeeAllButton />
       </Stack>
-      {!predictions ||
-        (predictions.listMatch.length == 0 && (
-          <>
-            <Paper elevation={4} sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                sx={{ justifyContent: "space-between", alignItems: "center" }}
-              >
-                <Stack>
-                  <Typography variant="body2" fontWeight="bold">
-                    No hiciste predicciones
-                  </Typography>
-                  <Typography variant="caption">Suerte la próxima</Typography>
-                </Stack>
-                <Typography variant="h6" sx={{ color: "secondary.main" }}>
-                  0 puntos
-                </Typography>
-              </Stack>
-            </Paper>
+      {predictions?.listMatch.length == 0 || !predictions && (
+        <>
+          <Paper elevation={4} sx={{ p: 2 }}>
             <Stack
-              sx={{ justifyContent: "center", alignItems: "center", mt: 3 }}
+              direction="row"
+              sx={{ justifyContent: "space-between", alignItems: "center" }}
             >
-              <MainButton onClick={() => handleOpenModals(1)}>
-                Hacer predicción
-              </MainButton>
+              <Stack>
+                <Typography variant="body2" fontWeight="bold">
+                  No hiciste predicciones
+                </Typography>
+                <Typography variant="caption">Suerte la próxima</Typography>
+              </Stack>
+              <Typography variant="h6" sx={{ color: "secondary.main" }}>
+                0 puntos
+              </Typography>
             </Stack>
-          </>
-        ))}
+          </Paper>
+          <Stack sx={{ justifyContent: "center", alignItems: "center", mt: 3 }}>
+            <MainButton onClick={() => handleOpenModals(1)}>
+              Hacer predicción
+            </MainButton>
+          </Stack>
+        </>
+      )}
       {predictions && <GameDetailPredictionsBadge />}
       <Typography fontWeight="bold" sx={{ my: 3 }}>
         Pronóstico general
@@ -60,7 +57,7 @@ const GameDetailPredictions = () => {
       <PredictionsByDayModal />
       {game && <PredictionsModal game={game} />}
       <PredictionAddedModal />
-      <ComingSoonModal/>
+      <ComingSoonModal />
     </Stack>
   );
 };

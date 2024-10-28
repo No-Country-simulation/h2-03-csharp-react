@@ -130,7 +130,9 @@ const PredictionsModal = ({ game }: { game: GameData }) => {
           >
             <Typography>Resumen:</Typography>
             <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
-              <Typography>{game.teamsAPI.homeAPI.teamAPI.name}</Typography>
+              <Typography noWrap sx={{ maxWidth: 120 }}>
+                {game.teamsAPI.homeAPI.teamAPI.name}
+              </Typography>
               <img
                 src={game.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
                 width={18}
@@ -142,7 +144,9 @@ const PredictionsModal = ({ game }: { game: GameData }) => {
                 width={18}
                 height={18}
               />
-              <Typography>{game.teamsAPI.awayAPI.teamAPI.name}</Typography>
+              <Typography noWrap sx={{ maxWidth: 120 }}>
+                {game.teamsAPI.awayAPI.teamAPI.name}
+              </Typography>
             </Stack>
             {winner && (
               <Stack

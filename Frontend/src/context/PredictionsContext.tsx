@@ -35,7 +35,7 @@ const PredictionsContext = createContext<PredictionsContextProps>({
 const PredictionsProvider: React.FC<PredictionsProviderProps> = ({
   children,
 }) => {
-  const [predictions, setPredictions] = useState<createBet | null>();
+  const [predictions, setPredictions] = useState<createBet | null>(null);
   const [winner, setWinner] = useState<string | null>(null);
   const [predictionType, setPredictionType] = useState<string | null>(null);
   const [openModals, setOpenModals] = useState<number | boolean>(false);
