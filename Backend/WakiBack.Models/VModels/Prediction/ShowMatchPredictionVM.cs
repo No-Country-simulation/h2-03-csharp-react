@@ -17,7 +17,7 @@ namespace WakiBack.Models
             get
             {
                 return RatioOfPrediction.HasValue
-                    ? Math.Round(RatioOfPrediction.Value * 10 , 2)
+                    ? Math.Ceiling(RatioOfPrediction.Value * 10)
                     : null;
             }
         }
