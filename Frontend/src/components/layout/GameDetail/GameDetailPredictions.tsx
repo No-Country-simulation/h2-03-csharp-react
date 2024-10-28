@@ -1,18 +1,19 @@
-import { useState } from "react";
 import { Paper, Stack, Typography } from "@mui/material";
 import PredictionsSeeAllButton from "../../buttons/PredictionsSeeAllButton";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 import GameDetailFinalResult from "./GameDetailPredictionsFinalResult";
 import GameDetailPredictionsBadge from "./GameDetailPredictionsBadge";
 import MainButton from "../../buttons/MainButton";
-import PredictionsByDayModal from "../../modals/PredictionsByDayModal";
+import PredictionsByDayModal from "../../modals/Predictions/PredictionsByDayModal";
+import PredictionsModal from "../../modals/Predictions/PredictionsModal";
+import { useGameContext } from "../../../hooks/useGameContext";
+import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
+import ComingSoonModal from "../../modals/Predictions/ComingSoonModal";
 
 const GameDetailPredictions = () => {
-  const { predictions } = usePredictionsContext();
-  const [open, setOpen] = useState(false);
+  const { predictions, handleOpenModals } = usePredictionsContext();
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { game } = useGameContext();
 
   return (
     <Stack sx={{ backgroundColor: "primary.light", mb: 50, pt: 4, px: 3 }}>
@@ -24,7 +25,7 @@ const GameDetailPredictions = () => {
         <PredictionsSeeAllButton />
       </Stack>
       {!predictions ||
-        (predictions.length == 0 && (
+        (predictions.listMatch.length == 0 && (
           <>
             <Paper elevation={4} sx={{ p: 2 }}>
               <Stack
@@ -45,7 +46,7 @@ const GameDetailPredictions = () => {
             <Stack
               sx={{ justifyContent: "center", alignItems: "center", mt: 3 }}
             >
-              <MainButton onClick={handleOpen}>
+              <MainButton onClick={() => handleOpenModals(1)}>
                 Hacer predicción
               </MainButton>
             </Stack>
@@ -56,7 +57,10 @@ const GameDetailPredictions = () => {
         Pronóstico general
       </Typography>
       <GameDetailFinalResult />
-      <PredictionsByDayModal open={open} handleClose={handleClose} />
+      <PredictionsByDayModal />
+      {game && <PredictionsModal game={game} />}
+      <PredictionAddedModal />
+      <ComingSoonModal/>
     </Stack>
   );
 };

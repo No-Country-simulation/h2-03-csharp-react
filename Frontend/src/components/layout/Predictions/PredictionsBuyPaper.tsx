@@ -1,7 +1,10 @@
 import { Paper, Typography } from "@mui/material";
 import MainButton from "../../buttons/MainButton";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 
 const PredictionsBuyPaper = () => {
+  const { handleOpenModals } = usePredictionsContext();
+
   return (
     <Paper
       sx={{
@@ -17,7 +20,9 @@ const PredictionsBuyPaper = () => {
       <Typography variant="body2" sx={{ mr: 1 }}>
         ¿Te quedaste sin predicciones?
       </Typography>
-      <MainButton>Comprar predicciones</MainButton>
+      <MainButton onClick={() => handleOpenModals(4)}>
+        Comprar predicciones
+      </MainButton>
     </Paper>
   );
 };

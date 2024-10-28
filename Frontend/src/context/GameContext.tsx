@@ -1,12 +1,15 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
-import predictions from "../services/predictions";
+import predictions from "../services/games";
 import dates from "../utils/predictions-tab-dates";
 
 interface LeagueData {
   leagueId: number;
   name: string;
   logoUrl: string | null;
-  country: string | null;
+  country: {
+    name: string | null;
+    logoUrl: null;
+  };
 }
 
 export interface GameData {
@@ -59,6 +62,7 @@ interface GameContextProps {
   games: GameData[] | undefined;
   game: GameData | undefined;
   setGameData: (game: GameData) => void;
+  setGameDataByParam: (param: string) => void;
   dateValue: string | undefined;
   handleChangeDate: (event: React.SyntheticEvent, newValue: string) => void;
 }
@@ -68,6 +72,7 @@ const GameContext = createContext<GameContextProps>({
   games: undefined,
   game: undefined,
   setGameData: () => null,
+  setGameDataByParam: () => null,
   dateValue: undefined,
   handleChangeDate: () => null,
 });
@@ -89,6 +94,11 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     setGame(game);
   };
 
+  const setGameDataByParam = (param: string) => {
+    const gameData = games.find((game) => game.entityPublicKey === param);
+    setGame(gameData);
+  };
+
   const handleChangeDate = (event: React.SyntheticEvent, newValue: string) => {
     setDateValues(newValue);
     event.preventDefault();
@@ -101,6 +111,7 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         games,
         game,
         setGameData,
+        setGameDataByParam,
         dateValue,
         handleChangeDate,
       }}

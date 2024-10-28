@@ -1,18 +1,20 @@
-import { useState } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import MainButton from "../../buttons/MainButton";
 import PredictionsDetailRecord from "./PredictionsDetailRecord";
 import PredictionsDetailActive from "./PredictionsDetailActive";
 import { useGameContext } from "../../../hooks/useGameContext";
-import PredictionsGamesListModal from "../../modals/PredictionsGamesListModal";
+import PredictionsGamesListModal from "../../modals/Predictions/PredictionsGamesListModal";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
+import PredictionsByDayModal from "../../modals/Predictions/PredictionsByDayModal";
+import PredictionsModal from "../../modals/Predictions/PredictionsModal";
+import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
+import ComingSoonModal from "../../modals/Predictions/ComingSoonModal";
 
 const PredictionsDetail = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const { dateValue } = useGameContext();
+  const { handleOpenModals } = usePredictionsContext();
+
+  const { game } = useGameContext();
 
   return (
     <Box
@@ -29,7 +31,9 @@ const PredictionsDetail = () => {
         <Typography variant="h6" sx={{ color: "primary" }}>
           Activas
         </Typography>
-        <MainButton onClick={handleOpen}>Hacer predicción</MainButton>
+        <MainButton onClick={() => handleOpenModals(0)}>
+          Hacer predicción
+        </MainButton>
       </Box>
       <Paper
         elevation={4}
@@ -48,7 +52,11 @@ const PredictionsDetail = () => {
       </Paper>
       <PredictionsDetailActive />
       {dateValue === "Todos" && <PredictionsDetailRecord />}
-      <PredictionsGamesListModal open={open} handleClose={handleClose} />
+      <PredictionsGamesListModal />
+      <PredictionsByDayModal />
+      {game && <PredictionsModal game={game} />}
+      <PredictionAddedModal />
+      <ComingSoonModal />
     </Box>
   );
 };

@@ -3,9 +3,11 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { GameData } from "../../../context/GameContext";
 import { IoStatsChartSharp } from "react-icons/io5";
-import GameStatsModal from "../../modals/GameStatsModal";
-import PredictionsModal from "../../modals/PredictionsModal";
+import PredictionsModal from "../../modals/Predictions/PredictionsModal";
 import { useGameContext } from "../../../hooks/useGameContext";
+import GameStatsModal from "../../modals/Games/GameStatsModal";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
+import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
 
 interface GamesGameBadgeProps {
   gameData: GameData;
@@ -13,21 +15,18 @@ interface GamesGameBadgeProps {
 
 const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
   const [openStats, setOpenStats] = useState(false);
-  const [openPredic, setOpenPredic] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
 
   const handleOpenStats = () => setOpenStats(true);
   const handleCloseStats = () => setOpenStats(false);
 
-  const handleOpenPredic = () => setOpenPredic(true);
-  const handleClosePredic = () => setOpenPredic(false);
-
   const navigate = useNavigate();
 
   const { setGameData } = useGameContext();
+  const { setPredictionWinner, openModals, handleOpenModals, handlePredictionType } =
+    usePredictionsContext();
 
   const handleGameDetail = () => {
-    if (!openStats && !openPredic) {
+    if (!openStats && !openModals) {
       navigate(`/partidos/${gameData.entityPublicKey}`);
     }
     setGameData(gameData);
@@ -40,10 +39,11 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
 
   const handleShowPredic = (
     event: React.MouseEvent<HTMLSpanElement>,
-    selected: string | null
+    selected: string
   ) => {
-    handleOpenPredic();
-    setSelected(selected);
+    setPredictionWinner(selected);
+    handlePredictionType("result")
+    handleOpenModals(2);
     event.stopPropagation();
   };
 
@@ -56,6 +56,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
           justifyContent: "center",
           alignItems: "center",
           bgcolor: "secondary.light",
+          cursor: "pointer",
         }}
       >
         <Stack
@@ -132,7 +133,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
           }}
         >
           <Stack
-            onClick={(event) => handleShowPredic(event, "local")}
+            onClick={(event) => handleShowPredic(event, "home")}
             sx={{
               bgcolor: "white",
               width: 70,
@@ -162,7 +163,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
             <Typography variant="caption">{gameData.oddsAPI.draw}</Typography>
           </Stack>
           <Stack
-            onClick={(event) => handleShowPredic(event, "visit")}
+            onClick={(event) => handleShowPredic(event, "away")}
             sx={{
               bgcolor: "white",
               width: 70,
@@ -183,13 +184,8 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
         handleClose={handleCloseStats}
         game={gameData}
       />
-      <PredictionsModal
-        selected={selected}
-        setSelected={setSelected}
-        open={openPredic}
-        handleClose={handleClosePredic}
-        game={gameData}
-      />
+      <PredictionsModal game={gameData} />
+      <PredictionAddedModal />
     </div>
   );
 };

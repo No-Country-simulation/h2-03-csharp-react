@@ -13,6 +13,7 @@ import GamesGameBadge from "./GamesGameBadge";
 import { GameData } from "../../../context/GameContext";
 import { useGameContext } from "../../../hooks/useGameContext";
 import setLeagueIcon from "../../../utils/league-set-icons";
+import capitalize from "../../../utils/capitalize";
 
 const GamesDetailLeagues = () => {
   const [expanded, setExpanded] = useState<number | false>(false);
@@ -61,7 +62,7 @@ const GamesDetailLeagues = () => {
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                   <img width={32} height={32} src={league.logoUrl || icon} />
                   <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                    {league.country}
+                    {capitalize(league.country.name)}
                   </Typography>
                   <Typography variant="caption">{league.name}</Typography>
                 </Box>

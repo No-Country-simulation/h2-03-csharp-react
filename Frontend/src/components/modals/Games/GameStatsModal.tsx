@@ -1,6 +1,6 @@
 import Modal from "@mui/material/Modal";
 import { Paper, Stack, Typography } from "@mui/material";
-import { GameData } from "../../context/GameContext";
+import { GameData } from "../../../context/GameContext";
 import { TbCards } from "react-icons/tb";
 import { LuFlagTriangleRight } from "react-icons/lu";
 import {
