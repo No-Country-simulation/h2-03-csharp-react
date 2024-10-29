@@ -21,24 +21,32 @@ namespace WakiBack.DAL
             
             
             // Desactivar el lazy loading para este contexto temporal
-            _appContext.ChangeTracker.LazyLoadingEnabled = false;
+            //_appContext.ChangeTracker.LazyLoadingEnabled = false;
 
             var predictions = await _appContext.Predictions!
             .Include(p => p.BetList!)
                 .ThenInclude(b => b.ListMatch!)
-                .ThenInclude(p => p.Match!.StageAPI!.MatchList!)
-                .ThenInclude(m => m.TeamsAPI)
-                .ThenInclude(t => t!.HomeAPI!.TeamAPI!)
+                .ThenInclude(m => m.Match!)
+                .ThenInclude(match => match.StageAPI)
             .Include(p => p.BetList!)
                 .ThenInclude(b => b.ListMatch!)
-                .ThenInclude(p => p.Match!.StageAPI!.MatchList!)
-                .ThenInclude(m => m.TeamsAPI)
-                .ThenInclude(t => t!.AwayAPI!.TeamAPI!)
+                .ThenInclude(m => m.Match!)
+                .ThenInclude(match => match.OddsAPI)
             .Include(p => p.BetList!)
                 .ThenInclude(b => b.ListMatch!)
-                .ThenInclude(p => p.Match!.OddsAPI)
-            .AsSplitQuery() 
+                .ThenInclude(m => m.Match!)
+                .ThenInclude(match => match.TeamsAPI)
+                    .ThenInclude(teams => teams.HomeAPI!)
+                    .ThenInclude(home => home.TeamAPI)
+            .Include(p => p.BetList!)
+                .ThenInclude(b => b.ListMatch!)
+                .ThenInclude(m => m.Match!)
+                .ThenInclude(match => match.TeamsAPI)
+                    .ThenInclude(teams => teams.AwayAPI!)
+                        .ThenInclude(away => away.TeamAPI)
+            .AsSplitQuery()
             .ToListAsync();
+
 
 
             return predictions;
