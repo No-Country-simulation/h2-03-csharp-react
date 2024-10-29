@@ -46,14 +46,14 @@ const GameDetailPredictionsBadge = () => {
               variant="subtitle1"
               sx={{
                 color: "primary.main",
-                ...(matchData.match.winner == "ganado" && {
+                ...(matchData.winPrediction == "Win" && {
                   color: "secondary.main",
                 }),
-                ...(matchData.match.winner == "perdido" && {
+                ...(matchData.winPrediction == "Lose" && {
                   textDecoration: "line-through",
                   color: "primary.dark",
                 }),
-                ...(matchData.match.winner == "tbd" && {
+                ...(matchData.winPrediction == null && {
                   color: "primary.main",
                 }),
               }}
@@ -65,7 +65,7 @@ const GameDetailPredictionsBadge = () => {
         <Divider />
         <Box sx={{ height: 32 }}>
           <PredictionsCardStatus
-            status={matchData.match.winner}
+            status={matchData.winPrediction}
             points={matchData.pointsPrediction}
           />
         </Box>

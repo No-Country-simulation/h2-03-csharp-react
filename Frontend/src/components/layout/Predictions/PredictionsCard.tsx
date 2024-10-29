@@ -101,7 +101,7 @@ const PredictionsCard: React.FC<PredictionsCardProps> = ({ bet }) => {
       </Box>
       <Divider />
       <PredictionsCardStatus
-        status={bet.match.winner}
+        status={bet.winPrediction}
         points={bet.pointsPrediction}
       />
     </Paper>
