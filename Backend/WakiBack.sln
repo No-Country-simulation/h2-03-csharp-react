@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WakiBack.API", "WakiBack.API\WakiBack.API.csproj", "{53370370-CF0A-4CE9-BAA4-662EA057DC1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WakiBack.BLL", "WakiBack.BLL\WakiBack.BLL.csproj", "{1269C988-79E5-4147-995A-61107142FB7A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WakiBack.DAL", "WakiBack.DAL\WakiBack.DAL.csproj", "{53C027AF-4BF8-48DE-8035-482967874F9B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WakiBack.Models", "WakiBack.Models\WakiBack.Models.csproj", "{CF707911-E81C-4875-8557-2B12B6627BC6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53370370-CF0A-4CE9-BAA4-662EA057DC1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53370370-CF0A-4CE9-BAA4-662EA057DC1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53370370-CF0A-4CE9-BAA4-662EA057DC1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53370370-CF0A-4CE9-BAA4-662EA057DC1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1269C988-79E5-4147-995A-61107142FB7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1269C988-79E5-4147-995A-61107142FB7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1269C988-79E5-4147-995A-61107142FB7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1269C988-79E5-4147-995A-61107142FB7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53C027AF-4BF8-48DE-8035-482967874F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C027AF-4BF8-48DE-8035-482967874F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53C027AF-4BF8-48DE-8035-482967874F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53C027AF-4BF8-48DE-8035-482967874F9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF707911-E81C-4875-8557-2B12B6627BC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF707911-E81C-4875-8557-2B12B6627BC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF707911-E81C-4875-8557-2B12B6627BC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF707911-E81C-4875-8557-2B12B6627BC6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96C12AB9-2515-4C3C-9F0F-2E61466E5163}
+	EndGlobalSection
+EndGlobal
