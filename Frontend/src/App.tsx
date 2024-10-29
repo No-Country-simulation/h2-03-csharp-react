@@ -1,27 +1,43 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Footer from "./components/layout/Footer";
 import "./App.css";
-import Home from "./pages/Home";
-import Login from "./pages/Access";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./hooks/UserContext";
+import { GameProvider } from "./context/GameContext";
+import { PredictionsProvider } from "./context/PredictionsContext";
+
+import Home from "./pages/Home";
+import Login from "./pages/LoginPage";
 import PredictionsPage from "./pages/PredictionsPage";
-import MatchesPage from "./pages/MatchesPage";
+import GamesPage from "./pages/GamesPage";
+import GameDetailPage from "./pages/GameDetailPage";
+import DivisionsPage from "./pages/DivisionsPage";
+import ProfilePage from "./pages/ProfilePage";
+import Footer from "./components/layout/Footer";
+import ScrollToTop from "./components/layout/ScrollToTop";
+import TokensPage from "./pages/TokensPage";
 
 function App() {
   return (
-    <>
-      <UserProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/ingresar" element={<Login />} />
-            <Route path="/predicciones" element={<PredictionsPage />} />
-            <Route path="/partidos" element={<MatchesPage />} />
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </UserProvider>
-    </>
+    <UserProvider>
+      <GameProvider>
+        <PredictionsProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/ingresar" element={<Login />} />
+              <Route path="/predicciones" element={<PredictionsPage />} />
+              <Route path="/partidos" element={<GamesPage />} />
+              <Route path="/partidos/:partidoId" element={<GameDetailPage />} />
+              <Route path="/divisiones" element={<DivisionsPage />} />
+              <Route path="/tokens" element={<TokensPage />} />
+              <Route path="/perfil" element={<ProfilePage />} />
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </PredictionsProvider>
+      </GameProvider>
+    </UserProvider>
   );
 }
 

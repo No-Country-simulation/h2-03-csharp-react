@@ -1,35 +1,27 @@
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { FaArrowLeftLong } from "react-icons/fa6";
 import PredictionsTabs from "./PredictionsTabs";
 import PredictionsBuyPaper from "./PredictionsBuyPaper";
-import { NavLink } from "react-router-dom";
+import GameNavButton from "../../buttons/GameNavButton";
+import { useGameContext } from "../../../hooks/useGameContext";
+import dates from "../../../utils/predictions-tab-dates";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 
-interface PredictionsHeaderProps {
-  value: number;
-  handle: (event: React.SyntheticEvent, newValue: number) => void;
-}
-
-const PredictionsHeader: React.FC<PredictionsHeaderProps> = ({
-  value,
-  handle,
-}) => {
+const PredictionsHeader = () => {
   const theme = useTheme();
+  const { dateValue } = useGameContext();
+  const { predictions } = usePredictionsContext();
 
   return (
     <Box
       sx={{
-        background: `linear-gradient(90deg, ${theme.palette.primary.main} -0.04%, ${theme.palette.secondary.main} 99.96%)`,
+        background: `radial-gradient(88.6% 55.7% at 21.5% 50%, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
         width: "100%",
         color: "white",
         py: 3,
       }}
     >
-      <Typography variant="caption" sx={{ ml: 2, color: "primary.light" }}>
-        <NavLink to="/partidos" style={{ textDecoration: "none", color: "inherit" }}>
-          <FaArrowLeftLong /> <span>Partidos</span>
-        </NavLink>
-      </Typography>
+      <GameNavButton />
       <Box
         sx={{
           display: "flex",
@@ -43,9 +35,11 @@ const PredictionsHeader: React.FC<PredictionsHeaderProps> = ({
         <Typography variant="h6" sx={{ mb: 2 }}>
           Tus predicciones
         </Typography>
-        <Typography variant="h1">5</Typography>
+        <Typography variant="h1">
+          {predictions && 5 - predictions[0].countBets}
+        </Typography>
         <Typography variant="caption" sx={{ color: "primary.light" }}>
-          {value === 0
+          {dateValue === "Todos"
             ? "Predicciones disponibles hoy"
             : "Predicciones disponibles"}
         </Typography>
@@ -58,14 +52,15 @@ const PredictionsHeader: React.FC<PredictionsHeaderProps> = ({
           width: "100%",
         }}
       >
-        <PredictionsTabs value={value} handleChange={handle} />
+        <PredictionsTabs />
         <PredictionsBuyPaper />
         <Typography
           variant="body2"
           align="center"
           sx={{ color: "primary.light", m: 2, maxWidth: 350 }}
         >
-          {value > 1 &&
+          {dateValue !== dates.generateDates()[0] &&
+            dateValue !== "Todos" &&
             "Puedes hacer un máximo de 2 predicciones para días futuros"}
         </Typography>
       </Box>

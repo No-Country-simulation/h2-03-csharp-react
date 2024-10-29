@@ -1,16 +1,20 @@
-import { Button } from "@mui/material";
+import { Button, useTheme } from "@mui/material";
 
 interface MainButtonProps {
   children: string;
   disabled?: boolean;
+  width?: string | number;
   onClick?: () => void;
 }
 
 const MainButton: React.FC<MainButtonProps> = ({
   children,
   disabled = false,
+  width,
   onClick,
 }) => {
+  const theme = useTheme();
+
   return (
     <Button
       type="submit"
@@ -20,11 +24,14 @@ const MainButton: React.FC<MainButtonProps> = ({
       disabled={disabled}
       sx={{
         textTransform: "none",
+        width: width,
         minWidth: "fit-content",
         borderRadius: 2,
+        background: `linear-gradient(90deg, ${theme.palette.secondary.main} -0.04%, ${theme.palette.primary.main} 99.96%)`,
         "&.Mui-disabled": {
-          backgroundColor: "secondary.light",
-          color: "primary.light",
+          background: "#B1B1B1",
+          opacity: "70%",
+          color: theme.palette.secondary.light,
         },
       }}
     >

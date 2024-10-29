@@ -1,19 +1,28 @@
 const today: Date = new Date();
 const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "short" };
 
-const dateFormat = (date: Date) => {
+const dateFormat = (dateString: string) => {
+  const [day, month, year] = dateString.split("/");
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
   if (date.toDateString() === today.toDateString()) {
     return "Hoy";
   }
   return date.toLocaleDateString("es-ES", options);
 };
 
-const dates: string[] = [];
-for (let i = 0; i < 6; i++) {
-  const newDate: Date = new Date(today);
-  newDate.setDate(today.getDate() + i);
+const generateDates = () => {
+  const dates: string[] = [];
+  for (let i = 0; i < 6; i++) {
+    const newDate: Date = new Date(today);
+    newDate.setDate(today.getDate() + i);
 
-  dates.push(dateFormat(newDate));
-}
+    const day = String(newDate.getDate()).padStart(2, "0");
+    const month = String(newDate.getMonth() + 1).padStart(2, "0");
+    const year = newDate.getFullYear();
 
-export default dates;
+    dates.push(`${day}/${month}/${year}`);
+  }
+  return dates;
+};
+
+export default { dateFormat, generateDates };

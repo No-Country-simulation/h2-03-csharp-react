@@ -12,7 +12,9 @@ const PredictionsCardTeam: React.FC<PredictionsCardTeamProps> = ({
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
       <img width={18} height={18} src={imageSrc} />
-      <Typography variant="body1">{label}</Typography>
+      <Typography noWrap variant="body1" sx={{ maxWidth: 120 }}>
+        {label}
+      </Typography>
     </Box>
   );
 };
