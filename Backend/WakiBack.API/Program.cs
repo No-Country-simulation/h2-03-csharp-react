@@ -25,7 +25,8 @@ namespace WakiBack.API
             builder.Services.AddDbContext<WebAppContext>(options => options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("WakiBack.DAL")
-            ));
+                
+            ) );
 
             //Adding jwt service to program pipeline
             builder.Services.AddJWTTokenServices(builder.Configuration);
