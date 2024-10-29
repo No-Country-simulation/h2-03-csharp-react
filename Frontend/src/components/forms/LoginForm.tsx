@@ -60,7 +60,7 @@ const LoginForm = () => {
             username: response.data.username,
           },
         });
-        navigate("/");
+        navigate("/partidos");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
