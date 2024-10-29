@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Typography, Modal, Button, Divider } from "@mui/material";
+import { Box, Typography, Modal, Divider } from "@mui/material";
 import headerBG from "../../../assets/tokens-header-top-bg.svg";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import messiProfPic from "../../../assets/messi-profile-pic.svg";
@@ -21,11 +21,7 @@ interface TokenViewerModalProps {
 const TokenViewerModal: React.FC<TokenViewerModalProps> = ({
   open,
   handleClose,
-  position,
   name,
-  div,
-  tokens,
-  price,
 }) => {
   const [choice, setChoice] = useState(0);
   const theme = useTheme();
