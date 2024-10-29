@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, InputAdornment } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../hooks/UserContext";
 import { axiosInstance } from "../../utils/axios";
 import FormErrorModal from "../modals/FormErrorModal";
@@ -18,6 +19,7 @@ const RegisterForm = () => {
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const { dispatch } = useUserContext();
+  const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
     const re =
@@ -85,6 +87,7 @@ const RegisterForm = () => {
             username: response.data.username,
           },
         });
+        navigate("/");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
