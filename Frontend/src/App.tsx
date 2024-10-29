@@ -13,6 +13,7 @@ import GameDetailPage from "./pages/GameDetailPage";
 import DivisionsPage from "./pages/DivisionsPage";
 import ProfilePage from "./pages/ProfilePage";
 import Footer from "./components/layout/Footer";
+import TokensPage from "./pages/TokensPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/partidos" element={<GamesPage />} />
               <Route path="/partidos/:partidoId" element={<GameDetailPage />} />
               <Route path="/divisiones" element={<DivisionsPage />} />
+              <Route path="/tokens" element={<TokensPage />} />
               <Route path="/perfil" element={<ProfilePage />} />
             </Routes>
             <Footer />
