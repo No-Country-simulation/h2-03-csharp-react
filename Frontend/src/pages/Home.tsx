@@ -48,7 +48,10 @@ const Home = () => {
           to="/divisiones"
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          Divisiones
+          Divisiones |{" "}
+        </Link>
+        <Link to="/tokens" style={{ textDecoration: "none", color: "inherit" }}>
+          Tokens
         </Link>
       </Typography>
     </Stack>
