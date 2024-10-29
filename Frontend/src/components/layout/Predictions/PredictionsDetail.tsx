@@ -1,6 +1,6 @@
 import { Box, Paper, Typography } from "@mui/material";
 import MainButton from "../../buttons/MainButton";
-import PredictionsDetailRecord from "./PredictionsDetailRecord";
+//import PredictionsDetailRecord from "./PredictionsDetailRecord";
 import PredictionsDetailActive from "./PredictionsDetailActive";
 import { useGameContext } from "../../../hooks/useGameContext";
 import PredictionsGamesListModal from "../../modals/Predictions/PredictionsGamesListModal";
@@ -12,7 +12,7 @@ import ComingSoonModal from "../../modals/Predictions/ComingSoonModal";
 import PredictionStopModal from "../../modals/Predictions/PredictionStopModal";
 
 const PredictionsDetail = () => {
-  const { dateValue } = useGameContext();
+  //const { dateValue } = useGameContext();
   const { handleOpenModals } = usePredictionsContext();
 
   const { game } = useGameContext();
@@ -52,7 +52,7 @@ const PredictionsDetail = () => {
         <Typography>Puntos</Typography>
       </Paper>
       <PredictionsDetailActive />
-      {dateValue === "Todos" && <PredictionsDetailRecord />}
+      {/*dateValue === "Todos" && <PredictionsDetailRecord />*/}
       <PredictionsGamesListModal />
       <PredictionsByDayModal />
       {game && <PredictionsModal game={game} />}
