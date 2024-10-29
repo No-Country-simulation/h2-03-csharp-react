@@ -15,13 +15,13 @@ const PredictionsCardStatus: React.FC<PredictionsCardStatusProps> = ({
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1, pt: 1 }}>
       {status == "tbd" && <BiLoaderCircle color="purple" />}
-      {status == "PointsEarned" && <FaCheck color="green" />}
-      {status == "UnearnedPoints" && <MdOutlineCancel color="red" />}
+      {status == "Win" && <FaCheck color="green" />}
+      {status == "Lose" && <MdOutlineCancel color="red" />}
       <Typography variant="caption">
         {status == "tbd" && "Pendiente"}
-        {status == "PointsEarned" &&
+        {status == "Win" &&
           `Ganaste ${points} puntos con esta predicción`}
-        {status == "UnearnedPoints" && "No ganaste puntos con esta predicción"}
+        {status == "Lose" && "No ganaste puntos con esta predicción"}
       </Typography>
     </Box>
   );

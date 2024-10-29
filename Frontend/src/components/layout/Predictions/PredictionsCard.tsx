@@ -84,10 +84,10 @@ const PredictionsCard: React.FC<PredictionsCardProps> = ({ bet }) => {
           variant="h6"
           sx={{
             color: "primary.main",
-            ...(bet.match.winner == "ganado" && {
+            ...(bet.match.winner == "Win" && {
               color: "secondary.main",
             }),
-            ...(bet.match.winner == "perdido" && {
+            ...(bet.match.winner == "Lose" && {
               textDecoration: "line-through",
               color: "primary.dark",
             }),
