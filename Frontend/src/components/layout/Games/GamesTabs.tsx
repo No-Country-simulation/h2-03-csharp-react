@@ -1,32 +1,33 @@
 import { Tab, Tabs } from "@mui/material";
-import dates from "../../../utils/games-tabs-dates";
+import dates from "../../../utils/predictions-tab-dates";
+import { useGameContext } from "../../../hooks/useGameContext";
 
-interface GamesTabsProps {
-  value: number;
-  handleChange: (event: React.SyntheticEvent, newValue: number) => void;
-}
-
-const GamesTabs: React.FC<GamesTabsProps> = ({ value, handleChange }) => {
+const GamesTabs = () => {
+  const { dateValue, handleChangeDate } = useGameContext();
+  
   return (
     <Tabs
-      value={value}
-      onChange={handleChange}
+      value={dateValue}
+      onChange={handleChangeDate}
       indicatorColor="primary"
       variant="scrollable"
     >
-      {dates?.map((date, index) => (
-        <Tab
-          key={index}
-          label={date}
-          sx={{
-            width: "33%",
-            color: "white",
-            "&.Mui-selected": {
-              color: "primary",
-            },
-          }}
-        />
-      ))}
+      {dates.generateDates().map((date, index) => {
+        return (
+          <Tab
+            key={index}
+            label={dates.dateFormat(date)}
+            value={date}
+            sx={{
+              width: "33%",
+              color: "white",
+              "&.Mui-selected": {
+                color: "primary",
+              },
+            }}
+          />
+        );
+      })}
     </Tabs>
   );
 };

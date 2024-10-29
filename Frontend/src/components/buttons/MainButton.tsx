@@ -29,8 +29,9 @@ const MainButton: React.FC<MainButtonProps> = ({
         borderRadius: 2,
         background: `linear-gradient(90deg, ${theme.palette.secondary.main} -0.04%, ${theme.palette.primary.main} 99.96%)`,
         "&.Mui-disabled": {
-          backgroundColor: "secondary.light",
-          color: "primary.light",
+          background: "#B1B1B1",
+          opacity: "70%",
+          color: theme.palette.secondary.light,
         },
       }}
     >

@@ -3,9 +3,17 @@ import PredictionsSeeAllButton from "../../buttons/PredictionsSeeAllButton";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 import GameDetailFinalResult from "./GameDetailPredictionsFinalResult";
 import GameDetailPredictionsBadge from "./GameDetailPredictionsBadge";
+import MainButton from "../../buttons/MainButton";
+import PredictionsByDayModal from "../../modals/Predictions/PredictionsByDayModal";
+import PredictionsModal from "../../modals/Predictions/PredictionsModal";
+import { useGameContext } from "../../../hooks/useGameContext";
+import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
+import ComingSoonModal from "../../modals/Predictions/ComingSoonModal";
 
 const GameDetailPredictions = () => {
-  const { predictions } = usePredictionsContext();
+  const { prediction, handleOpenModals } = usePredictionsContext();
+
+  const { game } = useGameContext();
 
   return (
     <Stack sx={{ backgroundColor: "primary.light", mb: 50, pt: 4, px: 3 }}>
@@ -16,8 +24,8 @@ const GameDetailPredictions = () => {
         <Typography fontWeight="bold">Tus predicciones</Typography>
         <PredictionsSeeAllButton />
       </Stack>
-      {!predictions ||
-        (predictions.length == 0 && (
+      {!prediction && (
+        <>
           <Paper elevation={4} sx={{ p: 2 }}>
             <Stack
               direction="row"
@@ -34,12 +42,22 @@ const GameDetailPredictions = () => {
               </Typography>
             </Stack>
           </Paper>
-        ))}
-      {predictions && <GameDetailPredictionsBadge />}
+          <Stack sx={{ justifyContent: "center", alignItems: "center", mt: 3 }}>
+            <MainButton onClick={() => handleOpenModals(1)}>
+              Hacer predicción
+            </MainButton>
+          </Stack>
+        </>
+      )}
+      {prediction && <GameDetailPredictionsBadge />}
       <Typography fontWeight="bold" sx={{ my: 3 }}>
         Pronóstico general
       </Typography>
       <GameDetailFinalResult />
+      <PredictionsByDayModal />
+      {game && <PredictionsModal game={game} />}
+      <PredictionAddedModal />
+      <ComingSoonModal />
     </Stack>
   );
 };
