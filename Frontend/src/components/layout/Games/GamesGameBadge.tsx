@@ -2,10 +2,12 @@ import { useState } from "react";
 import { IconButton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { GameData } from "../../../context/GameContext";
-import { FaCircle } from "react-icons/fa6";
 import { IoStatsChartSharp } from "react-icons/io5";
-import GameStatsModal from "../../modals/GameStatsModal";
-import PredictionsModal from "../../modals/PredictionsModal";
+import PredictionsModal from "../../modals/Predictions/PredictionsModal";
+import { useGameContext } from "../../../hooks/useGameContext";
+import GameStatsModal from "../../modals/Games/GameStatsModal";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
+import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
 
 interface GamesGameBadgeProps {
   gameData: GameData;
@@ -13,21 +15,21 @@ interface GamesGameBadgeProps {
 
 const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
   const [openStats, setOpenStats] = useState(false);
-  const [openPredic, setOpenPredic] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
 
   const handleOpenStats = () => setOpenStats(true);
   const handleCloseStats = () => setOpenStats(false);
 
-  const handleOpenPredic = () => setOpenPredic(true);
-  const handleClosePredic = () => setOpenPredic(false);
-
   const navigate = useNavigate();
 
+  const { setGameData } = useGameContext();
+  const { setPredictionWinner, openModals, handleOpenModals, handlePredictionType } =
+    usePredictionsContext();
+
   const handleGameDetail = () => {
-    if (!openStats && !openPredic) {
-      navigate(`/partidos/${gameData.id}`);
+    if (!openStats && !openModals) {
+      navigate(`/partidos/${gameData.entityPublicKey}`);
     }
+    setGameData(gameData);
   };
 
   const handleShowStats = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,10 +39,11 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
 
   const handleShowPredic = (
     event: React.MouseEvent<HTMLSpanElement>,
-    selected: string | null
+    selected: string
   ) => {
-    handleOpenPredic();
-    setSelected(selected);
+    setPredictionWinner(selected);
+    handlePredictionType("result")
+    handleOpenModals(2);
     event.stopPropagation();
   };
 
@@ -53,6 +56,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
           justifyContent: "center",
           alignItems: "center",
           bgcolor: "secondary.light",
+          cursor: "pointer",
         }}
       >
         <Stack
@@ -72,14 +76,18 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
             }}
           >
-            <img src={gameData.local.shield} width={55} height={55} />
-            <Typography noWrap variant="caption">
-              {gameData.local.name}
+            <img
+              src={gameData.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
+              width={55}
+              height={55}
+            />
+            <Typography noWrap variant="caption" sx={{ maxWidth: 120 }}>
+              {gameData.teamsAPI.homeAPI.teamAPI.name}
             </Typography>
           </Stack>
           <Stack
             sx={{
-              justifyContent: "center",
+              justifyContent: "start",
               alignItems: "center",
               position: "absolute",
             }}
@@ -92,17 +100,9 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               <IoStatsChartSharp />
             </IconButton>
             <Typography variant="h6" fontWeight="bold">
-              {gameData.result}
+              {gameData.time}
             </Typography>
-            <Typography variant="caption">
-              {gameData.state == "Finalizado" && "FT"}
-              {gameData.state == "En vivo" && (
-                <span>
-                  <FaCircle color="red" style={{ width: 6, marginRight: 2 }} />
-                  {gameData.schedule}
-                </span>
-              )}
-            </Typography>
+            <Typography variant="caption">{" - "}</Typography>
           </Stack>
           <Stack
             sx={{
@@ -112,9 +112,13 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
             }}
           >
-            <img src={gameData.visit.shield} width={55} height={55} />
-            <Typography noWrap variant="caption">
-              {gameData.visit.name}
+            <img
+              src={gameData.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
+              width={55}
+              height={55}
+            />
+            <Typography noWrap variant="caption" sx={{ maxWidth: 120 }}>
+              {gameData.teamsAPI.awayAPI.teamAPI.name}
             </Typography>
           </Stack>
         </Stack>
@@ -129,7 +133,7 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
           }}
         >
           <Stack
-            onClick={(event) => handleShowPredic(event, "local")}
+            onClick={(event) => handleShowPredic(event, "home")}
             sx={{
               bgcolor: "white",
               width: 70,
@@ -138,10 +142,10 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
               borderRadius: 1,
               border: "1px solid grey",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
-            <Typography variant="caption">{gameData.localRatio}</Typography>
+            <Typography variant="caption">{gameData.oddsAPI.home}</Typography>
           </Stack>
           <Stack
             onClick={(event) => handleShowPredic(event, "draw")}
@@ -153,13 +157,13 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
               borderRadius: 1,
               border: "1px solid grey",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
-            <Typography variant="caption">{gameData.drawRatio}</Typography>
+            <Typography variant="caption">{gameData.oddsAPI.draw}</Typography>
           </Stack>
           <Stack
-            onClick={(event) => handleShowPredic(event, "visit")}
+            onClick={(event) => handleShowPredic(event, "away")}
             sx={{
               bgcolor: "white",
               width: 70,
@@ -168,10 +172,10 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
               alignItems: "center",
               borderRadius: 1,
               border: "1px solid grey",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
-            <Typography variant="caption">{gameData.visitRatio}</Typography>
+            <Typography variant="caption">{gameData.oddsAPI.away}</Typography>
           </Stack>
         </Stack>
       </Stack>
@@ -180,13 +184,8 @@ const GamesGameBadge: React.FC<GamesGameBadgeProps> = ({ gameData }) => {
         handleClose={handleCloseStats}
         game={gameData}
       />
-      <PredictionsModal
-        selected={selected}
-        setSelected={setSelected}
-        open={openPredic}
-        handleClose={handleClosePredic}
-        game={gameData}
-      />
+      <PredictionsModal game={gameData} />
+      <PredictionAddedModal />
     </div>
   );
 };

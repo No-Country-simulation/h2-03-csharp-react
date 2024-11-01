@@ -44,29 +44,29 @@ const LoginForm = () => {
       showTemporaryModal();
       return;
     }
-    // try {
-    //   const response = await axiosInstance.post("Security/Login", {
-    //     username,
-    //     password,
-    //   });
-    //   if (response.data.token) {
-    //     localStorage.setItem("token", response.data.token);
-    //     dispatch({
-    //       type: "LOGIN_SUCCESS",
-    //       payload: {
-    //         token: response.data.token,
-    //         email: response.data.email,
-    //         username: response.data.username,
-    //       },
-    //     });
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   if (axios.isAxiosError(error)) {
-    //     setError(error?.response?.data);
-    //     showTemporaryModal();
-    //   }
-    // }
+    try {
+      const response = await axiosInstance.post("Security/Login", {
+        username,
+        password,
+      });
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            token: response.data.token,
+            email: response.data.email,
+            username: response.data.username,
+          },
+        });
+        navigate("/partidos");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error?.response?.data);
+        showTemporaryModal();
+      }
+    }
   };
 
   return (

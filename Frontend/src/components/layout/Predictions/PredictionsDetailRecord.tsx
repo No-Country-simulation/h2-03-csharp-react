@@ -1,14 +1,9 @@
-import { Box, Typography } from "@mui/material";
-import PredictionsCard, { PredictionsCardProps } from "./PredictionsCard";
-
-const predictions: PredictionsCardProps[] = [
-  { result: "Barcelona", points: 13, status: "UnearnedPoints" },
-  { result: "Barcelona", points: 13, status: "PointsEarned" },
-];
+//import { Box, Typography } from "@mui/material";
+//import PredictionsCard from "./PredictionsCard";
 
 const PredictionsDetailRecord = () => {
   return (
-    <Box>
+    {/*<Box>
       <Typography variant="h6" sx={{ color: "primary", my: 2 }}>
         Pasadas
       </Typography>
@@ -20,7 +15,7 @@ const PredictionsDetailRecord = () => {
           status={prediction.status}
         />
       ))}
-    </Box>
+    </Box>*/}
   );
 };
 

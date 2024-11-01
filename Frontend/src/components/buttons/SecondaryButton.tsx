@@ -16,7 +16,7 @@ const SecondaryButton: React.FC<SecondaryButtonProps> = ({
   return (
     <Button
       type="submit"
-      variant="contained"
+      variant={!disabled ? "contained" : "outlined"}
       color="primary"
       onClick={onClick}
       disabled={disabled}
@@ -27,8 +27,9 @@ const SecondaryButton: React.FC<SecondaryButtonProps> = ({
         borderRadius: 2,
         background: "rgba(49, 126, 244, 0.31)",
         "&.Mui-disabled": {
-          backgroundColor: "secondary.light",
-          color: "primary.light",
+          background: "transparent",
+          color: "#B1B1B1",
+          borderColor: "#B1B1B1"
         },
       }}
     >

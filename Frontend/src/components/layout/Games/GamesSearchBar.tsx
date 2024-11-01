@@ -3,7 +3,7 @@ import { Box, Button, InputAdornment, TextField } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
 import GamesSearch from "./GamesSearch";
 
-const GamesSearchBar = () => {
+const GamesSearchBar = ({ search }: { search?: string }) => {
   const [cancel, setCancel] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -26,11 +26,12 @@ const GamesSearchBar = () => {
         gap: 2,
         m: 3,
         zIndex: 1000,
+        borderRadius: 2
       }}
     >
       <TextField
         value={searchValue}
-        placeholder="Busca un jugador"
+        placeholder={search == "game" ? "Busca un partido" : "Busca un jugador"}
         color="primary"
         size="small"
         onChange={handleChange}
@@ -44,11 +45,11 @@ const GamesSearchBar = () => {
             ),
           },
         }}
-        sx={{ width: "100%", backgroundColor: "#EFEFF0" }}
+        sx={{ width: "100%", backgroundColor: "#EFEFF0", borderRadius: 2 }}
       />
       {cancel && (
         <Button
-          color="secondary"
+          color={"secondary"}
           onClick={handleCancel}
           sx={{ textTransform: "none" }}
         >

@@ -1,15 +1,19 @@
 import { Box, Divider, Stack } from "@mui/material";
-import { games } from "../../../utils/games";
 import GamesGameBadgeContainer from "./GamesGameBadgeContainer";
 import GamesGameBadge from "./GamesGameBadge";
+import { useGameContext } from "../../../hooks/useGameContext";
 
 const GamesDetailSchedule = () => {
-  const schedules = ["En vivo", "Entre tiempo"];
+  const { games, dateValue } = useGameContext();
+
+  const schedules: string[] | undefined = games
+    ?.filter((game) => game.date == dateValue)
+    .map((game) => game.time);
 
   return (
     <Stack>
-      {schedules.map((schedule, index) => (
-        <Box sx={{ minHeight: 200 }}>
+      {schedules?.map((schedule, index) => (
+        <Box key={index} sx={{ minHeight: 200 }}>
           <Divider
             key={index}
             textAlign="left"
@@ -23,9 +27,13 @@ const GamesDetailSchedule = () => {
           </Divider>
           {games &&
             games
-              .filter((game) => game.state == schedule && game.state )
+              .filter((game) => game.date == dateValue)
+              .filter((game) => game.time == schedule && game.time)
               .map((game, index) => (
-                <GamesGameBadgeContainer key={index} league={game.league}>
+                <GamesGameBadgeContainer
+                  key={index}
+                  league={game.stageAPI.leagueAPI.name}
+                >
                   <GamesGameBadge gameData={game} />
                 </GamesGameBadgeContainer>
               ))}

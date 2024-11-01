@@ -3,7 +3,7 @@ import { useGameContext } from "../../../hooks/useGameContext";
 
 interface BadgeContentProps {
   label: string | undefined;
-  number: number;
+  number: number | undefined;
 }
 
 const BadgeContent: React.FC<BadgeContentProps> = ({ label, number }) => {
@@ -16,7 +16,7 @@ const BadgeContent: React.FC<BadgeContentProps> = ({ label, number }) => {
         elevation={0}
         sx={{ py: 0.5, px: 4, borderRadius: 2, border: "1px solid grey" }}
       >
-        {number}%
+        {number}
       </Paper>
     </Stack>
   );
@@ -43,9 +43,15 @@ const GameDetailFinalResult = () => {
           p: 2,
         }}
       >
-        <BadgeContent label={game?.local.name} number={48} />
-        <BadgeContent label="Empate" number={12} />
-        <BadgeContent label={game?.visit.name} number={40} />
+        <BadgeContent
+          label={game?.teamsAPI.homeAPI.teamAPI.name}
+          number={game?.oddsAPI.home}
+        />
+        <BadgeContent label="Empate" number={game?.oddsAPI.draw} />
+        <BadgeContent
+          label={game?.teamsAPI.awayAPI.teamAPI.name}
+          number={game?.oddsAPI.away}
+        />
       </Stack>
     </Paper>
   );

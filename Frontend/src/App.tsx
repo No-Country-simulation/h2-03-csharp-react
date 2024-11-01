@@ -13,6 +13,7 @@ import GameDetailPage from "./pages/GameDetailPage";
 import DivisionsPage from "./pages/DivisionsPage";
 import ProfilePage from "./pages/ProfilePage";
 import Footer from "./components/layout/Footer";
+import ScrollToTop from "./components/layout/ScrollToTop";
 import TokensPage from "./pages/TokensPage";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <GameProvider>
         <PredictionsProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/ingresar" element={<Login />} />

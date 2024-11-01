@@ -61,40 +61,40 @@ const RegisterForm = () => {
       return;
     }
 
-    // try {
-    //   const response = await axiosInstance.post("Security/Register", {
-    //     name,
-    //     lastName,
-    //     email,
-    //     password,
-    //     confirmPassword,
-    //     secondLastName: "Prueba",
-    //     phoneNumber,
-    //     isMale: true,
-    //     isSocialLogin: true,
-    //     loginTypeId: 0,
-    //     birthDate: formatDate(birthDate),
-    //   });
+    try {
+      const response = await axiosInstance.post("Security/Register", {
+        name,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        secondLastName: "Prueba",
+        phoneNumber,
+        isMale: true,
+        isSocialLogin: true,
+        loginTypeId: 0,
+        birthDate: formatDate(birthDate),
+      });
 
-    //   if (response.data.token) {
-    //     localStorage.setItem("token", response.data.token);
-    //     dispatch({
-    //       type: "LOGIN_SUCCESS",
-    //       payload: {
-    //         token: response.data.token,
-    //         email: response.data.email,
-    //         username: response.data.username,
-    //       },
-    //     });
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   if (axios.isAxiosError(error)) {
-    //     setError(error?.response?.data);
-    //     showTemporaryModal();
-    //     return;
-    //   }
-    // }
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            token: response.data.token,
+            email: response.data.email,
+            username: response.data.username,
+          },
+        });
+        navigate("/partidos");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error?.response?.data);
+        showTemporaryModal();
+        return;
+      }
+    }
   };
 
   return (
