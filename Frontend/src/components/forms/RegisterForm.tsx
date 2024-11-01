@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, InputAdornment } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../hooks/UserContext";
-import { axiosInstance } from "../../utils/axios";
+// import { useNavigate } from "react-router-dom";
+// import { useUserContext } from "../../hooks/UserContext";
 import FormErrorModal from "../modals/FormErrorModal";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import axios from "axios";
+// import axios from "axios";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -18,8 +17,8 @@ const RegisterForm = () => {
   const [birthDate, setBirthDate] = useState("");
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const { dispatch } = useUserContext();
-  const navigate = useNavigate();
+  // const { dispatch } = useUserContext();
+  // const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
     const re =
@@ -38,10 +37,10 @@ const RegisterForm = () => {
     }, 3000);
   };
 
-  const formatDate = (date: string) => {
-    const [day, month, year] = date.split("-");
-    return `${year}/${month}/${day}`;
-  };
+  // const formatDate = (date: string) => {
+  //   const [day, month, year] = date.split("-");
+  //   return `${year}/${month}/${day}`;
+  // };
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,40 +61,40 @@ const RegisterForm = () => {
       return;
     }
 
-    try {
-      const response = await axiosInstance.post("Security/Register", {
-        name,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-        secondLastName: "Prueba",
-        phoneNumber,
-        isMale: true,
-        isSocialLogin: true,
-        loginTypeId: 0,
-        birthDate: formatDate(birthDate),
-      });
+    // try {
+    //   const response = await axiosInstance.post("Security/Register", {
+    //     name,
+    //     lastName,
+    //     email,
+    //     password,
+    //     confirmPassword,
+    //     secondLastName: "Prueba",
+    //     phoneNumber,
+    //     isMale: true,
+    //     isSocialLogin: true,
+    //     loginTypeId: 0,
+    //     birthDate: formatDate(birthDate),
+    //   });
 
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: {
-            token: response.data.token,
-            email: response.data.email,
-            username: response.data.username,
-          },
-        });
-        navigate("/");
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setError(error?.response?.data);
-        showTemporaryModal();
-        return;
-      }
-    }
+    //   if (response.data.token) {
+    //     localStorage.setItem("token", response.data.token);
+    //     dispatch({
+    //       type: "LOGIN_SUCCESS",
+    //       payload: {
+    //         token: response.data.token,
+    //         email: response.data.email,
+    //         username: response.data.username,
+    //       },
+    //     });
+    //     navigate("/");
+    //   }
+    // } catch (error) {
+    //   if (axios.isAxiosError(error)) {
+    //     setError(error?.response?.data);
+    //     showTemporaryModal();
+    //     return;
+    //   }
+    // }
   };
 
   return (

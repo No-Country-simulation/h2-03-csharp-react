@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Box, Button, InputAdornment, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../hooks/UserContext";
-import { axiosInstance } from "../../utils/axios";
+// import { useNavigate } from "react-router-dom";
+// import { useUserContext } from "../../hooks/UserContext";
 import FormErrorModal from "../modals/FormErrorModal";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import axios from "axios";
+// import axios from "axios";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -13,8 +12,8 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const { dispatch } = useUserContext();
-  const navigate = useNavigate();
+  // const { dispatch } = useUserContext();
+  // const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
     const re =
@@ -45,29 +44,29 @@ const LoginForm = () => {
       showTemporaryModal();
       return;
     }
-    try {
-      const response = await axiosInstance.post("Security/Login", {
-        username,
-        password,
-      });
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: {
-            token: response.data.token,
-            email: response.data.email,
-            username: response.data.username,
-          },
-        });
-        navigate("/");
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setError(error?.response?.data);
-        showTemporaryModal();
-      }
-    }
+    // try {
+    //   const response = await axiosInstance.post("Security/Login", {
+    //     username,
+    //     password,
+    //   });
+    //   if (response.data.token) {
+    //     localStorage.setItem("token", response.data.token);
+    //     dispatch({
+    //       type: "LOGIN_SUCCESS",
+    //       payload: {
+    //         token: response.data.token,
+    //         email: response.data.email,
+    //         username: response.data.username,
+    //       },
+    //     });
+    //     navigate("/");
+    //   }
+    // } catch (error) {
+    //   if (axios.isAxiosError(error)) {
+    //     setError(error?.response?.data);
+    //     showTemporaryModal();
+    //   }
+    // }
   };
 
   return (
