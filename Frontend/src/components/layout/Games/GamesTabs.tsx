@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "@mui/material";
-import dates from "../../../utils/predictions-tab-dates";
+import dates from "../../../utils/games-tab-dates";
 import { useGameContext } from "../../../hooks/useGameContext";
 
 const GamesTabs = () => {
@@ -22,7 +22,7 @@ const GamesTabs = () => {
               width: "33%",
               color: "white",
               "&.Mui-selected": {
-                color: "primary",
+                color: "secondary.contrastText",
               },
             }}
           />

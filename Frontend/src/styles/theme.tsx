@@ -13,6 +13,7 @@ const theme = createTheme({
       light: "#F3F4F5",//Gris claro
       main: "#317EF4",//Celeste
       dark: "#181818",//Gris oscuro
+      contrastText: "#C694FF"
     },
     error: {
       main: red.A400,

@@ -27,7 +27,22 @@ const getGames = async () => {
   }
 };
 
+const getGamesResults = async () => {
+  try {
+    const response = await wakiBack.get(
+      "/Match/GetAllMatchesResults?PageSize=2000"
+    );
+    return {
+      status: response.status,
+      data: response.data,
+    };
+  } catch (error) {
+    serverError(error);
+  }
+};
+
 export default {
   getLeagues,
   getGames,
+  getGamesResults,
 };

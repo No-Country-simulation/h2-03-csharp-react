@@ -1,6 +1,7 @@
 import "./App.css";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoutes from "./components/layout/ProtectedRoutes";
 import { UserProvider } from "./hooks/UserContext";
 import { GameProvider } from "./context/GameContext";
 import { PredictionsProvider } from "./context/PredictionsContext";
@@ -26,12 +27,18 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/ingresar" element={<Login />} />
-              <Route path="/predicciones" element={<PredictionsPage />} />
-              <Route path="/partidos" element={<GamesPage />} />
-              <Route path="/partidos/:partidoId" element={<GameDetailPage />} />
-              <Route path="/divisiones" element={<DivisionsPage />} />
-              <Route path="/tokens" element={<TokensPage />} />
-              <Route path="/perfil" element={<ProfilePage />} />
+              <Route path="/" element={<ProtectedRoutes />}>
+                <Route path="/predicciones" element={<PredictionsPage />} />
+                <Route path="/partidos" element={<GamesPage />} />
+                <Route
+                  path="/partidos/:partidoId"
+                  element={<GameDetailPage />}
+                />
+                <Route path="/divisiones" element={<DivisionsPage />} />
+                <Route path="/tokens" element={<TokensPage />} />
+                <Route path="/perfil" element={<ProfilePage />} />
+                <Route path="*" element={<Navigate to="/login" replace />} />
+              </Route>
             </Routes>
             <Footer />
           </BrowserRouter>

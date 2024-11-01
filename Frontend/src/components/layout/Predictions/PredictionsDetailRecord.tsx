@@ -1,21 +1,24 @@
-//import { Box, Typography } from "@mui/material";
-//import PredictionsCard from "./PredictionsCard";
+import { Box, Typography } from "@mui/material";
+import PredictionsCard from "./PredictionsCard";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 
 const PredictionsDetailRecord = () => {
+  const { predictions } = usePredictionsContext();
+
+  const bets = predictions?.flatMap(betOfDay=>betOfDay.betList).flatMap(bet=>bet.listMatch)
+
   return (
-    {/*<Box>
+    <Box>
       <Typography variant="h6" sx={{ color: "primary", my: 2 }}>
         Pasadas
       </Typography>
-      {predictions?.map((prediction, index) => (
+      {bets?.map((bet, index) => (
         <PredictionsCard
           key={index}
-          result={prediction.result}
-          points={prediction.points}
-          status={prediction.status}
+          bet={bet}
         />
       ))}
-    </Box>*/}
+    </Box>
   );
 };
 

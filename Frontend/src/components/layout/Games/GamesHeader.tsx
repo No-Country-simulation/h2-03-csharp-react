@@ -26,7 +26,7 @@ const GamesHeader = () => {
           <Typography
             variant="h5"
             align="center"
-            color="primary"
+            color="secondary.contrastText"
             sx={{ fontWeight: 600 }}
           >
             Partidos

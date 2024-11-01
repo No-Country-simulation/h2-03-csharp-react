@@ -16,7 +16,7 @@ const PredictionsTabs = () => {
         "& .MuiTabs-indicator": { backgroundColor: "white" },
       }}
     >
-      {/*<Tab label="Todos" value={"Todos"} />*/}
+      <Tab label="Todos" value={"Todos"} />
       {dates.generateDates().map((date, index) => (
         <Tab key={index} label={dates.dateFormat(date)} value={date} />
       ))}

@@ -29,6 +29,9 @@ const MatchDetailTabs = () => {
           sx={{
             textTransform: "none",
             color: "white",
+            "&.Mui-selected": {
+                color: "secondary.contrastText",
+              },
           }}
         />
       ))}
