@@ -2,14 +2,14 @@ import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PredictionsTabs from "./PredictionsTabs";
 import PredictionsBuyPaper from "./PredictionsBuyPaper";
-import GameNavButton from "../../buttons/GameNavButton";
-import { useGameContext } from "../../../hooks/useGameContext";
+import GameNavButton from "../../buttons/MatchNavButton";
+import { useMatchContext } from "../../../hooks/useMatchContext";
 import dates from "../../../utils/predictions-tab-dates";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 
 const PredictionsHeader = () => {
   const theme = useTheme();
-  const { dateValue } = useGameContext();
+  const { dateValue } = useMatchContext();
   const { predictions } = usePredictionsContext();
 
   return (

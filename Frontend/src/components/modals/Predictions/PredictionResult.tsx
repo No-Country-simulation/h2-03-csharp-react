@@ -1,8 +1,8 @@
 import { Stack, Typography } from "@mui/material";
-import { GameData } from "../../../context/GameContext";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
+import { MatchForPredictionsData } from "../../../types/MatchesTypes";
 
-const PredictionResult = ({ game }: { game: GameData }) => {
+const PredictionResult = ({ match }: { match: MatchForPredictionsData }) => {
   const { winner, setPredictionWinner } = usePredictionsContext();
 
   return (
@@ -39,15 +39,15 @@ const PredictionResult = ({ game }: { game: GameData }) => {
           }}
         >
           <img
-            src={game.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
+            src={match.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
             width={48}
             height={48}
           />
           <Typography noWrap fontWeight="bold" sx={{ maxWidth: 100 }}>
-            {game.teamsAPI.homeAPI.teamAPI.name}
+            {match.teamsAPI.homeAPI.teamAPI.name}
           </Typography>
           <Typography variant="caption">
-            {Math.ceil(game.oddsAPI.home * 10)}
+            {Math.ceil(match.oddsAPI.home * 10)}
           </Typography>
         </Stack>
         <Stack
@@ -64,15 +64,15 @@ const PredictionResult = ({ game }: { game: GameData }) => {
           }}
         >
           <img
-            src={game.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
+            src={match.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
             width={48}
             height={48}
           />
           <Typography noWrap fontWeight="bold" sx={{ maxWidth: 100 }}>
-            {game.teamsAPI.awayAPI.teamAPI.name}
+            {match.teamsAPI.awayAPI.teamAPI.name}
           </Typography>
           <Typography variant="caption">
-            {Math.ceil(game.oddsAPI.away * 10)}
+            {Math.ceil(match.oddsAPI.away * 10)}
           </Typography>
         </Stack>
       </Stack>
@@ -91,7 +91,7 @@ const PredictionResult = ({ game }: { game: GameData }) => {
         }}
       >
         <Typography fontWeight="bold">Empate</Typography>
-        <Typography>{Math.ceil(game.oddsAPI.draw * 10)}</Typography>
+        <Typography>{Math.ceil(match.oddsAPI.draw * 10)}</Typography>
       </Stack>
     </Stack>
   );

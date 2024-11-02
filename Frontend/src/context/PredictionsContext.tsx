@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useGameContext } from "../hooks/useGameContext";
+import { useMatchContext } from "../hooks/useMatchContext";
 import {
   createBetList,
   prediction,
@@ -23,7 +23,7 @@ const PredictionsProvider: React.FC<PredictionsProviderProps> = ({
   const [predictionType, setPredictionType] = useState<string | null>(null);
   const [openModals, setOpenModals] = useState<number | boolean>(false);
 
-  const { game } = useGameContext();
+  const { match } = useMatchContext();
   const { state } = useUserContext();
 
   useEffect(() => {
@@ -46,9 +46,9 @@ const PredictionsProvider: React.FC<PredictionsProviderProps> = ({
   };
 
   const handleCreateBet = async () => {
-    if (game && winner) {
+    if (match && winner) {
       const matchBet = {
-        matchPublicKey: game?.entityPublicKey,
+        matchPublicKey: match?.entityPublicKey,
         winnerPrediction: winner,
       };
       setBets({

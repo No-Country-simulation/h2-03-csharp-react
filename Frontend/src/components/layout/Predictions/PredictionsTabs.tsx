@@ -1,9 +1,9 @@
 import { Tab, Tabs } from "@mui/material";
 import dates from "../../../utils/predictions-tab-dates";
-import { useGameContext } from "../../../hooks/useGameContext";
+import { useMatchContext } from "../../../hooks/useMatchContext";
 
 const PredictionsTabs = () => {
-  const { dateValue, handleChangeDate } = useGameContext();
+  const { dateValue, handleChangeDate } = useMatchContext();
 
   return (
     <Tabs

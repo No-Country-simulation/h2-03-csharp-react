@@ -2,8 +2,8 @@ import { Box, Paper, Typography } from "@mui/material";
 import MainButton from "../../buttons/MainButton";
 //import PredictionsDetailRecord from "./PredictionsDetailRecord";
 import PredictionsDetailActive from "./PredictionsDetailActive";
-import { useGameContext } from "../../../hooks/useGameContext";
-import PredictionsGamesListModal from "../../modals/Predictions/PredictionsGamesListModal";
+import { useMatchContext } from "../../../hooks/useMatchContext";
+import PredictionsGamesListModal from "../../modals/Predictions/PredictionsMatchesListModal";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 import PredictionsByDayModal from "../../modals/Predictions/PredictionsByDayModal";
 import PredictionsModal from "../../modals/Predictions/PredictionsModal";
@@ -12,10 +12,9 @@ import ComingSoonModal from "../../modals/Predictions/ComingSoonModal";
 import PredictionStopModal from "../../modals/Predictions/PredictionStopModal";
 
 const PredictionsDetail = () => {
-  //const { dateValue } = useGameContext();
   const { handleOpenModals } = usePredictionsContext();
 
-  const { game } = useGameContext();
+  const { match } = useMatchContext();
 
   return (
     <Box
@@ -55,7 +54,7 @@ const PredictionsDetail = () => {
       {/*dateValue === "Todos" && <PredictionsDetailRecord />*/}
       <PredictionsGamesListModal />
       <PredictionsByDayModal />
-      {game && <PredictionsModal game={game} />}
+      {match && <PredictionsModal match={match} />}
       <PredictionAddedModal />
       <ComingSoonModal />
       <PredictionStopModal />

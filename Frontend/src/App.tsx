@@ -3,14 +3,14 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoutes from "./components/layout/ProtectedRoutes";
 import { UserProvider } from "./hooks/UserContext";
-import { GameProvider } from "./context/GameContext";
+import { MatchProvider } from "./context/MatchContext";
 import { PredictionsProvider } from "./context/PredictionsContext";
 
 import Home from "./pages/Home";
 import Login from "./pages/LoginPage";
 import PredictionsPage from "./pages/PredictionsPage";
-import GamesPage from "./pages/GamesPage";
-import GameDetailPage from "./pages/GameDetailPage";
+import MatchesPage from "./pages/MatchesPage";
+import GameDetailPage from "./pages/MatchesDetailPage";
 import DivisionsPage from "./pages/DivisionsPage";
 import ProfilePage from "./pages/ProfilePage";
 import Footer from "./components/layout/Footer";
@@ -20,7 +20,7 @@ import TokensPage from "./pages/TokensPage";
 function App() {
   return (
     <UserProvider>
-      <GameProvider>
+      <MatchProvider>
         <PredictionsProvider>
           <BrowserRouter>
             <ScrollToTop />
@@ -29,7 +29,7 @@ function App() {
               <Route path="/ingresar" element={<Login />} />
               <Route path="/" element={<ProtectedRoutes />}>
                 <Route path="/predicciones" element={<PredictionsPage />} />
-                <Route path="/partidos" element={<GamesPage />} />
+                <Route path="/partidos" element={<MatchesPage />} />
                 <Route
                   path="/partidos/:partidoId"
                   element={<GameDetailPage />}
@@ -43,7 +43,7 @@ function App() {
             <Footer />
           </BrowserRouter>
         </PredictionsProvider>
-      </GameProvider>
+      </MatchProvider>
     </UserProvider>
   );
 }

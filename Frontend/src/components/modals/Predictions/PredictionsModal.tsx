@@ -8,15 +8,15 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { GameData } from "../../../context/GameContext";
 import { RxCross1 } from "react-icons/rx";
 import MainButton from "../../buttons/MainButton";
 import SecondaryButton from "../../buttons/SecondaryButton";
 import PredictionsCount from "./PredictionsCount";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 import PredictionResult from "./PredictionResult";
+import { MatchForPredictionsData } from "../../../types/MatchesTypes";
 
-const PredictionsModal = ({ game }: { game: GameData }) => {
+const PredictionsModal = ({ match }: { match: MatchForPredictionsData }) => {
   const theme = useTheme();
 
   const {
@@ -83,7 +83,7 @@ const PredictionsModal = ({ game }: { game: GameData }) => {
               },
             }}
           />
-          {predictionType == "result" && <PredictionResult game={game} />}
+          {predictionType == "result" && <PredictionResult match={match} />}
           <Stack
             direction="row"
             sx={{
@@ -132,21 +132,21 @@ const PredictionsModal = ({ game }: { game: GameData }) => {
             <Typography>Resumen:</Typography>
             <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
               <Typography noWrap sx={{ maxWidth: 120 }}>
-                {game.teamsAPI.homeAPI.teamAPI.name}
+                {match.teamsAPI.homeAPI.teamAPI.name}
               </Typography>
               <img
-                src={game.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
+                src={match.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
                 width={18}
                 height={18}
               />
               <Typography>vs</Typography>
               <img
-                src={game.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
+                src={match.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
                 width={18}
                 height={18}
               />
               <Typography noWrap sx={{ maxWidth: 120 }}>
-                {game.teamsAPI.awayAPI.teamAPI.name}
+                {match.teamsAPI.awayAPI.teamAPI.name}
               </Typography>
             </Stack>
             {winner && (
@@ -156,9 +156,9 @@ const PredictionsModal = ({ game }: { game: GameData }) => {
               >
                 <Typography>Resultado final:</Typography>
                 <Typography>
-                  {winner === "home" && Math.ceil(game.oddsAPI.home * 10)}
-                  {winner === "draw" && Math.ceil(game.oddsAPI.draw * 10)}
-                  {winner === "away" && Math.ceil(game.oddsAPI.away * 10)}
+                  {winner === "home" && Math.ceil(match.oddsAPI.home * 10)}
+                  {winner === "draw" && Math.ceil(match.oddsAPI.draw * 10)}
+                  {winner === "away" && Math.ceil(match.oddsAPI.away * 10)}
                 </Typography>
               </Stack>
             )}
@@ -180,9 +180,9 @@ const PredictionsModal = ({ game }: { game: GameData }) => {
               >
                 <Typography variant="h6">Puntos totales</Typography>
                 <Typography variant="h6">
-                  {winner === "home" && Math.ceil(game.oddsAPI.home * 10)}
-                  {winner === "draw" && Math.ceil(game.oddsAPI.draw * 10)}
-                  {winner === "away" && Math.ceil(game.oddsAPI.away * 10)}
+                  {winner === "home" && Math.ceil(match.oddsAPI.home * 10)}
+                  {winner === "draw" && Math.ceil(match.oddsAPI.draw * 10)}
+                  {winner === "away" && Math.ceil(match.oddsAPI.away * 10)}
                 </Typography>
               </Stack>
             )}
