@@ -1,5 +1,6 @@
-import { Stack, useTheme } from "@mui/material";
+import { Stack } from "@mui/material";
 import LandpageSection from "../components/layout/landpage/LandpageSection"
+import LpgFirstSection from "../components/layout/landpage/LpgFirstSection";
 
 const Home = () => {
   return (
@@ -11,7 +12,9 @@ const Home = () => {
         background: "black",
       }}
     >
-      <LandpageSection/>
+      <LandpageSection>
+        <LpgFirstSection/>
+      </LandpageSection>
     </Stack>
   );
 };

@@ -1,13 +1,16 @@
+import { ReactNode } from "react"
 import Container from '@mui/material/Container';
-import LandpageNavbar from "./LandpageNavbar";
 
+interface Props {
+    children: ReactNode,
+}
 
-const LandpageSection = () => {
-    return (
-        <Container maxWidth="lg">
-            <LandpageNavbar/>
-        </Container>
-    );
+const LandpageSection = ({ children }: Props) => {
+	return (
+		<Container maxWidth="lg">
+			{children}
+		</Container>
+	);
 }
 
 export default LandpageSection
