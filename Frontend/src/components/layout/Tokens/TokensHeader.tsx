@@ -24,10 +24,6 @@ const TokensHeader: React.FC<TokensHeaderProps> = ({
         paddingTop: 3,
       }}
     >
-      <Typography variant="h6" sx={{ ml: 2, color: "primary.main" }}>
-        Scout Players
-      </Typography>
-
       <Box
         sx={{
           width: "100%",

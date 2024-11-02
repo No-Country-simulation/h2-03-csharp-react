@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Box, Divider, Paper, Typography } from "@mui/material";
-import upDownArrowIcon from "../../../assets/up-down-arrows-icon.svg";
+import upDownArrowIcon from "../../../assets/arrow-up-down-icon.svg";
 import TokensChartTab from "./TokensChartTab";
 
 const TokensPlayersRanking = () => {
   const [order, setOrder] = useState("Valor");
-
-  const [players] = useState([
+  const [players, setPlayers] = useState([
     {
       position: 1,
       name: "Lionel Messi",
@@ -72,15 +71,38 @@ const TokensPlayersRanking = () => {
     },
   ]);
 
+  const handleSort = () => {
+    const sortedPlayers = [...players];
+    if (order === "Valor") {
+      sortedPlayers.sort((a, b) => b.price - a.price);
+    } else if (order === "Liga") {
+      sortedPlayers.sort((a, b) => b.tokens - a.tokens);
+    } else if (order === "Minutos Jugados") {
+      sortedPlayers.sort((a, b) => b.price - a.price);
+    } else if (order === "Asistencia") {
+      sortedPlayers.sort((a, b) => b.price - a.price);
+    } else if (order === "Edad") {
+      sortedPlayers.sort((a, b) => b.price - a.price);
+    }
+    setPlayers(sortedPlayers);
+  };
+
   const handleClick = () => {
     if (order === "Valor") {
-      setOrder("Precio");
-    } else if (order === "Precio") {
-      setOrder("Nombre");
-    } else if (order === "Nombre") {
-      setOrder("Liberados");
-    } else if (order === "Liberados") {
+      setOrder("Liga");
+      handleSort();
+    } else if (order === "Liga") {
+      setOrder("Minutos jugados");
+      handleSort();
+    } else if (order === "Minutos jugados") {
+      setOrder("Asistencia");
+      handleSort();
+    } else if (order === "Asistencia") {
+      setOrder("Edad");
+      handleSort();
+    } else if (order === "Edad") {
       setOrder("Valor");
+      handleSort();
     }
   };
 
