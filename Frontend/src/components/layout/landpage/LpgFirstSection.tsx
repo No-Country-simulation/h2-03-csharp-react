@@ -11,7 +11,12 @@ import { useNavigate } from "react-router-dom";
 const LpgFirstSection = () => {
 	const navigate = useNavigate();
 	return (
-		<Stack>
+		<Stack sx={{
+			height: "100vh",
+			justifyContent: "center",
+			background: "black"
+			}}
+		>
 			<Spline scene="https://prod.spline.design/BQaBZbFbtTUK3GQe/scene.splinecode" style={{position: "absolute", inset: "0px", zIndex: "0px"}}/>
 			<LandpageNavbar/>
 			<LpgFirstTextGroup/>
