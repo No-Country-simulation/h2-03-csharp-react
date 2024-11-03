@@ -210,12 +210,9 @@ namespace WakiBack.BLL
         {
             var customer = await _unitOfWork.Customers.GetByUserEmailAsync(email);
                         
-            var items = await _unitOfWork.Predictions.GetAllPredictionsAsync();
-
-            var myPredictions = items.Where( p => p.CustomerEFId == customer!.Id ).ToList();
-
+            var items = await _unitOfWork.Predictions.GetAllMyPredictionsAsync(customer.Id);          
          
-            return _mapper.Map<IEnumerable<ShowPredictionVM>>(myPredictions);
+            return _mapper.Map<IEnumerable<ShowPredictionVM>>(items);
 
         }
 
