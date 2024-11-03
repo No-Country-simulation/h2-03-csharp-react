@@ -109,7 +109,7 @@ namespace WakiBack.BLL
                 if (DateTime.TryParse(match.Date, out DateTime matchDate))
                 {
                     
-                    if (matchDate.Date != DateTime.Today)
+                    if (matchDate.Date != DateTime.UtcNow.Date)
                     {
                         sumMatchPredictionsFuture++;
                     }
