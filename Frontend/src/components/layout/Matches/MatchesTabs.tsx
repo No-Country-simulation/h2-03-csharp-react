@@ -1,14 +1,14 @@
 import { Tab, Tabs } from "@mui/material";
 import dates from "../../../utils/matches-tab-dates";
-import { useMatchContext } from "../../../hooks/useMatchContext";
+import { useDatesContext } from "../../../hooks/useDatesContext";
 
 const MatchesTabs = () => {
-  const { dateValue, handleChangeDate } = useMatchContext();
+  const { dateMatchValue, handleChangeMatchDate } = useDatesContext();
   
   return (
     <Tabs
-      value={dateValue}
-      onChange={handleChangeDate}
+      value={dateMatchValue}
+      onChange={handleChangeMatchDate}
       indicatorColor="primary"
       variant="scrollable"
     >

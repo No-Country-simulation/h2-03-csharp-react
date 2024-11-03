@@ -1,22 +1,27 @@
-export const convertUtcToLocalTime = (utcTime: string) => {
+interface ConvertDateTime {
+  adjustedDate: string;
+  adjustedTime: string;
+}
 
-  const [hours, minutes] = utcTime.split(":").map(Number);
-  const utcDate = new Date(
-    Date.UTC(
-      new Date().getUTCFullYear(),
-      new Date().getUTCMonth(),
-      new Date().getUTCDate(),
-      hours,
-      minutes
-    )
-  );
+export const convertUtcToLocalDateTime = (
+  utcDate: string,
+  utcTime: string
+): ConvertDateTime => {
+  const [day, month, year] = utcDate.split("/");
+  const formattedDate = `${year}-${month}-${day}`;
 
-  const localHours = utcDate.getHours();
-  const localMinutes = utcDate.getMinutes();
+  const utcDateTime = new Date(`${formattedDate}T${utcTime}:00Z`);
 
-  const formattedLocalTime =
-    localHours.toString().padStart(2, "0") +
-    ":" +
-    localMinutes.toString().padStart(2, "0");
-  return formattedLocalTime;
+  const localDateTime = new Date(utcDateTime);
+
+  const localDay = localDateTime.getDate().toString().padStart(2, "0");
+  const localMonth = (localDateTime.getMonth() + 1).toString().padStart(2, "0");
+  const localYear = localDateTime.getFullYear();
+  const localHours = localDateTime.getHours().toString().padStart(2, "0");
+  const localMinutes = localDateTime.getMinutes().toString().padStart(2, "0");
+
+  const adjustedDate = `${localDay}/${localMonth}/${localYear}`;
+  const adjustedTime = `${localHours}:${localMinutes}`;
+
+  return { adjustedDate, adjustedTime };
 };

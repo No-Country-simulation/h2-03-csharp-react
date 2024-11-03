@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -9,17 +9,27 @@ import {
   Typography,
 } from "@mui/material";
 import { SlArrowDown } from "react-icons/sl";
-import { LeagueData, MatchForPredictionsData } from "../../../types/MatchesTypes";
-import setLeagueIcon from "../../../utils/league-set-icons";
+import {
+  LeagueData,
+  MatchForPredictionsData,
+} from "../../../types/MatchesTypes";
 import capitalize from "../../../utils/capitalize";
 import { useMatchContext } from "../../../hooks/useMatchContext";
 import MatchesMatchBadge from "./MatchesMatchBadge";
+import { useDatesContext } from "../../../hooks/useDatesContext";
 
 const MatchesDetailLeagues = () => {
   const [expanded, setExpanded] = useState<number | false>(false);
-  const [matchesData, setMatchesData] = useState<MatchForPredictionsData[] | undefined>([]);
+  const [matchesData, setMatchesData] = useState<
+    MatchForPredictionsData[] | undefined
+  >([]);
 
-  const { leagues, matchesForPredictions, dateValue } = useMatchContext();
+  const { leagues, matchesForPredictions } = useMatchContext();
+  const { dateMatchValue } = useDatesContext()
+
+  useEffect(() => {
+    setMatchesData(matchesForPredictions);
+  }, [matchesForPredictions]);
 
   const handleChange =
     (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -36,7 +46,7 @@ const MatchesDetailLeagues = () => {
     leagues && (
       <Paper elevation={3}>
         {leagues.map((league: LeagueData, index: number) => {
-          const icon = setLeagueIcon(league.name);
+
           return (
             <Accordion
               key={index}
@@ -60,7 +70,7 @@ const MatchesDetailLeagues = () => {
                 }
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                  <img width={32} height={32} src={league.logoUrl || icon} />
+                  <img width={32} height={32} src={league.logoUrl || ""} />
                   <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
                     {capitalize(league.country.name)}
                   </Typography>
@@ -70,7 +80,7 @@ const MatchesDetailLeagues = () => {
               <AccordionDetails sx={{ minHeight: 150, p: 0 }}>
                 {matchesData &&
                   matchesData
-                    .filter((match) => match.date === dateValue)
+                    .filter((match) => match.adjustedDate === dateMatchValue)
                     .filter(
                       (match) => match.stageAPI.leagueAPI.name === league.name
                     )

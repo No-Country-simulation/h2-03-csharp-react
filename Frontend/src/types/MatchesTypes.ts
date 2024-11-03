@@ -13,6 +13,8 @@ export interface LeagueData {
 export interface MatchForPredictionsData {
   date: string;
   time: string;
+  adjustedDate?: string;
+  adjustedTime?: string;
   stageAPI: {
     name: string;
     isActive: boolean;
@@ -61,6 +63,4 @@ export interface MatchContextProps {
   match: MatchForPredictionsData | undefined;
   setMatchData: (match: MatchForPredictionsData) => void;
   setMatchDataByParam: (param: string) => void;
-  dateValue: string | undefined;
-  handleChangeDate: (event: React.SyntheticEvent, newValue: string) => void;
 }

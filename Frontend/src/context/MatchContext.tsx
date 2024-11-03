@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import matches from "../services/matches";
-import dates from "../utils/predictions-tab-dates";
 import {
   MatchContextProps,
   MatchForPredictionsData,
@@ -8,29 +7,94 @@ import {
   LeagueData,
 } from "../types/MatchesTypes";
 import { useUserContext } from "../hooks/UserContext";
+import { useDatesContext } from "../hooks/useDatesContext";
+import { convertUtcToLocalDateTime } from "../utils/local-time";
 
 const MatchContext = createContext<MatchContextProps | null>(null);
 
 const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
-  const dateValues = dates.generateDates();
-
   const [leagues, setLeagues] = useState<LeagueData[]>([]);
   const [matchesForPredictions, setMatchesForPredictions] = useState<
     MatchForPredictionsData[]
   >([]);
   const [match, setMatch] = useState<MatchForPredictionsData | undefined>();
-  const [dateValue, setDateValues] = useState<string>(dateValues[0]);
 
   const { state } = useUserContext();
+  const { datesMatchesForPredictionsValues, datesMatchesResultsValues } =
+    useDatesContext();
 
   useEffect(() => {
+    const matchesData = async () => {
+      try {
+        const matchesPromise: Promise<MatchForPredictionsData[]>[] =
+          datesMatchesForPredictionsValues.map((date) =>
+            matches
+              .getMatchesForPredictions(date)
+              .then((res) => {
+                if (res?.status == 404) {
+                  console.warn(`Datos no encontrados para ${date}`);
+                  return [];
+                } else if (!res?.data) {
+                  console.warn(`Error en la repuesta para ${date}`);
+                  return [];
+                }
+                return res.data.items as Promise<MatchForPredictionsData[]>;
+              })
+              .catch(() => {
+                return [];
+              })
+          );
+
+        const matchesResultsPromise: Promise<MatchForPredictionsData[]>[] =
+          datesMatchesResultsValues.map((date) =>
+            matches
+              .getMatchesResults(date)
+              .then((res) => {
+                if (res?.status == 404) {
+                  console.warn(`Datos no encontrados para ${date}`);
+                  return [];
+                } else if (!res?.data) {
+                  console.warn(`Error en la repuesta para ${date}`);
+                  return [];
+                }
+                return res.data.items as Promise<MatchForPredictionsData[]>;
+              })
+              .catch(() => {
+                return [];
+              })
+          );
+
+        const [firstResult, seconsdResult] = await Promise.all([
+          Promise.all(matchesPromise),
+          Promise.all(matchesResultsPromise),
+        ]);
+        const combinedResults = [
+          ...firstResult.flat(),
+          ...seconsdResult.flat(),
+        ];
+        setMatchesForPredictions(
+          combinedResults.map((match: MatchForPredictionsData) => {
+            const { adjustedDate, adjustedTime } = convertUtcToLocalDateTime(
+              match.date,
+              match.time
+            );
+            return {
+              ...match,
+              adjustedDate,
+              adjustedTime,
+            };
+          })
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     if (state.token) {
       matches.getLeagues().then((res) => setLeagues(res?.data));
-      matches
-        .getMatchesForPredictions()
-        .then((res) => setMatchesForPredictions(res?.data.items));
+      matchesData();
     }
-  }, [state]);
+  }, [state, datesMatchesForPredictionsValues, datesMatchesResultsValues]);
 
   const setMatchData = (game: MatchForPredictionsData) => {
     setMatch(game);
@@ -43,11 +107,6 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     setMatch(matchData);
   };
 
-  const handleChangeDate = (event: React.SyntheticEvent, newValue: string) => {
-    setDateValues(newValue);
-    event.preventDefault();
-  };
-
   return (
     <MatchContext.Provider
       value={{
@@ -56,8 +115,6 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
         match,
         setMatchData,
         setMatchDataByParam,
-        dateValue,
-        handleChangeDate,
       }}
     >
       {children}

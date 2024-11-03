@@ -28,8 +28,16 @@ const MatchDetailResult = () => {
           </Typography>
         </Stack>
         <Stack>
-          <Typography variant="h6" align="center">{dates.dateFormat(match.date)}</Typography>
-          <Typography variant="h3">{match.time}</Typography>
+          <Typography variant="h6" align="center">
+            {match.adjustedDate && match.winner === "tbd"
+              ? dates.dateFormat(match.adjustedDate)
+              : "Finalizado"}
+          </Typography>
+          <Typography variant="h3">
+            {match.winner === "tbd"
+              ? match.adjustedTime
+              : `${match.homeFtGoals} - ${match.awayFtGoals}`}
+          </Typography>
         </Stack>
         <Stack sx={{ gap: 1 }}>
           <img

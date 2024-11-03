@@ -8,7 +8,6 @@ import { useMatchContext } from "../../../hooks/useMatchContext";
 import GameStatsModal from "../../modals/Matches/MatchStatsModal";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
-import { convertUtcToLocalTime } from "../../../utils/local-time";
 
 interface MatchesMatchBadgeProps {
   matchData: MatchForPredictionsData;
@@ -23,8 +22,12 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
   const navigate = useNavigate();
 
   const { setMatchData } = useMatchContext();
-  const { setPredictionWinner, openModals, handleOpenModals, handlePredictionType } =
-    usePredictionsContext();
+  const {
+    setPredictionWinner,
+    openModals,
+    handleOpenModals,
+    handlePredictionType,
+  } = usePredictionsContext();
 
   const handleGameDetail = () => {
     if (!openStats && !openModals) {
@@ -43,7 +46,7 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
     selected: string
   ) => {
     setPredictionWinner(selected);
-    handlePredictionType("result")
+    handlePredictionType("result");
     handleOpenModals(2);
     event.stopPropagation();
   };
@@ -101,7 +104,9 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
               <IoStatsChartSharp />
             </IconButton>
             <Typography variant="h6" fontWeight="bold">
-              {convertUtcToLocalTime(matchData.time)}
+              {matchData.winner === "tbd"
+                ? matchData.adjustedTime
+                : `${matchData.homeFtGoals} - ${matchData.awayFtGoals}`}
             </Typography>
             <Typography variant="caption">{" - "}</Typography>
           </Stack>

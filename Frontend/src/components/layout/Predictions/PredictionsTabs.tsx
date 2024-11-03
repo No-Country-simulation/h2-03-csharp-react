@@ -1,14 +1,14 @@
 import { Tab, Tabs } from "@mui/material";
 import dates from "../../../utils/predictions-tab-dates";
-import { useMatchContext } from "../../../hooks/useMatchContext";
+import { useDatesContext } from "../../../hooks/useDatesContext";
 
 const PredictionsTabs = () => {
-  const { dateValue, handleChangeDate } = useMatchContext();
+  const { datePredictionValue, handleChangePredictionDate } = useDatesContext();
 
   return (
     <Tabs
-      value={dateValue}
-      onChange={handleChangeDate}
+      value={datePredictionValue}
+      onChange={handleChangePredictionDate}
       textColor="inherit"
       variant="scrollable"
       sx={{

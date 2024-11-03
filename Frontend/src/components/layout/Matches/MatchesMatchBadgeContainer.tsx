@@ -1,20 +1,17 @@
 import { ReactNode } from "react";
 import { Paper, Stack, Typography } from "@mui/material";
-import setLeagueIcon from "../../../utils/league-set-icons";
 
 interface MatchesMatchBadgeContainerProps {
   children: ReactNode;
-  league?: string;
-  label?: string;
+  leagueIcon?: string;
+  leagueName?: string;
 }
 
 const MatchesMatchBadgeContainer: React.FC<MatchesMatchBadgeContainerProps> = ({
   children,
-  league,
-  label,
+  leagueIcon,
+  leagueName,
 }) => {
-
-  const icon = setLeagueIcon(league);
 
   return (
     <Paper elevation={4} sx={{ borderRadius: 3, mb: 1 }}>
@@ -29,10 +26,9 @@ const MatchesMatchBadgeContainer: React.FC<MatchesMatchBadgeContainerProps> = ({
           gap: 1,
         }}
       >
-        <img width={18} height={18} src={icon} />
+        <img width={18} height={18} src={leagueIcon} />
         <Typography variant="caption">
-          {league}
-          {label}
+          {leagueName}
         </Typography>
       </Stack>
       {children}

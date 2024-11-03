@@ -17,7 +17,7 @@ const getMatchesForPredictions = async (SearchString?: string) => {
   try {
     const response = await wakiBack.get(
       SearchString
-        ? `/Prediction/GetAllMatchesFromLeagueForPredictionsPaginated?PageSize=2000$&SearchString=${SearchString}`
+        ? `/Prediction/GetAllMatchesFromLeagueForPredictionsPaginated?PageSize=2000&SearchString=${encodeURI(SearchString)}`
         : "/Prediction/GetAllMatchesFromLeagueForPredictionsPaginated?PageSize=2000"
     );
     return {
@@ -32,7 +32,7 @@ const getMatchesForPredictions = async (SearchString?: string) => {
 const getMatchesResults = async (SearchString: string) => {
   try {
     const response = await wakiBack.get(
-      `/Match/GetAllMatchesResults?PageSize=2000&SearchString=${SearchString}`
+      `/Match/GetAllMatchesResults?PageSize=2000&SearchString=${encodeURI(SearchString)}`
     );
     return {
       status: response.status,
