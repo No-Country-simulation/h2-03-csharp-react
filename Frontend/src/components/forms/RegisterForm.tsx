@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Box, Button, TextField, InputAdornment } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../hooks/UserContext";
-import { axiosInstance } from "../../utils/axios";
 import FormErrorModal from "../modals/FormErrorModal";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import wakiBack from "../../apis/waki-back";
 import axios from "axios";
 
 const RegisterForm = () => {
@@ -63,7 +63,7 @@ const RegisterForm = () => {
     }
 
     try {
-      const response = await axiosInstance.post("Security/Register", {
+      const response = await wakiBack.post("Security/Register", {
         name,
         lastName,
         email,

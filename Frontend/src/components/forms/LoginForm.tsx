@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Box, Button, InputAdornment, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../hooks/UserContext";
-import { axiosInstance } from "../../utils/axios";
 import FormErrorModal from "../modals/FormErrorModal";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import wakiBack from "../../apis/waki-back";
 import axios from "axios";
 
 const LoginForm = () => {
@@ -46,7 +46,7 @@ const LoginForm = () => {
       return;
     }
     try {
-      const response = await axiosInstance.post("Security/Login", {
+      const response = await wakiBack.post("Security/Login", {
         username,
         password,
       });
