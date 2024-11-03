@@ -83,7 +83,7 @@ namespace WakiBack.DAL
                 .AsSplitQuery();
 
             // Materializar la consulta como una lista asíncrona
-            var predictions = await query.ToListAsync();
+            var predictions = await query.AsNoTracking().ToListAsync();
 
             return predictions;
         }

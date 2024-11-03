@@ -24,8 +24,12 @@ namespace WakiBack.API
 
             builder.Services.AddDbContext<WebAppContext>(options => options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly("WakiBack.DAL")
-                
+                sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly("WakiBack.DAL");
+                    sqlOptions.CommandTimeout(120); // Establece el tiempo de espera a 120 segundos
+                }
+
             ) );
 
             //Adding jwt service to program pipeline

@@ -38,7 +38,7 @@ namespace WakiBack.BLL
 
             var sumMatchPredictions = model.ListMatch.Count;
             int sumMatchPredictionsFuture = 0;
-            var todayDate = DateTime.Now;
+            var todayDate = DateTime.UtcNow;
             int limitBetsPerDay = 5;
             int limitBetsPerDayFuture = 2;
 
@@ -121,7 +121,6 @@ namespace WakiBack.BLL
                 }
 
             }
-       
 
             if (countPredictionsTodayForFuture + sumMatchPredictionsFuture > limitBetsPerDayFuture)
             {
