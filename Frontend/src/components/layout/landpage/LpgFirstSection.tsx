@@ -1,10 +1,12 @@
 import Box from '@mui/material/Box';
 import Spline from '@splinetool/react-spline';
 import LandpageNavbar from "./LandpageNavbar";
-import LpgTeamsSlider from "./LpgTeamsSlider"
-import { Stack, Typography } from '@mui/material';
+import LpgTeamsSlider from "./LpgTeamsSlider";
+import LpgFirstTextGroup from "./LpgFirstTextGroup"
+import { Stack } from '@mui/material';
 import MainButton from "../../buttons/MainButton";
 import { useNavigate } from "react-router-dom";
+
 
 const LpgFirstSection = () => {
 	const navigate = useNavigate();
@@ -12,42 +14,10 @@ const LpgFirstSection = () => {
 		<Stack>
 			<Spline scene="https://prod.spline.design/BQaBZbFbtTUK3GQe/scene.splinecode" style={{position: "absolute", inset: "0px", zIndex: "0px"}}/>
 			<LandpageNavbar/>
+			<LpgFirstTextGroup/>
 			<Box sx={{
-				flexDirection: 'column',
-				justifyContent: 'flex-start',
-				color: "primary.light"
-				}}
-			>
-				<Typography>
-					SIENTE LA
-				</Typography>
-				<Typography>
-					ADRENALINA
-				</Typography>
-				<Typography>
-					DEL FÚTBOL
-				</Typography>
-			</Box>
-			<Box sx={{
-				flexDirection: 'column',
-				justifyContent: 'flex-end',
-				color: "primary.light"
-				}}
-			>
-				<Typography>
-					¡HAZ TUS
-				</Typography>
-				<Typography>
-					PREDICCIONES Y
-				</Typography>
-				<Typography>
-					GANA GRANDES
-				</Typography>
-				<Typography>
-					PREMIOS!
-				</Typography>
-			</Box>
-			<Box sx={{
+				flexGrow: 1,
+				justifyContent: 'center',
 				alignItems: 'center',
 				}}
 			>
