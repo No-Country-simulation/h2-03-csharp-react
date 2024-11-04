@@ -20,6 +20,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        marginBottom: "15px",
         width: "100%",
       }}
     >
@@ -69,7 +70,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             width: "200px",
           }}
         />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+        <Typography
+          variant="body1"
+          sx={{ fontSize: "22px", fontWeight: "700" }}
+        >
           {name}
         </Typography>
       </Box>
