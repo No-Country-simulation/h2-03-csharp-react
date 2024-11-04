@@ -24,7 +24,7 @@ const PredictionsModal = ({ match }: { match: MatchForPredictionsData }) => {
     predictionType,
     openModals,
     handleCloseModals,
-    handleCreateBet
+    handleCreateBet,
   } = usePredictionsContext();
 
   return (

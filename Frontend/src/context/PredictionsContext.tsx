@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { useMatchContext } from "../hooks/useMatchContext";
 import {
-  createBetList,
-  prediction,
+  CreateBetList,
+  Prediction,
   PredictionsContextProps,
   PredictionsProviderProps,
 } from "../types/PredictionsTypes";
@@ -15,10 +15,10 @@ const PredictionsProvider: React.FC<PredictionsProviderProps> = ({
   children,
 }) => {
   const [predictions, setPredictions] = useState<
-    prediction[] | null | undefined
+    Prediction[] | null | undefined
   >(null);
-  const [prediction, setPrediction] = useState<prediction | null>(null);
-  const [bets, setBets] = useState<createBetList | null>(null);
+  const [prediction, setPrediction] = useState<Prediction | null>(null);
+  const [bets, setBets] = useState<CreateBetList | null>(null);
   const [winner, setWinner] = useState<string | null>(null);
   const [predictionType, setPredictionType] = useState<string | null>(null);
   const [openModals, setOpenModals] = useState<number | boolean>(false);

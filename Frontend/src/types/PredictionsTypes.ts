@@ -1,68 +1,68 @@
 import { ReactNode } from "react";
 
-export interface matchBet {
+export interface MatchBet {
   matchPublicKey: string;
   winnerPrediction: string;
 }
 
-export interface createBetList {
-  listMatch: matchBet[];
+export interface CreateBetList {
+  listMatch: MatchBet[];
 }
 
-export interface prediction {
+export interface Prediction {
   dateFirstBetOfDay: string;
   countBets: number;
-  betList: [
-    {
-      listMatch: [
-        {
-          match: {
-            date: string;
-            time: string;
-            stageAPI: {
-              name: string;
-              isActive: boolean;
-              leagueAPI: string | null;
-            };
-            teamsAPI: {
-              homeAPI: {
-                teamAPI: {
-                  name: string;
-                  logoUrl: string;
-                };
-              };
-              awayAPI: {
-                teamAPI: {
-                  name: string;
-                  logoUrl: string;
-                };
-              };
-            };
-            winner: string;
-            oddsAPI: {
-              home: number;
-              draw: number;
-              away: number;
-            };
-            homeFtGoals: number;
-            awayFtGoals: number;
-            entityPublicKey: string;
-          };
-          matchPublicKey: string;
-          winnerPrediction: string;
-          winPrediction: null;
-          ratioOfPrediction: number;
-          entityPublicKey: string;
-          pointsPrediction: number;
-        }
-      ];
-      ratioOfPredictionCombined: number;
-      pointsPredictionCombined: number;
-      checkforWin: boolean;
-      win: string;
-    }
-  ];
+  betList: ListMatch[];
   entityPublicKey: string;
+}
+
+export interface ListMatch {
+  listMatch: Match[];
+  ratioOfPredictionCombined: number;
+  pointsPredictionCombined: number;
+  checkforWin: boolean;
+  win: string;
+}
+
+export interface Match {
+  match: {
+    date: string;
+    time: string;
+    stageAPI: {
+      name: string;
+      isActive: boolean;
+      leagueAPI: string | null;
+    };
+    teamsAPI: {
+      homeAPI: {
+        teamAPI: {
+          name: string;
+          logoUrl: string;
+        };
+      };
+      awayAPI: {
+        teamAPI: {
+          name: string;
+          logoUrl: string;
+        };
+      };
+    };
+    winner: string;
+    oddsAPI: {
+      home: number;
+      draw: number;
+      away: number;
+    };
+    homeFtGoals: number;
+    awayFtGoals: number;
+    entityPublicKey: string;
+  };
+  matchPublicKey: string;
+  winnerPrediction: string;
+  winPrediction: null;
+  ratioOfPrediction: number;
+  entityPublicKey: string;
+  pointsPrediction: number;
 }
 
 export interface PredictionsProviderProps {
@@ -70,10 +70,10 @@ export interface PredictionsProviderProps {
 }
 
 export interface PredictionsContextProps {
-  predictions: prediction[] | null | undefined;
+  predictions: Prediction[] | null | undefined;
   setPredictionDataByParam: (param: string) => void;
-  prediction: prediction | null;
-  bets: createBetList | null | undefined;
+  prediction: Prediction | null;
+  bets: CreateBetList | null | undefined;
   winner: string | null;
   handleCreateBet: () => void;
   setPredictionWinner: (winner: string) => void;

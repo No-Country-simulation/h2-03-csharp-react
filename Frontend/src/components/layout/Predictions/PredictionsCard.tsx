@@ -62,7 +62,7 @@ const PredictionsCard: React.FC<PredictionsCardProps> = ({ bet }) => {
       >
         <Box sx={{ pl: { sm: 1, md: 2 } }}>
           <Typography variant="caption">Resultado final:</Typography>
-          <Typography variant="h6">
+          <Typography noWrap variant="h6" sx={{maxWidth: 120}}>
             {bet.winnerPrediction === "home" &&
               bet.match.teamsAPI.homeAPI.teamAPI.name}
             {bet.winnerPrediction === "draw" && "Empate"}

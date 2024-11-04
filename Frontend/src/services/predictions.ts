@@ -1,8 +1,8 @@
 import wakiBack from "../apis/waki-back";
-import { createBetList } from "../types/PredictionsTypes";
+import { CreateBetList } from "../types/PredictionsTypes";
 import { serverError } from "../utils/serverError";
 
-const createBet = async (data: createBetList) => {
+const createBet = async (data: CreateBetList) => {
   try {
     const response = await wakiBack.post("/Prediction/CreateBet", data);
     return {
