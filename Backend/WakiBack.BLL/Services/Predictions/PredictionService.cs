@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Net;
 using WakiBack.DAL;
 using WakiBack.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WakiBack.BLL
 {
@@ -106,10 +107,26 @@ namespace WakiBack.BLL
                     $"Match with Public Key: {element.MatchPublicKey} not found");
                 }
 
-                if (DateTime.TryParse(match.Date, out DateTime matchDate))
+                // fix para el deploy invertir fecha, TODO refactor cambiar date en db
+
+                var marchDatesArray = match.Date!.Split("/");
+
+                var day = marchDatesArray[0];
+
+                var month = marchDatesArray[1];
+
+                var year = marchDatesArray[2];
+
+                var resultNewDate = month + "/" + day + "/" + year + " " + match.Time;
+
+
+                if ( DateTime.TryParse(resultNewDate, out DateTime matchDate))
                 {
+                    DateTime currentDate = DateTime.UtcNow.Date;
                     
-                    if (matchDate.Date != DateTime.UtcNow.Date)
+
+
+                    if (DateTime.Compare(matchDate.Date, currentDate.Date) != 0)
                     {
                         sumMatchPredictionsFuture++;
                     }
