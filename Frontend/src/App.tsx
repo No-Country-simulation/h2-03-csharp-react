@@ -1,4 +1,5 @@
 import "./App.css";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./hooks/UserContext";
@@ -18,26 +19,31 @@ import TokensPage from "./pages/TokensPage";
 
 function App() {
   return (
-    <UserProvider>
-      <GameProvider>
-        <PredictionsProvider>
-          <BrowserRouter>
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/ingresar" element={<Login />} />
-              <Route path="/predicciones" element={<PredictionsPage />} />
-              <Route path="/partidos" element={<GamesPage />} />
-              <Route path="/partidos/:partidoId" element={<GameDetailPage />} />
-              <Route path="/divisiones" element={<DivisionsPage />} />
-              <Route path="/tokens" element={<TokensPage />} />
-              <Route path="/perfil" element={<ProfilePage />} />
-            </Routes>
-            <Footer />
-          </BrowserRouter>
-        </PredictionsProvider>
-      </GameProvider>
-    </UserProvider>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <UserProvider>
+        <GameProvider>
+          <PredictionsProvider>
+            <BrowserRouter>
+              <ScrollToTop />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/ingresar" element={<Login />} />
+                <Route path="/predicciones" element={<PredictionsPage />} />
+                <Route path="/partidos" element={<GamesPage />} />
+                <Route
+                  path="/partidos/:partidoId"
+                  element={<GameDetailPage />}
+                />
+                <Route path="/divisiones" element={<DivisionsPage />} />
+                <Route path="/tokens" element={<TokensPage />} />
+                <Route path="/perfil" element={<ProfilePage />} />
+              </Routes>
+              <Footer />
+            </BrowserRouter>
+          </PredictionsProvider>
+        </GameProvider>
+      </UserProvider>
+    </GoogleOAuthProvider>
   );
 }
 
