@@ -38,6 +38,14 @@ const RegisterForm = () => {
     }, 3000);
   };
 
+  const checkAge = (date: string) => {
+    const [day, month, year] = date.split("-");
+    const birthDate = new Date(`${year}-${month}-${day}`);
+    const now = new Date();
+    const age = now.getFullYear() - birthDate.getFullYear();
+    return age >= 18;
+  };
+
   const formatDate = (date: string) => {
     const [day, month, year] = date.split("-");
     return `${year}/${month}/${day}`;
@@ -45,6 +53,12 @@ const RegisterForm = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!checkAge(birthDate)) {
+      setError("Debe ser mayor de 18 años");
+      showTemporaryModal();
+      return;
+    }
 
     if (!validateEmail(email)) {
       setError("Ingrese un correo válido");
@@ -91,7 +105,20 @@ const RegisterForm = () => {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setError(error?.response?.data);
+        const backendMessage = error?.response?.data.error;
+        let customMessage = "Ocurrió un error inesperado."; // Default message
+
+        if (backendMessage) {
+          if (
+            backendMessage.toLowerCase().includes("username") &&
+            backendMessage.toLowerCase().includes("taken")
+          ) {
+            customMessage = "El correo ingresado ya está en uso.";
+          } else if (backendMessage.toLowerCase().includes("invalid")) {
+            customMessage = "El correo ingresado no es válido.";
+          }
+        }
+        setError(customMessage);
         showTemporaryModal();
         return;
       }
