@@ -12,24 +12,37 @@ import ProfileSettings from "./ProfileSettings";
 
 const Profile = () => {
   const [view, setView] = useState("home");
-  const [predictions] = useState(24);
-  const [wins] = useState(14);
-  const [tokens] = useState(2);
+  let viewTitle = view;
+
+  const userData = {
+    name: "Usuario",
+    predictions: 24,
+    wins: 14,
+    losses: 10,
+    addFriendCode: 14011222,
+  };
   let component;
 
   if (view === "home") {
+    viewTitle = userData.name;
     component = <ProfileHomeBody onClick={setView} />;
   } else if (view === "activities") {
+    viewTitle = "Actividades de mis amigos";
     component = <Activities />;
   } else if (view === "addFriend") {
-    component = <AddFriend />;
+    viewTitle = "Agregar amigo";
+    component = <AddFriend userCode={userData.addFriendCode} />;
   } else if (view === "friends") {
+    viewTitle = "Amigos";
     component = <FriendsBody />;
   } else if (view === "profileData") {
+    viewTitle = "Mis datos";
     component = <ProfileData />;
   } else if (view === "profileSettings") {
+    viewTitle = "Ajustes";
     component = <ProfileSettings />;
   }
+
   return (
     <Box
       sx={{
@@ -39,15 +52,15 @@ const Profile = () => {
       }}
     >
       <ProfileHeader
-        name="Usuario"
+        name={viewTitle}
         exit={view !== "home"}
         onClick={() => setView("home")}
       />
       {view === "home" && (
         <ProfileHomeStats
-          predictions={predictions}
-          wins={wins}
-          tokens={tokens}
+          predictions={userData.predictions}
+          wins={userData.wins}
+          losses={userData.losses}
         />
       )}
       {view === "friends" && <FriendsHeader />}

@@ -4,10 +4,15 @@ import RewardsPointsCard from "./RewardsPointsCard";
 import RewardsDivisionsCard from "./RewardsDivisionsCard";
 
 const Rewards = () => {
+  const userData = {
+    points: 200,
+    division: "bronze",
+    pointsToNextDivision: 300,
+  };
   return (
     <Box mb={9}>
-      <RewardsHeader division="bronze" />
-      <RewardsPointsCard />
+      <RewardsHeader division={userData.division} />
+      <RewardsPointsCard {...userData} />
       <RewardsDivisionsCard />
     </Box>
   );

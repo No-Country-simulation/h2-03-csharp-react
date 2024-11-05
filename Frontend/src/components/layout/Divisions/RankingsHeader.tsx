@@ -1,25 +1,21 @@
 import { Box, Typography } from "@mui/material";
-import styled from "@emotion/styled";
 import bronze from "../../../assets/bronze.png";
 import silver from "../../../assets/silver.png";
 import gold from "../../../assets/gold.png";
-// import bronzeLocked from "../../../assets/bronze-locked.png";
 import silverLocked from "../../../assets/silver-locked.png";
 import goldLocked from "../../../assets/gold-locked.png";
 
 interface RankingsHeaderProps {
-  division: string;
+  userDivision: string; // User's actual division
+  division: "bronze" | "silver" | "gold"; // Current view division
+  setDivision: (division: "bronze" | "silver" | "gold") => void; // Function to change the division being viewed
 }
 
-const Img = styled.img`
-  width: 7%;
-
-  @media (max-width: 600px) {
-    width: 22%;
-  }
-`;
-
-const RankingsHeader: React.FC<RankingsHeaderProps> = ({ division }) => {
+const RankingsHeader: React.FC<RankingsHeaderProps> = ({
+  userDivision,
+  division,
+  setDivision,
+}) => {
   return (
     <Box>
       <Box
@@ -31,9 +27,54 @@ const RankingsHeader: React.FC<RankingsHeaderProps> = ({ division }) => {
           mb: 3,
         }}
       >
-        <Img src={division === "bronze" ? bronze : silverLocked} alt="bronze" />
-        <Img src={division === "silver" ? silver : silverLocked} alt="silver" />
-        <Img src={division === "gold" ? gold : goldLocked} alt="gold" />
+        <Box
+          component="img"
+          src={bronze}
+          alt="bronze"
+          sx={{
+            cursor: "pointer",
+            width: "7%",
+            "@media (max-width: 600px)": { width: "22%" },
+          }}
+          onClick={() => setDivision("bronze")}
+        />
+        <Box
+          component="img"
+          src={
+            userDivision === "silver" || userDivision === "gold"
+              ? silver
+              : silverLocked
+          }
+          alt="silver"
+          sx={{
+            cursor:
+              userDivision === "silver" || userDivision === "gold"
+                ? "pointer"
+                : "not-allowed",
+            width: "7%",
+            "@media (max-width: 600px)": { width: "22%" },
+          }}
+          onClick={() => {
+            if (userDivision === "silver" || userDivision === "gold") {
+              setDivision("silver");
+            }
+          }}
+        />
+        <Box
+          component="img"
+          src={userDivision === "gold" ? gold : goldLocked}
+          alt="gold"
+          sx={{
+            cursor: userDivision === "gold" ? "pointer" : "not-allowed",
+            width: "7%",
+            "@media (max-width: 600px)": { width: "22%" },
+          }}
+          onClick={() => {
+            if (userDivision === "gold") {
+              setDivision("gold");
+            }
+          }}
+        />
       </Box>
 
       <Typography

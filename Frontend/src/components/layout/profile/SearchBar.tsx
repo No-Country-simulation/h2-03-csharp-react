@@ -2,7 +2,11 @@ import { TextField, Box } from "@mui/material";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import useTheme from "@mui/material/styles/useTheme";
 
-const SearchBar = () => {
+interface SearchBarProps {
+  width?: string;
+}
+
+const SearchBar: React.FC<SearchBarProps> = (width) => {
   const theme = useTheme();
   return (
     <TextField
@@ -10,7 +14,8 @@ const SearchBar = () => {
       sx={{
         backgroundColor: theme.palette.secondary.light,
         borderRadius: "15px",
-        width: "100%",
+        margin: "auto",
+        width: width ? width : "100%",
         "& .MuiOutlinedInput-root": {
           borderRadius: "18px",
           "& fieldset": {
