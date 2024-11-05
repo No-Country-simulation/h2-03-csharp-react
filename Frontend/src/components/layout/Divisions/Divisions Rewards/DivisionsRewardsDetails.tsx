@@ -1,52 +1,62 @@
-import { useState } from "react";
-// import { useEffect, useState } from "react";
 import { Box, Paper, Typography, Modal, Divider } from "@mui/material";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import RewardCard from "./RewardCard";
 import headerBG from "../../../../assets/division-header-top-bg.svg";
-// import bronze from "../../../../assets/bronze.png";
+import bronze from "../../../../assets/bronze.png";
 import silver from "../../../../assets/silver.png";
-// import gold from "../../../../assets/gold.png";
-import shirtPic from "../../../../assets/shirt-prize-pic.svg";
+import gold from "../../../../assets/gold.png";
 import silverGiftIcon from "../../../../assets/silver-gift-icon.svg";
+import goldenGiftIcon from "../../../../assets/golden-gift-icon.svg";
+import firstPlaceRibbonIcon from "../../../../assets/first-place-ribbon-icon.svg";
 import dolarIcon from "../../../../assets/dollar-icon.svg";
 import theme from "../../../../styles/theme";
 import RankingTab from "./RankingTab";
 
+interface Prize {
+  text: string;
+}
+
+interface Player {
+  name: string;
+  tokens: number;
+  price: number;
+}
+
+interface DivisionInfo {
+  division: string;
+  prizes: Prize[];
+  players: Player[];
+  monthlyPrize: string;
+}
+
 interface DivisionsRewardsDetailsProps {
+  divisionInfo: DivisionInfo;
   open: boolean;
   onClose: () => void;
 }
 
 const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
+  divisionInfo,
   open,
   onClose,
 }) => {
-  // const [prizes, setPrizes] = useState([{ icon: "", text: "" }]);
-  const [prizes] = useState([
-    {
-      icon: silverGiftIcon,
-      text: "Participa en el sorteo mensual por el premio de la división plata",
-    },
-    {
-      icon: dolarIcon,
-      text: "asdafa",
-    },
-  ]);
-  // const [players, setPlayers] = useState([{ name: "", tokens: 0, price: 0 }]);
-  const [players] = useState([
-    { name: "Player 1", tokens: 0, price: 0 },
-    { name: "Player 2", tokens: 0, price: 0 },
-    { name: "Player 3", tokens: 0, price: 0 },
-    { name: "Player 4", tokens: 0, price: 0 },
-    { name: "Player 5", tokens: 0, price: 0 },
-  ]);
+  const handleIcon = (text: string) => {
+    switch (true) {
+      case text.includes("mes"):
+        return firstPlaceRibbonIcon;
+      case text.includes("mensual") && text.includes("Plata"):
+        return silverGiftIcon;
+      case text.includes("mensual") && text.includes("Oro"):
+        return goldenGiftIcon;
+      case text.includes("mensual") && text.includes("Bronce"):
+        return silverGiftIcon;
+      case text.includes("tokens"):
+        return dolarIcon;
+      default:
+        return "";
+    }
+  };
 
-  // useEffect(() => {
-  //   // API call
-  //   // setPlayers(response.data);
-  //   // setPrizes(response.data);
-  // }, []);
   return (
     <Modal open={open} onClose={onClose} hideBackdrop={false}>
       <Box
@@ -100,7 +110,18 @@ const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
             >
               <Typography
                 variant="body1"
-                sx={{ color: "white", margin: "30px 0" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  color: "white",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  margin: "30px 0",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
+                }}
               >
                 <FaArrowLeftLong /> Recompensas
               </Typography>
@@ -113,14 +134,33 @@ const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
                 alignItems: "center",
               }}
             >
-              <Typography variant="h6" sx={{ color: "white", mb: 4 }}>
-                División Plata
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "white",
+                  fontSize: "22px",
+                  fontWeight: 600,
+                  mb: 4,
+                }}
+              >
+                División{" "}
+                {divisionInfo.division === "bronze"
+                  ? "Bronce"
+                  : divisionInfo.division === "silver"
+                  ? "Plata"
+                  : "Oro"}
               </Typography>
               <Box
                 component="img"
-                src={silver}
+                src={
+                  divisionInfo.division === "bronze"
+                    ? bronze
+                    : divisionInfo.division === "silver"
+                    ? silver
+                    : gold
+                }
                 alt="plata"
-                sx={{ marginBottom: 4 }}
+                sx={{ height: "111px", marginBottom: "2rem", width: "94px" }}
               />
             </Box>
           </Box>
@@ -142,7 +182,11 @@ const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
                 gap: 2,
               }}
             >
-              <Typography color="white" variant="h6">
+              <Typography
+                color="white"
+                variant="body1"
+                sx={{ fontSize: "18px", fontWeight: 500 }}
+              >
                 Recompensas
               </Typography>
               <Box
@@ -156,15 +200,16 @@ const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
                   width: "100%",
                 }}
               >
-                {prizes.map((prize) => (
+                {divisionInfo.prizes.map((prize) => (
                   <>
                     <RewardCard
-                      icon={prize.icon}
-                      alt="ícono de regalo"
+                      icon={handleIcon(prize.text)}
+                      alt="reward icon"
                       text={prize.text}
                     />
-                    {prizes.length > 1 &&
-                      prizes.indexOf(prize) !== prizes.length - 1 && (
+                    {divisionInfo.prizes.length > 1 &&
+                      divisionInfo.prizes.indexOf(prize) !==
+                        divisionInfo.prizes.length - 1 && (
                         <Divider
                           sx={{ border: "1px solid gray", width: "100%" }}
                         />
@@ -172,7 +217,11 @@ const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
                   </>
                 ))}
               </Box>
-              <Typography color="white" variant="h6">
+              <Typography
+                color="white"
+                variant="body1"
+                sx={{ fontSize: "18px", fontWeight: 500 }}
+              >
                 Premios del mes
               </Typography>
               <Box
@@ -185,7 +234,7 @@ const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
               >
                 <Box
                   component="img"
-                  src={shirtPic}
+                  src={divisionInfo.monthlyPrize}
                   alt="shirt"
                   sx={{ width: "100%" }}
                 />
@@ -198,14 +247,21 @@ const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
                   width: "100%",
                 }}
               >
-                <Typography color="white" fontSize={"1.2rem"} variant="h6">
-                  Tokens división Plata
+                <Typography
+                  variant="body1"
+                  sx={{ color: "white", fontSize: "18px", fontWeight: 500 }}
+                >
+                  Tokens división{" "}
+                  {divisionInfo.division === "bronze"
+                    ? "Bronce"
+                    : divisionInfo.division === "silver"
+                    ? "Plata"
+                    : "Oro"}
                 </Typography>
                 <Typography
                   color={theme.palette.primary.dark}
-                  fontSize={"0.8rem"}
-                  fontWeight={"bold"}
-                  variant="h6"
+                  variant="body1"
+                  sx={{ fontSize: "14px", fontWeight: 600 }}
                 >
                   Ir al ranking <FaArrowRightLong />
                 </Typography>
@@ -230,23 +286,39 @@ const DivisionsRewardsDetails: React.FC<DivisionsRewardsDetailsProps> = ({
                     width: "100%",
                   }}
                 >
-                  <Typography>#</Typography>
-                  <Typography sx={{ textAlign: "left" }}>Jugador</Typography>
-                  <Typography>Liberados</Typography>
-                  <Typography>Precio</Typography>
+                  <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+                    #
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      fontWeight: 400,
+                      textAlign: "left",
+                    }}
+                  >
+                    Jugador
+                  </Typography>
+                  <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+                    Liberados
+                  </Typography>
+                  <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+                    {" "}
+                    Precio
+                  </Typography>
                   <Box sx={{ display: "none" }} />
                 </Box>
                 <Divider sx={{ border: "1px solid gray", width: "100%" }} />
-                {players.map((player) => (
+                {divisionInfo.players.map((player) => (
                   <>
                     <RankingTab
-                      position={players.indexOf(player) + 1}
+                      position={divisionInfo.players.indexOf(player) + 1}
                       player={player.name}
                       released={player.tokens}
                       price={player.price}
                     />
-                    {players.length > 1 &&
-                      players.indexOf(player) !== players.length - 1 && (
+                    {divisionInfo.players.length > 1 &&
+                      divisionInfo.players.indexOf(player) !==
+                        divisionInfo.players.length - 1 && (
                         <Divider
                           sx={{ border: "1px solid gray", width: "100%" }}
                         />

@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import styled from "@emotion/styled";
 import bronze from "../../../assets/bronze.png";
 import silver from "../../../assets/silver.png";
 import gold from "../../../assets/gold.png";
@@ -10,14 +9,6 @@ import goldLocked from "../../../assets/gold-locked.png";
 interface RankingsHeaderProps {
   division: string;
 }
-
-const Img = styled.img`
-  width: 7%;
-
-  @media (max-width: 600px) {
-    width: 22%;
-  }
-`;
 
 const RankingsHeader: React.FC<RankingsHeaderProps> = ({ division }) => {
   return (
@@ -31,9 +22,41 @@ const RankingsHeader: React.FC<RankingsHeaderProps> = ({ division }) => {
           mb: 3,
         }}
       >
-        <Img src={division === "bronze" ? bronze : silverLocked} alt="bronze" />
-        <Img src={division === "silver" ? silver : silverLocked} alt="silver" />
-        <Img src={division === "gold" ? gold : goldLocked} alt="gold" />
+        <Box
+          component={"img"}
+          src={bronze}
+          alt="bronze"
+          sx={{
+            cursor: "pointer",
+            width: "7%",
+            "@media (max-width: 600px)": { width: "22%" },
+          }}
+        />
+        <Box
+          component={"img"}
+          src={
+            division === "silver" || division === "gold" ? silver : silverLocked
+          }
+          alt="silver"
+          sx={{
+            cursor:
+              division === "silver" || division === "gold"
+                ? "pointer"
+                : "not-allowed",
+            width: "7%",
+            "@media (max-width: 600px)": { width: "22%" },
+          }}
+        />
+        <Box
+          component={"img"}
+          src={division === "gold" ? gold : goldLocked}
+          alt="gold"
+          sx={{
+            cursor: division === "gold" ? "pointer" : "not-allowed",
+            width: "7%",
+            "@media (max-width: 600px)": { width: "22%" },
+          }}
+        />
       </Box>
 
       <Typography

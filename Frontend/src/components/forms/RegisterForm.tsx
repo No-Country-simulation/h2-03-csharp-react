@@ -27,6 +27,12 @@ const RegisterForm = () => {
     return re.test(String(email).toLowerCase());
   };
 
+  const validatePassword = (password: string) => {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
+      password
+    );
+  };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -54,6 +60,12 @@ const RegisterForm = () => {
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!name || !lastName || !email || !password || !confirmPassword) {
+      setError("Complete todos los campos");
+      showTemporaryModal();
+      return;
+    }
+
     if (!checkAge(birthDate)) {
       setError("Debe ser mayor de 18 años");
       showTemporaryModal();
@@ -65,13 +77,17 @@ const RegisterForm = () => {
       showTemporaryModal();
       return;
     }
-    if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden");
+
+    if (!validatePassword(password)) {
+      setError(
+        "La contraseña debe tener al menos 6 caracteres, una letra mayuscula, una minuscula, un numero y un simbolo"
+      );
       showTemporaryModal();
       return;
     }
-    if (!name || !lastName || !email || !password || !confirmPassword) {
-      setError("Complete todos los campos");
+
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
       showTemporaryModal();
       return;
     }
@@ -106,8 +122,7 @@ const RegisterForm = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const backendMessage = error?.response?.data.error;
-        let customMessage = "Ocurrió un error inesperado."; // Default message
-
+        let customMessage = "Ocurrió un error inesperado.";
         if (backendMessage) {
           if (
             backendMessage.toLowerCase().includes("username") &&

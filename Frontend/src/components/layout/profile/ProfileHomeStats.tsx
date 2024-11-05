@@ -4,13 +4,13 @@ import { useTheme } from "@mui/material/styles";
 interface ProfileHomeStatsProps {
   predictions: number;
   wins: number;
-  tokens: number;
+  losses: number;
 }
 
 const ProfileHomeStats: React.FC<ProfileHomeStatsProps> = ({
   predictions,
   wins,
-  tokens,
+  losses,
 }) => {
   const theme = useTheme();
   return (
@@ -68,8 +68,8 @@ const ProfileHomeStats: React.FC<ProfileHomeStatsProps> = ({
           width: "27%",
         }}
       >
-        <Typography variant="body2">Tokens</Typography>
-        <Typography variant="h5">{tokens}</Typography>
+        <Typography variant="body2">Erradas</Typography>
+        <Typography variant="h5">{losses}</Typography>
       </Paper>
     </Box>
   );

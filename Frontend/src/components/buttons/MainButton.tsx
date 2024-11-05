@@ -1,15 +1,17 @@
 import { Button, useTheme } from "@mui/material";
 
 interface MainButtonProps {
-  children: string;
+  text: string;
   disabled?: boolean;
+  icon?: string;
   width?: string | number;
   onClick?: () => void;
 }
 
 const MainButton: React.FC<MainButtonProps> = ({
-  children,
+  text,
   disabled = false,
+  icon,
   width,
   onClick,
 }) => {
@@ -35,7 +37,8 @@ const MainButton: React.FC<MainButtonProps> = ({
         },
       }}
     >
-      {children}
+      {icon ? <img src={icon} style={{ paddingRight: "10px" }} /> : null}
+      {text}
     </Button>
   );
 };

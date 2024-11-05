@@ -1,6 +1,8 @@
 import React from "react";
 import { LinearProgress, Box, Typography } from "@mui/material";
+import bronzeMini from "../../assets/bronze-mini-icon.svg";
 import silverMini from "../../assets/silver-mini.png";
+import goldMini from "../../assets/gold-mini-icon.svg";
 import { useTheme } from "@mui/material";
 
 interface ProgressBarProps {
@@ -46,8 +48,19 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           color: "white",
         }}
       >
-        <img src={silverMini} alt="silver-mini" />
-        <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+        <Box
+          component={"img"}
+          src={
+            division === "bronze"
+              ? bronzeMini
+              : division === "silver"
+              ? silverMini
+              : goldMini
+          }
+          alt="silver-mini"
+          sx={{ height: "23px", width: "18px" }}
+        />
+        <Typography variant="body1" sx={{ fontSize: "16px", fontWeight: 400 }}>
           {division === "bronze"
             ? "Bronce"
             : division === "silver"

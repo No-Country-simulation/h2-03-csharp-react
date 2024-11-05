@@ -1,11 +1,13 @@
-import { Box } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 
 interface Column {
   id: "position" | "name" | "points";
@@ -28,31 +30,34 @@ const columns: readonly Column[] = [
 ];
 
 interface Data {
-  position: number;
   name: string;
   points: number;
 }
 
-function createData(position: number, name: string, points: number): Data {
-  return { position, name, points };
+interface RankingsBodyProps {
+  rankings: Data[];
+  currentUser: Data | null;
 }
 
-const rows = [
-  createData(1, "Sayid", 100),
-  createData(2, "Kate", 90),
-  createData(3, "Jin", 80),
-  createData(4, "Sawyer", 70),
-  createData(5, "Lapidus", 60),
-  createData(6, "Hurley", 50),
-  createData(7, "Sun", 40),
-  createData(8, "Jack", 30),
-  createData(9, "Shannon", 20),
-  createData(10, "Miles", 10),
-];
+const RankingsBody = ({ rankings, currentUser }: RankingsBodyProps) => {
+  // Combine rankings and currentUser for conditional inclusion
+  let extendedRankings = [...rankings];
 
-const RankingsBody = () => {
-  // Aquí se incluirá la API call para obtener información de las tablas y la posición del usuario
-  // Hay que agregar una tabla extra en caso que el usuario no clasifique entre los primeros 10
+  if (currentUser) {
+    // Check if currentUser's points are higher than the last place in the top 10
+    const minPointsInTop10 = rankings[rankings.length - 1].points;
+
+    if (currentUser.points > minPointsInTop10) {
+      // Insert currentUser into the correct position
+      extendedRankings = [...rankings, currentUser]
+        .sort((a, b) => b.points - a.points)
+        .slice(0, 10); // keep only top 10
+    } else {
+      // Add the currentUser as an 11th row to show they are outside the top 10
+      extendedRankings.push(currentUser);
+    }
+  }
+
   return (
     <Box
       display="flex"
@@ -90,25 +95,38 @@ const RankingsBody = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  hover
-                  role="checkbox"
-                  tabIndex={-1}
-                  key={row.position}
-                >
-                  {columns.map((column) => {
-                    const value = row[column.id as keyof Data];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === "number"
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
+              {extendedRankings.map((row, index) => {
+                const isCurrentUser =
+                  currentUser && row.name === currentUser.name;
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={index}
+                    sx={{
+                      backgroundColor: isCurrentUser ? "#C2DAFF" : "inherit",
+                    }}
+                  >
+                    {columns.map((column) => {
+                      let value;
+                      if (column.id === "position") {
+                        value = index + 1;
+                      } else {
+                        value = row[column.id as keyof Data];
+                      }
+
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>

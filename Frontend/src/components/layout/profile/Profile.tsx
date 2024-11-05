@@ -18,12 +18,9 @@ const Profile = () => {
     name: "Usuario",
     predictions: 24,
     wins: 14,
-    tokens: 2,
+    losses: 10,
     addFriendCode: 14011222,
   };
-  const [predictions] = useState(24);
-  const [wins] = useState(14);
-  const [tokens] = useState(2);
   let component;
 
   if (view === "home") {
@@ -61,9 +58,9 @@ const Profile = () => {
       />
       {view === "home" && (
         <ProfileHomeStats
-          predictions={predictions}
-          wins={wins}
-          tokens={tokens}
+          predictions={userData.predictions}
+          wins={userData.wins}
+          losses={userData.losses}
         />
       )}
       {view === "friends" && <FriendsHeader />}
