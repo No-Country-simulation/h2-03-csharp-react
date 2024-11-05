@@ -54,7 +54,7 @@ namespace WakiBack.BLL
 
         public async Task<BusinessResponse> UpdateDatabase()
         {
-            _logger.LogInformation("The credit card database update process is in progress.");
+            _logger.LogInformation("The database update process is in progress.");
 
            // var checkLeague = await _unitOfWork.Leagues.GetAllAsync();
            // var leagueList = await GetAllFromAPI();
