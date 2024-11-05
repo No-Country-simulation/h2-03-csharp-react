@@ -116,7 +116,7 @@ const FriendsHeader = () => {
           },
         }}
       />
-      <MainButton icon={addFriendsIcon} text="Agregar amigos" />
+      <MainButton icon={addFriendsIcon} children="Agregar amigos" />
       <Box
         sx={{
           display: "flex",
