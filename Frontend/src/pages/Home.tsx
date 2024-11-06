@@ -1,6 +1,6 @@
-import { Stack } from "@mui/material"
-import LandpageSection from "../components/layout/landpage/LandpageSection"
-import LpgFirstSection from "../components/layout/landpage/LpgFirstSection"
+import { Stack } from "@mui/material";
+import LandpageSection from "../components/layout/landpage/LandpageSection";
+import LpgFirstSection from "../components/layout/landpage/LpgFirstSection";
 
 const Home = () => {
   return (
@@ -8,11 +8,11 @@ const Home = () => {
       sx={{
         width: "100%",
         height: "100vh",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
     >
       <LandpageSection>
-        <LpgFirstSection/>
+        <LpgFirstSection />
       </LandpageSection>
     </Stack>
   );
