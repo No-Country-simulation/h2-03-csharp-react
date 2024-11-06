@@ -6,7 +6,7 @@ const LpgSecondTextGroup = () => {
   return (
     <Box
       sx={{
-        marginLeft: "10%",
+        margin: "0 10%",
         textAlign: "right",
         width: "30%",
         zIndex: 1,

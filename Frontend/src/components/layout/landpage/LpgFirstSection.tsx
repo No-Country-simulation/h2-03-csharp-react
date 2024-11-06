@@ -13,17 +13,19 @@ const LpgFirstSection = () => {
   return (
     <Stack
       sx={{
+        position: "relative",
         height: "100vh",
         justifyContent: "center",
         background: "black",
+        margin: "0",
         "@media (max-width: 800px)": {
-          height: "88vh",
+          height: "95vh",
         },
       }}
     >
       <Spline
         scene="https://prod.spline.design/BQaBZbFbtTUK3GQe/scene.splinecode"
-        style={{ position: "absolute", inset: "0px", zIndex: "0px" }}
+        style={{ position: "absolute", inset: "0px", zIndex: 0 }}
       />
       <LandpageNavbar />
       <Box

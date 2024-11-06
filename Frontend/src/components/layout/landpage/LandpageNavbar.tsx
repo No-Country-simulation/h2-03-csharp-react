@@ -14,6 +14,7 @@ const LandpageNavbar = () => {
     <Box
       sx={{
         background: "transparent",
+        padding: "1rem",
       }}
     >
       <AppBar position="static">
@@ -22,13 +23,15 @@ const LandpageNavbar = () => {
             display: "flex",
             justifyContent: "space-between",
             borderBottom: `2px solid ${theme.palette.primary.main}`,
+            paddingBottom: "1rem",
           }}
         >
           <Typography
             variant="h3"
             sx={{
-              fontWeight: "bold",
               background: `linear-gradient(90deg, ${theme.palette.secondary.main} -0.04%, ${theme.palette.primary.main} 99.96%)`,
+              fontSize: "29px",
+              fontWeight: "900",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
