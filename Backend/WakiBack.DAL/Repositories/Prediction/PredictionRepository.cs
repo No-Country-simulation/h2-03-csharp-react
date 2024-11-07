@@ -16,6 +16,12 @@ namespace WakiBack.DAL
             await _appContext.SaveChangesAsync();
         }
 
+        public async Task AddAsyncSaveChanges(Prediction prediction)
+        {
+            await _appContext!.Predictions!.AddAsync(prediction);
+            await _appContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Prediction>> GetAllPredictionsAsync()
         {
             // Desactivar el lazy loading para este contexto temporal

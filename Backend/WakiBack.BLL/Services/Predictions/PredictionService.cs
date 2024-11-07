@@ -132,7 +132,7 @@ namespace WakiBack.BLL
 
                 // Encontrar la predicción correspondiente a la fecha
                 var predictionForCompareDate = resultPredictions
-                    .FirstOrDefault(p => p.DateFirstBetOfDay.Date == matchDate);
+                    .FirstOrDefault(p => p.DateFirstBetOfDay.Date == matchDate.Date);
 
                 if (predictionForCompareDate != null)
                 {
@@ -200,7 +200,7 @@ namespace WakiBack.BLL
                     if (countPredictionsTodayForFuture + sumMatchPredictionsFuture > limitBetsPerDayFuture)
                     {
                         return GetBusinessResponse(HttpStatusCode.BadRequest,
-                            $"You have reached the future bet limit for this day on Date {matchDate}. You have {betsLeftForDayFuture} bets left.");
+                            $"You have reached the future bet limit for this day on Date {matchDate}. You have {betsLeftForDayFuture} bets left. You are trying to place {sumMatchPredictionsFuture} bets on the same day");
                     }
                 }
             }
@@ -217,118 +217,86 @@ namespace WakiBack.BLL
                     return GetBusinessResponse(HttpStatusCode.BadRequest,
                     $"Match with Public Key: {item.MatchPublicKey} not found");
                 }
+                                                           
+
+                double? away = 0;
+                double? home = 0;
+                double? draw = 0;
+
+                away = match.OddsAPI?.Away;
+                home = match.OddsAPI?.Home;
+                draw = match.OddsAPI?.Draw;
 
 
-                var marchDatesArray = match.Date!.Split("/");
-
-                var day = marchDatesArray[0];
-
-                var month = marchDatesArray[1];
-
-                var year = marchDatesArray[2];
-
-                var resultNewDate = month + "/" + day + "/" + year + " " + match.Time;
-                
-
-                if (DateTime.TryParse(resultNewDate, out DateTime matchFixedDate))
+                var matchForPrediction = new MatchPrediction()
                 {
 
-
-                    var predictionForDay = resultPredictions.FirstOrDefault(p => p.DateFirstBetOfDay.Date == matchFixedDate.Date );
-
-                    if (predictionForDay == null)
+                    Bet = newBet,
+                    Match = match,
+                    MatchPublicKey = match!.EntityPublicKey,
+                    WinnerPrediction = item.WinnerPrediction,
+                    RatioOfPrediction = item.WinnerPrediction switch
                     {
-                        predictionForDay = new Prediction()
-                        {
-                            DateFirstBetOfDay = matchFixedDate.Date,
-                            BetList = new List<Bet>(),
-                            CustomerEF = customer,
-                            EntityPublicKey = Guid.NewGuid(),
-                            ExistPreviously = false
-                        };
-                    }
-                    else
-                    {
-                        predictionForDay.ExistPreviously = true;
-                    }
-
+                        "away" => away != 0 ? away : 0,
+                        "home" => home != 0 ? home : 0,
+                        "draw" => draw != 0 ? draw : 0
+                    },
+                    EntityPublicKey = Guid.NewGuid()
+                };
                
 
-                    sumMatchPredictions = 0;
-                    sumMatchPredictionsFuture = 0;
-                    
+                listMatchForPrediction.Add(matchForPrediction);
 
-                    if (DateTime.Compare(matchFixedDate.Date, currentDate) == 0)
+                combinedRatio = combinedRatio == 0 ? matchForPrediction.RatioOfPrediction :
+                combinedRatio * matchForPrediction.RatioOfPrediction;                                  
+            
+            }
+
+            foreach (var entry in matchCountByDate)
+            {
+                var matchDate = entry.Key;
+                var matchCount = entry.Value;
+
+                // Encontrar la predicción correspondiente a la fecha
+                var predictionForCompareDate = resultPredictions
+                    .FirstOrDefault(p => p.DateFirstBetOfDay.Date == matchDate.Date);
+
+                if (predictionForCompareDate == null)
+                {
+                    predictionForCompareDate = new Prediction()
                     {
-
-                        sumMatchPredictions++;
-
-                    }
-                    else
-                    {
-                        sumMatchPredictions++;
-                        sumMatchPredictionsFuture++;
-                    }
-
-                    
-
-                    double? away = 0;
-                    double? home = 0;
-                    double? draw = 0;
-
-                    away = match.OddsAPI?.Away;
-                    home = match.OddsAPI?.Home;
-                    draw = match.OddsAPI?.Draw;
-
-
-                    var matchForPrediction = new MatchPrediction()
-                    {
-
-                        Bet = newBet,
-                        Match = match,
-                        MatchPublicKey = match!.EntityPublicKey,
-                        WinnerPrediction = item.WinnerPrediction,
-                        RatioOfPrediction = item.WinnerPrediction switch
-                        {
-                            "away" => away != 0 ? away : 0,
-                            "home" => home != 0 ? home : 0,
-                            "draw" => draw != 0 ? draw : 0
-                        },
-                        EntityPublicKey = Guid.NewGuid()
+                        DateFirstBetOfDay = matchDate.Date,
+                        BetList = new List<Bet>(),
+                        CustomerEF = customer,
+                        EntityPublicKey = Guid.NewGuid(),
+                        ExistPreviously = false
                     };
-
-
-                    predictionForDay.CountBets = predictionForDay.CountBets + sumMatchPredictions;
-                    predictionForDay.CountFutureBets = predictionForDay.CountFutureBets + sumMatchPredictionsFuture;
-
-                    listMatchForPrediction.Add(matchForPrediction);
-
-                    combinedRatio = combinedRatio == 0 ? matchForPrediction.RatioOfPrediction :
-                    combinedRatio * matchForPrediction.RatioOfPrediction;
-
-
-                    if (predictionForDay.ExistPreviously)
-                    {
-                        await _unitOfWork.Predictions.UpdateAsync(predictionForDay);
-                        await _unitOfWork.SaveAsync();
-                    }
-                    else
-                    {
-                        await _unitOfWork.Predictions.AddAsync(predictionForDay);
-                        await _unitOfWork.SaveAsync();
-                    }
-
-
-
-
-                }                           
+                }
                 else
                 {
-                    return GetBusinessResponse(HttpStatusCode.BadRequest,
-                        $"Invalid date format for Match with Public Key: {item.MatchPublicKey}");
+                    predictionForCompareDate.ExistPreviously = true;
                 }
 
+                predictionForCompareDate.CountBets += matchCount;
+
+                if (matchDate.Date != currentDate.Date)
+                {
+                    predictionForCompareDate.CountFutureBets += matchCount;
+                }
+
+                if (predictionForCompareDate.ExistPreviously)
+                {
+                    await _unitOfWork.Predictions.UpdateAsync(predictionForCompareDate);
+                }
+                else
+                {
+                    await _unitOfWork.Predictions.AddAsyncSaveChanges(predictionForCompareDate);
+                }
+
+
+
             }
+
 
             var predictionForToday = resultPredictions.FirstOrDefault(p => p.DateFirstBetOfDay.Date == currentDate.Date);
 
