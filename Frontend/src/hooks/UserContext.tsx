@@ -18,7 +18,7 @@ type UserAction =
   | { type: "LOGOUT" };
 
 const initialState: UserState = {
-  token: null,
+  token: localStorage.getItem("token") || null,
   email: null,
   username: null,
 };
@@ -44,6 +44,7 @@ const UserContext = createContext<{
   dispatch: React.Dispatch<UserAction>;
 }>({ state: initialState, dispatch: () => null });
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useUserContext = () => useContext(UserContext);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({

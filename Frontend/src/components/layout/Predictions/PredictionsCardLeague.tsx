@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import { useGameContext } from "../../../hooks/useGameContext";
-import { LeagueData } from "../../../context/GameContext";
+import { useMatchContext } from "../../../hooks/useMatchContext";
+import { LeagueData } from "../../../types/MatchesTypes";
 
 const PredictionCardLeague = ({ leagueName }: { leagueName: string }) => {
   const [league, setLeague] = useState<LeagueData | undefined>();
-  const { leagues } = useGameContext();
+  const { leagues } = useMatchContext();
 
   useEffect(() => {
     const league = leagues?.find((league) => league.name === leagueName);

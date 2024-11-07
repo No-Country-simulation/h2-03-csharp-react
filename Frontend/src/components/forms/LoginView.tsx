@@ -18,7 +18,7 @@ const LoginView = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "95vh",
+        minHeight: "100vh",
         background: "linear-gradient(#8f3bef, #011027)",
       }}
     >

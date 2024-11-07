@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import useWindowSize from "../../hooks/UseWindowSize";
 import style from "./layout.module.css";
 import { Link, useLocation } from "react-router-dom";
-import { BiUserCircle } from "react-icons/bi";
+import profile from "../../assets/icons/profile.svg";
 import ball from "../../assets/icons/ball.svg";
 import coins from "../../assets/icons/coins.svg";
 import cup from "../../assets/icons/cup.svg";
+import { useUserContext } from "../../hooks/UserContext";
 
 const Footer = () => {
   const windowWidth = useWindowSize();
@@ -43,6 +44,7 @@ const DesktopFooter = () => (
 
 const MobileFooter = () => {
   const [selected, setSelected] = useState<number>();
+  const { state } = useUserContext()
 
   const location = useLocation();
 
@@ -64,57 +66,58 @@ const MobileFooter = () => {
   }, [location]);
 
   return (
-    <footer className={style.mobileFooter}>
-      <div>
-        <Link
-          to={"/scoutplayers"}
-          onClick={() => setSelected(0)}
-          className={
-            selected === 0 ? `${style.link} ${style.selected}` : style.link
-          }
-        >
-          <img src={coins} alt="coins" />
-          <p>Scout player</p>
-        </Link>
-      </div>
-      <div>
-        <Link
-          to={"/partidos"}
-          onClick={() => setSelected(1)}
-          className={
-            selected === 1 ? `${style.link} ${style.selected}` : style.link
-          }
-        >
-          <img src={ball} alt="ball" />
-          <p>Partidos</p>
-        </Link>
-      </div>
-      <div>
-        <Link
-          to={"/divisiones"}
-          onClick={() => setSelected(2)}
-          className={
-            selected === 2 ? `${style.link} ${style.selected}` : style.link
-          }
-        >
-          <img src={cup} alt="cup" />
-          <p>Divisiones</p>
-        </Link>
-      </div>
-      <div>
-        <Link
-          to={"/perfil"}
-          onClick={() => setSelected(3)}
-          className={
-            selected === 3 ? `${style.link} ${style.selected}` : style.link
-          }
-        >
-          <BiUserCircle className={style.icon} />
-
-          <p>Perfil</p>
-        </Link>
-      </div>
-    </footer>
+    state.token && location.pathname != "/" && (
+      <footer className={style.mobileFooter}>
+        <div>
+          <Link
+            to={"/scoutplayers"}
+            onClick={() => setSelected(0)}
+            className={
+              selected === 0 ? `${style.link} ${style.selected}` : style.link
+            }
+          >
+            <img src={coins} alt="coins" />
+            <p>Scout player</p>
+          </Link>
+        </div>
+        <div>
+          <Link
+            to={"/partidos"}
+            onClick={() => setSelected(1)}
+            className={
+              selected === 1 ? `${style.link} ${style.selected}` : style.link
+            }
+          >
+            <img src={ball} alt="ball" />
+            <p>Partidos</p>
+          </Link>
+        </div>
+        <div>
+          <Link
+            to={"/divisiones"}
+            onClick={() => setSelected(2)}
+            className={
+              selected === 2 ? `${style.link} ${style.selected}` : style.link
+            }
+          >
+            <img src={cup} alt="cup" />
+            <p>Divisiones</p>
+          </Link>
+        </div>
+        <div>
+          <Link
+            to={"/perfil"}
+            onClick={() => setSelected(3)}
+            className={
+              selected === 3 ? `${style.link} ${style.selected}` : style.link
+            }
+          >
+            <img src={profile} alt="profile"/>
+            <p>Perfil</p>
+          </Link>
+        </div>
+      </footer>
+    )
   );
 };
 

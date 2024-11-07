@@ -4,7 +4,7 @@ import { FaCheck } from "react-icons/fa6";
 import { MdOutlineCancel } from "react-icons/md";
 
 export interface PredictionsCardStatusProps {
-  status: string;
+  status: string|null;
   points: number;
 }
 
@@ -14,11 +14,11 @@ const PredictionsCardStatus: React.FC<PredictionsCardStatusProps> = ({
 }) => {
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1, pt: 1 }}>
-      {status == "tbd" && <BiLoaderCircle color="purple" />}
+      {!status && <BiLoaderCircle color="purple" />}
       {status == "Win" && <FaCheck color="green" />}
       {status == "Lose" && <MdOutlineCancel color="red" />}
       <Typography variant="caption">
-        {status == "tbd" && "Pendiente"}
+        {!status && "Pendiente"}
         {status == "Win" &&
           `Ganaste ${points} puntos con esta predicción`}
         {status == "Lose" && "No ganaste puntos con esta predicción"}

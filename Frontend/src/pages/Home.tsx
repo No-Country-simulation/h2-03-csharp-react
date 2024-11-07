@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useUserContext } from "../hooks/UserContext";
+import { useNavigate } from "react-router-dom";
 import { Box, Stack } from "@mui/material";
 import LpgFirstSection from "../components/layout/landpage/LpgFirstSection";
 import LpgSecondSection from "../components/layout/landpage/LpgSecondSection";
@@ -7,6 +10,15 @@ import LpgFourthSection from "../components/layout/landpage/LpgFourthSection";
 import LpgFifthSection from "../components/layout/landpage/LpgFifthSection";
 
 const Home = () => {
+  const { state } = useUserContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (state.token) {
+      navigate("/partidos");
+    }
+  }, [state, navigate]);
+
   return (
     <Stack>
       <LpgFirstSection />

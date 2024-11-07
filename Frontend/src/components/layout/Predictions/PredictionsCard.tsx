@@ -2,53 +2,25 @@ import { Box, Divider, Paper, Typography } from "@mui/material";
 import PredictionCardLeague from "./PredictionsCardLeague";
 import PredictionsCardTeam from "./PredictionsCardTeam";
 import PredictionsCardStatus from "./PredictionsCardStatus";
+import { PredictionMatch } from "../../../types/PredictionsTypes";
+import { useMatchContext } from "../../../hooks/useMatchContext";
+import { useNavigate } from "react-router-dom";
 
-interface PredictionsCardProps {
-  bet: {
-    match: {
-      date: string;
-      time: string;
-      stageAPI: {
-        name: string;
-        isActive: boolean;
-        leagueAPI: string | null;
-      };
-      teamsAPI: {
-        homeAPI: {
-          teamAPI: {
-            name: string;
-            logoUrl: string;
-          };
-        };
-        awayAPI: {
-          teamAPI: {
-            name: string;
-            logoUrl: string;
-          };
-        };
-      };
-      winner: string;
-      oddsAPI: {
-        home: number;
-        draw: number;
-        away: number;
-      };
-      homeFtGoals: number;
-      awayFtGoals: number;
-      entityPublicKey: string;
-    };
-    matchPublicKey: string;
-    winnerPrediction: string;
-    winPrediction: null;
-    ratioOfPrediction: number;
-    entityPublicKey: string;
-    pointsPrediction: number;
+const PredictionsCard = ({ bet }: { bet: PredictionMatch }) => {
+  const { setMatchData } = useMatchContext();
+  const navigate = useNavigate();
+
+  const handleGameDetail = () => {
+    setMatchData(bet.match);
+    navigate(`/partidos/${bet.match.entityPublicKey}`);
   };
-}
 
-const PredictionsCard: React.FC<PredictionsCardProps> = ({ bet }) => {
   return (
-    <Paper elevation={4} sx={{ my: 1, py: 1, px: 2, borderRadius: 3 }}>
+    <Paper
+      onClick={handleGameDetail}
+      elevation={4}
+      sx={{ my: 1, py: 1, px: 2, borderRadius: 3, cursor: "pointer" }}
+    >
       <PredictionCardLeague leagueName={bet.match.stageAPI.name} />
       <Divider />
       <Box
@@ -62,7 +34,7 @@ const PredictionsCard: React.FC<PredictionsCardProps> = ({ bet }) => {
       >
         <Box sx={{ pl: { sm: 1, md: 2 } }}>
           <Typography variant="caption">Resultado final:</Typography>
-          <Typography variant="h6">
+          <Typography noWrap variant="h6" sx={{ maxWidth: 120 }}>
             {bet.winnerPrediction === "home" &&
               bet.match.teamsAPI.homeAPI.teamAPI.name}
             {bet.winnerPrediction === "draw" && "Empate"}
@@ -101,7 +73,7 @@ const PredictionsCard: React.FC<PredictionsCardProps> = ({ bet }) => {
       </Box>
       <Divider />
       <PredictionsCardStatus
-        status={bet.match.winner}
+        status={bet.winPrediction}
         points={bet.pointsPrediction}
       />
     </Paper>

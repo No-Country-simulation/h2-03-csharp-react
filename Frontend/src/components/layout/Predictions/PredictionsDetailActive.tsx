@@ -1,25 +1,32 @@
 import { Box, Typography } from "@mui/material";
 import PredictionsCard from "./PredictionsCard";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
+import { useDatesContext } from "../../../hooks/useDatesContext";
 
 const PredictionsDetailActive = () => {
-  const { predictions }= usePredictionsContext()
+  const { listMatch } = usePredictionsContext();
+  const { datePredictionValue } = useDatesContext();
 
-  const bets = predictions?.flatMap(betOfDay=>betOfDay.betList).flatMap(bet=>bet.listMatch)
+  const betsOfDay = listMatch?.filter(
+    (betList) => betList.match.adjustedDate == datePredictionValue
+  );
 
   return (
     <Box>
-      {bets?.length == 0 && (
+      {datePredictionValue != "Todos" && betsOfDay?.length == 0 && (
         <Typography align="center" p={3}>
-          -
+          No hay predicciones activas
         </Typography>
       )}
-      {bets?.map((bet, index) => (
-        <PredictionsCard
-          key={index}
-          bet={bet}
-        />
-      ))}
+      {datePredictionValue == "Todos" &&
+        listMatch &&
+        listMatch
+          .filter((bet) => bet.match.winner == "tbd")
+          .map((bet, index) => <PredictionsCard key={index} bet={bet} />)}
+      {betsOfDay &&
+        betsOfDay
+          .filter((bet) => bet.match.winner == "tbd")
+          .map((bet, index) => <PredictionsCard key={index} bet={bet} />)}
     </Box>
   );
 };
