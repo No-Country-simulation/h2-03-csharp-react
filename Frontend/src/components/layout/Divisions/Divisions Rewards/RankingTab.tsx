@@ -26,10 +26,24 @@ const RankingTab: React.FC<RankingTabProps> = ({
         width: "100%",
       }}
     >
-      <Typography>{position}</Typography>
-      <Typography sx={{ textAlign: "left" }}>{player}</Typography>
-      <Typography>{released}</Typography>
-      <Typography>{price}</Typography>
+      <Typography
+        sx={{
+          color: theme.palette.secondary.main,
+          fontSize: "24px",
+          fontWeight: 400,
+        }}
+      >
+        {position}
+      </Typography>
+      <Typography sx={{ fontSize: "16px", fontWeight: 400, textAlign: "left" }}>
+        {player}
+      </Typography>
+      <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
+        {released}k
+      </Typography>
+      <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
+        {price}
+      </Typography>
       <IoIosArrowForward color={theme.palette.secondary.main} fontSize={20} />
     </Box>
   );

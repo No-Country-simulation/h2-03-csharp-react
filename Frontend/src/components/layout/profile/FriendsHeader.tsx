@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import useTheme from "@mui/material/styles/useTheme";
 import MainButton from "../../buttons/MainButton";
-// import addFriendsIcon from "../../../assets/add-friends-icon.svg";
+import addFriendsIcon from "../../../assets/add-friends-icon.svg";
 import ProfileHeaderTab from "./ProfileHeaderTab";
 import userIcon from "../../../assets/user-icon.svg";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -116,8 +116,7 @@ const FriendsHeader = () => {
           },
         }}
       />
-      {/* <MainButton>{addFriendsIcon} Agregar amigos</MainButton> */}
-      <MainButton>Agregar amigos</MainButton>
+      <MainButton icon={addFriendsIcon} children="Agregar amigos" />
       <Box
         sx={{
           display: "flex",

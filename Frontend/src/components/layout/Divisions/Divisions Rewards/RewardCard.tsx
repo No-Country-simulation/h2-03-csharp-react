@@ -9,8 +9,10 @@ interface RewardCardsProps {
 const RewardCard: React.FC<RewardCardsProps> = ({ icon, alt, text }) => {
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2, padding: 2.5 }}>
-      <img src={icon} alt={alt} />
-      <Typography variant="body1">{text}</Typography>
+      <Box component={"img"} src={icon} alt={alt} sx={{ width: "42px" }} />
+      <Typography variant="body1" sx={{ fontSize: "12px", fontWeight: 400 }}>
+        {text}
+      </Typography>
     </Box>
   );
 };

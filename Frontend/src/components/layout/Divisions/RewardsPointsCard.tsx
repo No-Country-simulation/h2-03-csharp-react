@@ -1,17 +1,19 @@
 import { Box, Paper, Typography } from "@mui/material";
-import { useState } from "react";
 import scoreIcon from "../../../assets/score-icon.png";
 import ProgressBar from "../../progress bars/ProgressBar";
 import { useTheme } from "@mui/material/styles";
 
-const RewardsPointsCard = () => {
-  const [points] = useState(200);
-  // const [points, setPoints] = useState(200);
-  const [division] = useState("bronze");
-  // const [division, setDivision] = useState("bronze");
-  const [pointsToNextDivision] = useState(300);
-  // const [pointsToNextDivision, setPointsToNextDivision] = useState(300);
+interface RewardsPointsCardProps {
+  points: number;
+  division: string;
+  pointsToNextDivision: number;
+}
 
+const RewardsPointsCard: React.FC<RewardsPointsCardProps> = ({
+  points,
+  division,
+  pointsToNextDivision,
+}) => {
   const theme = useTheme();
 
   return (
@@ -37,22 +39,26 @@ const RewardsPointsCard = () => {
           backgroundColor: theme.palette.primary.dark,
           borderRadius: "9px 9px 0 0",
           color: "white",
-          p: 2,
+          padding: "0.5rem 1rem",
           width: "100%",
         }}
       >
         <Typography
-          variant="body2"
+          variant="body1"
           sx={{
             display: "flex",
             alignItems: "center",
+            fontSize: "18px",
+            fontWeight: 500,
             gap: 1,
           }}
         >
           <img src={scoreIcon} alt="score-icon" />
           Tus puntos
         </Typography>
-        <Typography variant="h5">{points}</Typography>
+        <Typography variant="body1" sx={{ fontSize: "26px", fontWeight: 600 }}>
+          {points}
+        </Typography>
       </Box>
       <Box
         sx={{
@@ -72,8 +78,18 @@ const RewardsPointsCard = () => {
             width: "100%",
           }}
         >
-          <Typography>Desbloquear división</Typography>
-          <Typography>{points} de 300 puntos</Typography>
+          <Typography
+            variant="body1"
+            sx={{ fontSize: "14px", fontWeight: 400 }}
+          >
+            Desbloquear división
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ fontSize: "14px", fontWeight: 400 }}
+          >
+            {points} de {pointsToNextDivision} puntos
+          </Typography>
         </Box>
         <ProgressBar
           currentPoints={points}
