@@ -28,7 +28,7 @@ const LpgFourthSection = () => {
       <Box
         component="img"
         src={landingPageTokens}
-        alt="Foto del token de Mbappe"
+        alt="Foto de tokens de Messi"
       />
     </Paper>
   );
