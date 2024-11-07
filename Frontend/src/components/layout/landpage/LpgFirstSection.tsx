@@ -6,7 +6,7 @@ import LpgFirstTextGroup from "./LpgFirstTextGroup";
 import { Stack } from "@mui/material";
 import MainButton from "../../buttons/MainButton";
 import { useNavigate } from "react-router-dom";
-import LpgSecondTextGroup from "./LgpSecondTextGroup";
+import LpgSecondTextGroup from "./LpgSecondTextGroup";
 
 const LpgFirstSection = () => {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import landingPageImage from "../../../assets/lading-page-image1.svg";
 
 const LpgSecondSection = () => {
   return (
-    <Stack sx={{ padding: "2rem 0.5rem 2rem 1rem" }}>
+    <Stack sx={{ padding: "3rem 0.5rem 0 1rem" }}>
       <Box
         component="img"
         src={landingPageImage}
