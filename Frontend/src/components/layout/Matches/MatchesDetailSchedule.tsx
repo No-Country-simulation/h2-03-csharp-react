@@ -20,8 +20,8 @@ const MatchesDetailSchedule = () => {
   useEffect(() => {
     const filterMatchesByExactTime = (matches: MatchForPredictionsData[]) => {
       return matches
-        .filter((match) => match.date == dateMatchValue)
         .sort((a, b) => compareTimes(a.time, b.time))
+        .filter((match) => match.adjustedDate == dateMatchValue)
         .reduce((groups, match) => {
           const time = match.adjustedTime;
 
@@ -59,8 +59,8 @@ const MatchesDetailSchedule = () => {
             {matches.map((match, index) => (
               <MatchesMatchBadgeContainer
                 key={index}
-                leagueIcon={match.stageAPI.leagueAPI.logoUrl || ""}
-                leagueName={match.stageAPI.leagueAPI.name}
+                leagueIcon={match?.stageAPI?.leagueAPI?.logoUrl || ""}
+                leagueName={match?.stageAPI?.leagueAPI?.name}
               >
                 <MatchesMatchBadge matchData={match} />
               </MatchesMatchBadgeContainer>

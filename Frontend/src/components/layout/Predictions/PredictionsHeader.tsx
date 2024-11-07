@@ -3,14 +3,14 @@ import { useTheme } from "@mui/material/styles";
 import PredictionsTabs from "./PredictionsTabs";
 import PredictionsBuyPaper from "./PredictionsBuyPaper";
 import GameNavButton from "../../buttons/MatchNavButton";
-import { useMatchContext } from "../../../hooks/useMatchContext";
 import dates from "../../../utils/predictions-tab-dates";
-import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
+import { useDatesContext } from "../../../hooks/useDatesContext";
+import { useCountBetsContext } from "../../../hooks/useCountBetsContext";
 
 const PredictionsHeader = () => {
   const theme = useTheme();
-  const { dateValue } = useMatchContext();
-  const { predictions } = usePredictionsContext();
+  const { datePredictionValue } = useDatesContext();
+  const { countBets, countFutureBets } = useCountBetsContext();
 
   return (
     <Box
@@ -29,17 +29,19 @@ const PredictionsHeader = () => {
           alignItems: "center",
           width: "100%",
           mt: 1,
-          mb: 4,
+          mb: 2,
         }}
       >
         <Typography variant="h6" sx={{ mb: 2 }}>
           Tus predicciones
         </Typography>
-        <Typography variant="h1">
-          {predictions && 5 - predictions[0].countBets}
+        <Typography variant="h1" fontSize={62}>
+          {countBets && countBets < 5
+            ? 5 - countBets - countFutureBets
+            : 5 - countFutureBets}
         </Typography>
-        <Typography variant="caption" sx={{ color: "primary.light" }}>
-          {dateValue === "Todos"
+        <Typography variant="subtitle2" sx={{ color: "primary.light" }}>
+          {datePredictionValue === "Todos"
             ? "Predicciones disponibles hoy"
             : "Predicciones disponibles"}
         </Typography>
@@ -55,12 +57,12 @@ const PredictionsHeader = () => {
         <PredictionsTabs />
         <PredictionsBuyPaper />
         <Typography
-          variant="body2"
+          variant="body1"
           align="center"
           sx={{ color: "primary.light", m: 2, maxWidth: 350 }}
         >
-          {dateValue !== dates.generateDates()[0] &&
-            dateValue !== "Todos" &&
+          {datePredictionValue !== dates.generateDates()[0] &&
+            datePredictionValue !== "Todos" &&
             "Puedes hacer un máximo de 2 predicciones para días futuros"}
         </Typography>
       </Box>

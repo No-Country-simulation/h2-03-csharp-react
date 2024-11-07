@@ -9,16 +9,18 @@ import MatchDetailPredictions from "../components/layout/MatchDetail/MatchDetail
 
 const MatchDetailPage = () => {
   const { match, setMatchDataByParam } = useMatchContext();
-  const { setPredictionDataByParam } = usePredictionsContext();
+  const { setPredictionDataByParam, listMatch } = usePredictionsContext();
 
   const { partidoId } = useParams();
 
   useEffect(() => {
     if (partidoId) {
-      setMatchDataByParam(partidoId);
       setPredictionDataByParam(partidoId);
+      if (listMatch) {
+        setMatchDataByParam(partidoId, listMatch);
+      }
     }
-  }, [setMatchDataByParam, setPredictionDataByParam, partidoId]);
+  }, [setMatchDataByParam, setPredictionDataByParam, partidoId, listMatch]);
 
   return (
     match && (

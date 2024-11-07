@@ -44,8 +44,7 @@ const DesktopFooter = () => (
 
 const MobileFooter = () => {
   const [selected, setSelected] = useState<number>();
-
-  const { state } = useUserContext();
+  const { state } = useUserContext()
 
   const location = useLocation();
 
@@ -67,7 +66,7 @@ const MobileFooter = () => {
   }, [location]);
 
   return (
-    state.token && (
+    state.token && location.pathname != "/" && (
       <footer className={style.mobileFooter}>
         <div>
           <Link

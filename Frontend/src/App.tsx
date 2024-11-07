@@ -17,6 +17,7 @@ import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/layout/ScrollToTop";
 import TokensPage from "./pages/TokensPage";
 import { DatesProvider } from "./context/DatesContext";
+import { CountBetsProvider } from "./context/CountBetsContext";
 
 function App() {
   return (
@@ -24,26 +25,31 @@ function App() {
       <DatesProvider>
         <MatchProvider>
           <PredictionsProvider>
-            <BrowserRouter>
-              <ScrollToTop />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/ingresar" element={<Login />} />
-                <Route path="/" element={<ProtectedRoutes />}>
-                  <Route path="/predicciones" element={<PredictionsPage />} />
-                  <Route path="/partidos" element={<MatchesPage />} />
-                  <Route
-                    path="/partidos/:partidoId"
-                    element={<GameDetailPage />}
-                  />
-                  <Route path="/divisiones" element={<DivisionsPage />} />
-                  <Route path="/tokens" element={<TokensPage />} />
-                  <Route path="/perfil" element={<ProfilePage />} />
-                  <Route path="*" element={<Navigate to="/login" replace />} />
-                </Route>
-              </Routes>
-              <Footer />
-            </BrowserRouter>
+            <CountBetsProvider>
+              <BrowserRouter>
+                <ScrollToTop />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/ingresar" element={<Login />} />
+                  <Route path="/" element={<ProtectedRoutes />}>
+                    <Route path="/predicciones" element={<PredictionsPage />} />
+                    <Route path="/partidos" element={<MatchesPage />} />
+                    <Route
+                      path="/partidos/:partidoId"
+                      element={<GameDetailPage />}
+                    />
+                    <Route path="/divisiones" element={<DivisionsPage />} />
+                    <Route path="/tokens" element={<TokensPage />} />
+                    <Route path="/perfil" element={<ProfilePage />} />
+                    <Route
+                      path="*"
+                      element={<Navigate to="/" replace />}
+                    />
+                  </Route>
+                </Routes>
+                <Footer />
+              </BrowserRouter>
+            </CountBetsProvider>
           </PredictionsProvider>
         </MatchProvider>
       </DatesProvider>

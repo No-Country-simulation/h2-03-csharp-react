@@ -12,26 +12,37 @@ export interface CreateBetList {
 export interface Prediction {
   dateFirstBetOfDay: string;
   countBets: number;
+  countFutureBets: number;
   betList: ListMatch[];
   entityPublicKey: string;
 }
 
 export interface ListMatch {
-  listMatch: Match[];
+  listMatch: PredictionMatch[];
   ratioOfPredictionCombined: number;
   pointsPredictionCombined: number;
   checkforWin: boolean;
   win: string;
 }
 
-export interface Match {
+export interface PredictionMatch {
   match: {
     date: string;
     time: string;
+    adjustedDate?: string;
+    adjustedTime?: string;
     stageAPI: {
       name: string;
       isActive: boolean;
-      leagueAPI: string | null;
+      leagueAPI: {
+        leagueId: number;
+        name: string;
+        logoUrl: string | null;
+        country: {
+          name: string;
+          logoUrl: null;
+        };
+      } | null;
     };
     teamsAPI: {
       homeAPI: {
@@ -71,6 +82,8 @@ export interface PredictionsProviderProps {
 
 export interface PredictionsContextProps {
   predictions: Prediction[] | null | undefined;
+  betList: ListMatch[] | null;
+  listMatch: PredictionMatch[] | null;
   setPredictionDataByParam: (param: string) => void;
   prediction: Prediction | null;
   bets: CreateBetList | null | undefined;
@@ -81,6 +94,7 @@ export interface PredictionsContextProps {
   predictionType: string | null;
   handlePredictionType: (type: string) => void;
   openModals: number | boolean;
+  isLoading: boolean;
   handleOpenModals: (value: number) => void;
   handleCloseModals: () => void;
 }

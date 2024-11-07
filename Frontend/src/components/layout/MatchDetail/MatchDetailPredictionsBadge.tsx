@@ -1,7 +1,5 @@
 import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
-//import { MdOutlineCancel } from "react-icons/md";
-//import { FaCheck } from "react-icons/fa6";
 import { useMatchContext } from "../../../hooks/useMatchContext";
 import PredictionsCardStatus from "../Predictions/PredictionsCardStatus";
 
@@ -34,7 +32,7 @@ const MatchDetailPredictionsBadge = () => {
                 {"Resultado final:"}
                 {/*prediction.type == "gol" && "Gol:"*/}
               </Typography>
-              <Typography variant="h6">
+              <Typography noWrap variant="h6" sx={{ maxWidth: 200 }}>
                 {matchData.winnerPrediction === "home" &&
                   matchData.match.teamsAPI.homeAPI.teamAPI.name}
                 {matchData.winnerPrediction === "draw" && "Empate"}
@@ -42,24 +40,26 @@ const MatchDetailPredictionsBadge = () => {
                   matchData.match.teamsAPI.awayAPI.teamAPI.name}
               </Typography>
             </Stack>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                color: "primary.main",
-                ...(matchData.winPrediction == "Win" && {
-                  color: "secondary.main",
-                }),
-                ...(matchData.winPrediction == "Lose" && {
-                  textDecoration: "line-through",
-                  color: "primary.dark",
-                }),
-                ...(matchData.winPrediction == null && {
+            {
+              <Typography
+                variant="subtitle1"
+                sx={{
                   color: "primary.main",
-                }),
-              }}
-            >
-              {matchData.pointsPrediction} puntos
-            </Typography>
+                  ...(matchData.winPrediction == "Win" && {
+                    color: "secondary.main",
+                  }),
+                  ...(matchData.winPrediction == "Lose" && {
+                    textDecoration: "line-through",
+                    color: "primary.dark",
+                  }),
+                  ...(matchData.winPrediction == null && {
+                    color: "primary.main",
+                  }),
+                }}
+              >
+                {matchData.pointsPrediction} puntos
+              </Typography>
+            }
           </Stack>
         </Stack>
         <Divider />

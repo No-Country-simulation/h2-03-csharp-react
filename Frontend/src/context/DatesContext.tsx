@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { DatesProviderProps, DatesContextProps } from "../types/DatesTypes";
 import datesMatchesTabs from "../utils/matches-tab-dates";
-import datesMatchesForPredictions from "../utils/matches-for-predictions-dates";
+import datesMatchesForPredictions from "../utils/predictions-tab-dates";
 import datesMatchesResults from "../utils/matches-results-dates";
 import datesPredictions from "../utils/predictions-tab-dates";
 

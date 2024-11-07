@@ -4,9 +4,13 @@ import MatchesDetailFilterBar from "./MatchesDetailFilterBar";
 import MatchesDetailLeagues from "./MatchesDetailLeagues";
 import MatchesDetailSchedule from "./MatchesDetailSchedule";
 import MatchesDetailTrending from "./MatchesDetailTrending";
+import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
+import PredictionsModal from "../../modals/Predictions/PredictionsModal";
+import { useMatchContext } from "../../../hooks/useMatchContext";
 
 const MatchesDetail = () => {
   const [details, setDetail] = useState("Ligas");
+  const { match } = useMatchContext()
 
   const handleSelect = (label: string) => {
     setDetail(label);
@@ -18,6 +22,8 @@ const MatchesDetail = () => {
       {details == "Ligas" && <MatchesDetailLeagues />}
       {details == "Horario" && <MatchesDetailSchedule />}
       {details == "Trending" && <MatchesDetailTrending />}
+      {match && <PredictionsModal match={match} />}
+      <PredictionAddedModal />
     </Box>
   );
 };

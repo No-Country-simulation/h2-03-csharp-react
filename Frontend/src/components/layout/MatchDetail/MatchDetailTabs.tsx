@@ -15,11 +15,11 @@ const MatchDetailTabs = () => {
     <Tabs
       value={value}
       onChange={handleChange}
-      indicatorColor="secondary"
       variant="fullWidth"
       sx={{
         width: "100vw",
         backgroundColor: "primary.dark",
+        "& .MuiTabs-indicator": { backgroundColor: "secondary.contrastText", height: 5 },
       }}
     >
       {options.map((option, index) => (
@@ -28,9 +28,10 @@ const MatchDetailTabs = () => {
           label={option}
           sx={{
             textTransform: "none",
-            color: "white",
+            color: "gray",
             "&.Mui-selected": {
-                color: "secondary.contrastText",
+                color: "white",
+                fontSize: "bold"
               },
           }}
         />

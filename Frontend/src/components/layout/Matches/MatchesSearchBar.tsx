@@ -2,14 +2,18 @@ import { useState } from "react";
 import { Box, Button, InputAdornment, TextField } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
 import MatchesSearch from "./MatchesSearch";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 
 const MatchesSearchBar = ({ search }: { search?: string }) => {
   const [cancel, setCancel] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState("");
 
+  const { handleOpenModals } = usePredictionsContext();
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchValue(value);
+    handleOpenModals(4);
   };
 
   const handleCancel = () => {
@@ -26,7 +30,7 @@ const MatchesSearchBar = ({ search }: { search?: string }) => {
         gap: 2,
         m: 3,
         zIndex: 1000,
-        borderRadius: 2
+        borderRadius: 2,
       }}
     >
       <TextField

@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { PredictionMatch } from "./PredictionsTypes";
 
 export interface LeagueData {
   leagueId: number;
@@ -26,7 +27,7 @@ export interface MatchForPredictionsData {
         name: string;
         logoUrl: null;
       };
-    };
+    } | null;
   };
   teamsAPI: {
     homeAPI: {
@@ -62,5 +63,5 @@ export interface MatchContextProps {
   matchesForPredictions: MatchForPredictionsData[] | undefined;
   match: MatchForPredictionsData | undefined;
   setMatchData: (match: MatchForPredictionsData) => void;
-  setMatchDataByParam: (param: string) => void;
+  setMatchDataByParam: (param: string, prediction?: PredictionMatch[]) => void;
 }

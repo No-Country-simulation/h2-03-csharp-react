@@ -8,6 +8,7 @@ import {
   ArrowRightIcon,
 } from "@mui/x-date-pickers";
 import { useTheme } from "@mui/material/styles";
+import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 
 interface MatchCalendarProps {
   open: boolean;
@@ -18,6 +19,7 @@ const MatchesCalendar: React.FC<MatchCalendarProps> = ({
   open,
   handleClose,
 }) => {
+  const { handleOpenModals } = usePredictionsContext();
   const theme = useTheme();
 
   return (
@@ -38,6 +40,7 @@ const MatchesCalendar: React.FC<MatchCalendarProps> = ({
         </Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateCalendar
+            onChange={() => handleOpenModals(4)}
             slots={{
               leftArrowIcon: () => (
                 <ArrowLeftIcon sx={{ color: theme.palette.primary.main }} />

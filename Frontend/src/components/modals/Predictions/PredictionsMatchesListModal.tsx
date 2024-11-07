@@ -16,11 +16,13 @@ import { useMatchContext } from "../../../hooks/useMatchContext";
 import dates from "../../../utils/predictions-tab-dates";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 import { MatchForPredictionsData } from "../../../types/MatchesTypes";
+import { useDatesContext } from "../../../hooks/useDatesContext";
 
 const PredictionsMatchesListModal = () => {
   const theme = useTheme();
-  const { match, matchesForPredictions, dateValue, setMatchData } =
-    useMatchContext();
+  const { match, matchesForPredictions, setMatchData } = useMatchContext();
+  const { datePredictionValue } = useDatesContext();
+
   const {
     openModals,
     handleCloseModals,
@@ -74,8 +76,8 @@ const PredictionsMatchesListModal = () => {
               <RxCross1 />
             </Typography>
             <Typography variant="h5" align="center">
-              {dateValue &&
-                `Elige un partido de ${dates.dateFormat(dateValue)}`}
+              {datePredictionValue &&
+                `Elige un partido de ${dates.dateFormat(datePredictionValue)}`}
             </Typography>
             <Typography variant="subtitle1" align="center">
               Selecciona una opción
@@ -104,7 +106,7 @@ const PredictionsMatchesListModal = () => {
             }}
           >
             {matchesForPredictions
-              ?.filter((match) => match.date === dateValue)
+              ?.filter((match) => match.adjustedDate === datePredictionValue)
               .map((match, index) => (
                 <Stack
                   onClick={() => handleSetGameAndOpenNext(match)}
@@ -118,7 +120,7 @@ const PredictionsMatchesListModal = () => {
                 >
                   <Stack sx={{ height: 30 }}>
                     <Typography align="center" fontWeight="bold">
-                      {match.time}hs
+                      {match.adjustedTime}hs
                     </Typography>
                   </Stack>
                   <Divider

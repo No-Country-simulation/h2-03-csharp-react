@@ -9,6 +9,7 @@ import {
 import { useUserContext } from "../hooks/UserContext";
 import { useDatesContext } from "../hooks/useDatesContext";
 import { convertUtcToLocalDateTime } from "../utils/local-time";
+import { PredictionMatch } from "../types/PredictionsTypes";
 
 const MatchContext = createContext<MatchContextProps | null>(null);
 
@@ -100,11 +101,21 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     setMatch(game);
   };
 
-  const setMatchDataByParam = (param: string) => {
+  const setMatchDataByParam = (
+    param: string,
+    predictions?: PredictionMatch[]
+  ) => {
     const matchData = matchesForPredictions.find(
       (match) => match.entityPublicKey === param
     );
-    setMatch(matchData);
+    const alterMatchData = predictions?.find(
+      (match) => match.match.entityPublicKey === param
+    );
+    if (matchData) {
+      setMatch(matchData);
+    } else if (alterMatchData) {
+      setMatch(alterMatchData.match);
+    }
   };
 
   return (

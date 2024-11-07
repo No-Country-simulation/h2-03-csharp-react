@@ -3,11 +3,10 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { MatchForPredictionsData } from "../../../types/MatchesTypes";
 import { IoStatsChartSharp } from "react-icons/io5";
-import PredictionsModal from "../../modals/Predictions/PredictionsModal";
 import { useMatchContext } from "../../../hooks/useMatchContext";
 import GameStatsModal from "../../modals/Matches/MatchStatsModal";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
-import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
+import { useCountBetsContext } from "../../../hooks/useCountBetsContext";
 
 interface MatchesMatchBadgeProps {
   matchData: MatchForPredictionsData;
@@ -21,7 +20,8 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
 
   const navigate = useNavigate();
 
-  const { setMatchData } = useMatchContext();
+  const { countFutureBetsByDay } = useCountBetsContext();
+  const { setMatchData, match } = useMatchContext();
   const {
     setPredictionWinner,
     openModals,
@@ -33,7 +33,6 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
     if (!openStats && !openModals) {
       navigate(`/partidos/${matchData.entityPublicKey}`);
     }
-    setMatchData(matchData);
   };
 
   const handleShowStats = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,10 +44,15 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
     event: React.MouseEvent<HTMLSpanElement>,
     selected: string
   ) => {
-    setPredictionWinner(selected);
-    handlePredictionType("result");
-    handleOpenModals(2);
-    event.stopPropagation();
+    if (match?.winner == "tbd" || countFutureBetsByDay !== 2) {
+      setMatchData(matchData);
+      setPredictionWinner(selected);
+      handlePredictionType("result");
+      handleOpenModals(2);
+      event.stopPropagation();
+    } else if (countFutureBetsByDay == 2) {
+      handleOpenModals(6)
+    }
   };
 
   return (
@@ -190,8 +194,6 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
         handleClose={handleCloseStats}
         match={matchData}
       />
-      <PredictionsModal match={matchData} />
-      <PredictionAddedModal />
     </div>
   );
 };

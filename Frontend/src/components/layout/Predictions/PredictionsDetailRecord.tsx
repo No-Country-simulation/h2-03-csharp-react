@@ -3,21 +3,17 @@ import PredictionsCard from "./PredictionsCard";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 
 const PredictionsDetailRecord = () => {
-  const { predictions } = usePredictionsContext();
-
-  const bets = predictions?.flatMap(betOfDay=>betOfDay.betList).flatMap(bet=>bet.listMatch)
+  const { listMatch } = usePredictionsContext();
 
   return (
     <Box>
       <Typography variant="h6" sx={{ color: "primary", my: 2 }}>
         Pasadas
       </Typography>
-      {bets?.map((bet, index) => (
-        <PredictionsCard
-          key={index}
-          bet={bet}
-        />
-      ))}
+      {listMatch &&
+        listMatch
+          .filter((bet) => bet.match.winner !== "tbd")
+          .map((bet, index) => <PredictionsCard key={index} bet={bet} />)}
     </Box>
   );
 };

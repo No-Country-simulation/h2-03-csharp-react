@@ -23,7 +23,13 @@ const MatchDetailResult = () => {
             width={100}
             height={100}
           />
-          <Typography variant="caption" align="center" color="secondary.light">
+          <Typography
+            noWrap
+            variant="caption"
+            align="center"
+            color="secondary.light"
+            sx={{ maxWidth: 100 }}
+          >
             {match.teamsAPI.homeAPI.teamAPI.name}
           </Typography>
         </Stack>
@@ -45,7 +51,13 @@ const MatchDetailResult = () => {
             width={100}
             height={100}
           />
-          <Typography variant="caption" align="center" color="secondary.light">
+          <Typography
+            noWrap
+            variant="caption"
+            align="center"
+            color="secondary.light"
+            sx={{ maxWidth: 100 }}
+          >
             {match.teamsAPI.awayAPI.teamAPI.name}
           </Typography>
         </Stack>

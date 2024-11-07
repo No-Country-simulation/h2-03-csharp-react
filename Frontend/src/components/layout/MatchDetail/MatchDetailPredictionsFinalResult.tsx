@@ -9,7 +9,7 @@ interface BadgeContentProps {
 const BadgeContent: React.FC<BadgeContentProps> = ({ label, number }) => {
   return (
     <Stack sx={{ alignItems: "center", gap: 2 }}>
-      <Typography noWrap variant="caption">
+      <Typography noWrap variant="caption" sx={{maxWidth: 100}}>
         {label}
       </Typography>
       <Paper

@@ -9,9 +9,13 @@ import PredictionsModal from "../../modals/Predictions/PredictionsModal";
 import { useMatchContext } from "../../../hooks/useMatchContext";
 import PredictionAddedModal from "../../modals/Predictions/PredictionAddedModal";
 import ComingSoonModal from "../../modals/Predictions/ComingSoonModal";
+import { useDatesContext } from "../../../hooks/useDatesContext";
+import { useCountBetsContext } from "../../../hooks/useCountBetsContext";
 
 const MatchDetailPredictions = () => {
   const { prediction, handleOpenModals } = usePredictionsContext();
+  const { datesMatchesForPredictionsValues } = useDatesContext();
+  const { countFutureBetsByDay } = useCountBetsContext();
 
   const { match } = useMatchContext();
 
@@ -42,11 +46,17 @@ const MatchDetailPredictions = () => {
               </Typography>
             </Stack>
           </Paper>
-          <Stack sx={{ justifyContent: "center", alignItems: "center", mt: 3 }}>
-            <MainButton onClick={() => handleOpenModals(1)}>
-              Hacer predicción
-            </MainButton>
-          </Stack>
+          {countFutureBetsByDay !== 2 ||
+            (match?.adjustedDate &&
+              datesMatchesForPredictionsValues.includes(match.adjustedDate) && (
+                <Stack
+                  sx={{ justifyContent: "center", alignItems: "center", mt: 3 }}
+                >
+                  <MainButton onClick={() => handleOpenModals(1)}>
+                    Hacer predicción
+                  </MainButton>
+                </Stack>
+              ))}
         </>
       )}
       {prediction && <MatchDetailPredictionsBadge />}

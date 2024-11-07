@@ -1,10 +1,11 @@
-import { Button, useTheme } from "@mui/material";
+import { Button, CircularProgress, useTheme } from "@mui/material";
 
 interface MainButtonProps {
   children: string;
   disabled?: boolean;
   width?: string | number;
   onClick?: () => void;
+  loading?: boolean;
 }
 
 const MainButton: React.FC<MainButtonProps> = ({
@@ -12,10 +13,15 @@ const MainButton: React.FC<MainButtonProps> = ({
   disabled = false,
   width,
   onClick,
+  loading = false,
 }) => {
   const theme = useTheme();
 
-  return (
+  return loading ? (
+    <Button variant="outlined" disabled sx={{ width: width }}>
+      <CircularProgress color="secondary" />
+    </Button>
+  ) : (
     <Button
       type="submit"
       variant="contained"

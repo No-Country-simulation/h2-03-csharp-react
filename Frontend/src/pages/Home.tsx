@@ -1,8 +1,20 @@
+import { useEffect } from "react";
 import { Typography, Stack, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserContext } from "../hooks/UserContext";
 
 const Home = () => {
   const theme = useTheme();
+
+  const { state } = useUserContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (state.token) {
+      navigate("/partidos");
+    }
+  }, [state, navigate]);
+
   return (
     <Stack
       sx={{

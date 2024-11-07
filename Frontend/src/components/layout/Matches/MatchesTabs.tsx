@@ -4,13 +4,19 @@ import { useDatesContext } from "../../../hooks/useDatesContext";
 
 const MatchesTabs = () => {
   const { dateMatchValue, handleChangeMatchDate } = useDatesContext();
-  
+
   return (
     <Tabs
       value={dateMatchValue}
       onChange={handleChangeMatchDate}
-      indicatorColor="primary"
       variant="scrollable"
+      scrollButtons
+      sx={{
+        "& .MuiTabs-indicator": {
+          backgroundColor: "primary.main",
+          height: 5,
+        },
+      }}
     >
       {dates.generateDates().map((date, index) => {
         return (
@@ -20,9 +26,10 @@ const MatchesTabs = () => {
             value={date}
             sx={{
               width: "33%",
-              color: "white",
+              color: "gray",
               "&.Mui-selected": {
-                color: "secondary.contrastText",
+                color: "white",
+                fontSize: "bold",
               },
             }}
           />

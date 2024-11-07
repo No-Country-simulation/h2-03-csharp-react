@@ -13,7 +13,6 @@ import {
   LeagueData,
   MatchForPredictionsData,
 } from "../../../types/MatchesTypes";
-import capitalize from "../../../utils/capitalize";
 import { useMatchContext } from "../../../hooks/useMatchContext";
 import MatchesMatchBadge from "./MatchesMatchBadge";
 import { useDatesContext } from "../../../hooks/useDatesContext";
@@ -25,7 +24,7 @@ const MatchesDetailLeagues = () => {
   >([]);
 
   const { leagues, matchesForPredictions } = useMatchContext();
-  const { dateMatchValue } = useDatesContext()
+  const { dateMatchValue } = useDatesContext();
 
   useEffect(() => {
     setMatchesData(matchesForPredictions);
@@ -46,7 +45,6 @@ const MatchesDetailLeagues = () => {
     leagues && (
       <Paper elevation={3}>
         {leagues.map((league: LeagueData, index: number) => {
-
           return (
             <Accordion
               key={index}
@@ -71,19 +69,24 @@ const MatchesDetailLeagues = () => {
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                   <img width={32} height={32} src={league.logoUrl || ""} />
-                  <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                    {capitalize(league.country.name)}
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                    {league.country.name === "spain" && "España"}
+                    {league.country.name === "england" && "Inglaterra"}
+                    {league.country.name === "germany" && "Alemania"}
+                    {league.country.name === "france" && "Francia"}
+                    {league.country.name === "brazil" && "Brasil"}
+                    {league.country.name === "argentina" && "Argentina"}
                   </Typography>
-                  <Typography variant="caption">{league.name}</Typography>
+                  <Typography variant="subtitle2">{league.name}</Typography>
                 </Box>
               </AccordionSummary>
               <AccordionDetails sx={{ minHeight: 150, p: 0 }}>
                 {matchesData &&
                   matchesData
-                    .filter((match) => match.adjustedDate === dateMatchValue)
                     .filter(
-                      (match) => match.stageAPI.leagueAPI.name === league.name
+                      (match) => match.stageAPI.leagueAPI?.leagueId === league.leagueId
                     )
+                    .filter((match) => match.adjustedDate === dateMatchValue)
                     .map((match, index) => (
                       <div key={index}>
                         <MatchesMatchBadge matchData={match} />
