@@ -1,0 +1,29 @@
+.block-slider-imgs {
+  width: 100%;
+  height: auto;
+  margin: auto;
+  overflow: hidden;
+}
+
+.block-slider-imgs .slider {
+  display: flex;
+  animation: scroll 40s linear infinite;
+  width: calc(85px * 50);
+}
+
+.block-slider-imgs .slide {
+  width: 85px;
+}
+
+.block-slider-imgs .slide img {
+  width: 100%;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-85px * 25));
+  }
+}
