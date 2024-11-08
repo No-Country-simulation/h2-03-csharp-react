@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useWindowSize from "../../hooks/UseWindowSize";
 import style from "./layout.module.css";
 import { Link, useLocation } from "react-router-dom";
@@ -9,24 +10,34 @@ import cup from "../../assets/icons/cup.svg";
 import { useUserContext } from "../../hooks/UserContext";
 
 const Footer = () => {
+  const { dispatch } = useUserContext();
+  const navigate = useNavigate();
   const windowWidth = useWindowSize();
   const isMobile = windowWidth < 768;
 
-  return isMobile ? <MobileFooter /> : <DesktopFooter />;
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+  };
+  return isMobile ? (
+    <MobileFooter />
+  ) : (
+    <DesktopFooter handleLogout={handleLogout} />
+  );
 };
 
-// Desktop version of the Footer
-const DesktopFooter = () => (
+const DesktopFooter = ({ handleLogout }: { handleLogout: () => void }) => (
   <footer className={style.footer}>
     <div>
       <section className={style.nav}>
-        <Link to={"/ingresar"}>Ingresar</Link>
+        <p onClick={handleLogout}>Cerrar sesión</p>
         <Link to={"/predicciones"}>Predicciones</Link>
         <Link to={"/partidos"}>Partidos</Link>
         <Link to={"/divisiones"}>Divisiones</Link>
         <Link to={"/perfil"}>Perfil</Link>
       </section>
-      <section>
+      <section style={{ width: "fit-content" }}>
         <h3>WAKI</h3>
       </section>
       <hr />
@@ -44,13 +55,13 @@ const DesktopFooter = () => (
 
 const MobileFooter = () => {
   const [selected, setSelected] = useState<number>();
-  const { state } = useUserContext()
+  const { state } = useUserContext();
 
   const location = useLocation();
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/scoutplayers":
+      case "/tokens":
         setSelected(0);
         break;
       case "/partidos":
@@ -66,11 +77,12 @@ const MobileFooter = () => {
   }, [location]);
 
   return (
-    state.token && location.pathname != "/" && (
+    state.token &&
+    location.pathname != "/" && (
       <footer className={style.mobileFooter}>
         <div>
           <Link
-            to={"/scoutplayers"}
+            to={"/tokens"}
             onClick={() => setSelected(0)}
             className={
               selected === 0 ? `${style.link} ${style.selected}` : style.link
@@ -112,7 +124,7 @@ const MobileFooter = () => {
               selected === 3 ? `${style.link} ${style.selected}` : style.link
             }
           >
-            <img src={profile} alt="profile"/>
+            <img src={profile} alt="profile" />
             <p>Perfil</p>
           </Link>
         </div>

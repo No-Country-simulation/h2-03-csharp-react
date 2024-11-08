@@ -18,7 +18,7 @@ type UserAction =
   | { type: "LOGOUT" };
 
 const initialState: UserState = {
-  token: localStorage.getItem("token") || null,
+  token: null,
   email: null,
   username: null,
 };
