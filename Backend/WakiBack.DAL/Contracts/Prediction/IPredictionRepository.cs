@@ -11,7 +11,8 @@ namespace WakiBack.DAL
         Task<IEnumerable<Prediction>> GetAllPredictionsAsync();
         Task<IEnumerable<Prediction>> GetAllPredictionForBetAsync();
         Task<IEnumerable<Prediction>> GetAllMyPredictionsAsync(int id);
-
+        Task<IEnumerable<Prediction>> GetAllMyPredictionsWithTrackingAsync(int id);
+        Task AddAsyncSaveChanges(Prediction prediction);
 
     }
 }
