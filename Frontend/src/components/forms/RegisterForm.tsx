@@ -117,7 +117,12 @@ const RegisterForm = () => {
             username: response.data.username,
           },
         });
-        navigate("/partidos");
+        if (!localStorage.getItem("tutorial_seen")) {
+          localStorage.setItem("tutorial_seen", "true");
+          navigate("/onboarding");
+        } else {
+          navigate("/partidos");
+        }
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

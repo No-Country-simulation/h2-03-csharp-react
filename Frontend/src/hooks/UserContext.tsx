@@ -26,6 +26,7 @@ const initialState: UserState = {
 const userReducer = (state: UserState, action: UserAction): UserState => {
   switch (action.type) {
     case "LOGIN_SUCCESS":
+      localStorage.setItem("token", JSON.stringify(action.payload));
       return {
         ...state,
         token: action.payload.token,
@@ -33,6 +34,7 @@ const userReducer = (state: UserState, action: UserAction): UserState => {
         username: action.payload.username,
       };
     case "LOGOUT":
+      localStorage.removeItem("token");
       return initialState;
     default:
       return state;
@@ -50,7 +52,12 @@ export const useUserContext = () => useContext(UserContext);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [state, dispatch] = useReducer(userReducer, initialState);
+  const storedUser = localStorage.getItem("userToken");
+  const initialStateWithStorage = storedUser
+    ? JSON.parse(storedUser)
+    : initialState;
+
+  const [state, dispatch] = useReducer(userReducer, initialStateWithStorage);
 
   return (
     <UserContext.Provider value={{ state, dispatch }}>
