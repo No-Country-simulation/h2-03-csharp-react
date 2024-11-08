@@ -94,7 +94,12 @@ const GoogleButton = () => {
                   username: res.data.name,
                 },
               });
-              navigate("/partidos");
+              if (!localStorage.getItem("tutorial_seen")) {
+                localStorage.setItem("tutorial_seen", "true");
+                navigate("/onboarding");
+              } else {
+                navigate("/partidos");
+              }
             })
             .catch((err) => console.log("Error in backend login", err));
         })
