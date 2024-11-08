@@ -99,22 +99,22 @@ const ProfileHomeBody: React.FC<ProfileHomeBodyProps> = ({ onClick }) => {
         />
         <ProfileHeaderTab
           icon={walletIcon}
-          text="Mi cuenta"
+          text="Mi cartera"
           onClick={() => onClick("profileSettings")}
         ></ProfileHeaderTab>
         <Divider
           sx={{ border: "none", borderTop: "1px solid white", width: "100%" }}
         />
         <ProfileHeaderTab
-          icon={walletIcon}
-          text="Configuraciones"
+          icon="gear"
+          text="Ajustes"
           onClick={() => onClick("profileSettings")}
         ></ProfileHeaderTab>
         <Divider
           sx={{ border: "none", borderTop: "1px solid white", width: "100%" }}
         />
         <ProfileHeaderTab
-          icon={walletIcon}
+          icon="logout"
           text="Cerrar sesión"
           onClick={() => handleLogout()}
         ></ProfileHeaderTab>

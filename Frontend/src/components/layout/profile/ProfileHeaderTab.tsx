@@ -1,5 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { IoIosArrowForward } from "react-icons/io";
+import { BsGearFill } from "react-icons/bs";
+import { IoLogOut } from "react-icons/io5";
 
 interface profileHeaderTabProps {
   icon: string;
@@ -33,8 +35,31 @@ const ProfileHeaderTab: React.FC<profileHeaderTabProps> = ({
       }}
       onClick={onClick}
     >
-      <Box component="img" src={icon} />
-
+      {icon === "gear" ? (
+        <Box
+          sx={{
+            display: "flex",
+            color: "white",
+            fontSize: "26px",
+            textAlign: "left",
+          }}
+        >
+          <BsGearFill />
+        </Box>
+      ) : icon === "logout" ? (
+        <Box
+          sx={{
+            display: "flex",
+            color: "white",
+            fontSize: "30px",
+            textAlign: "left",
+          }}
+        >
+          <IoLogOut />
+        </Box>
+      ) : (
+        <Box component="img" src={icon} />
+      )}
       <Typography sx={{ color: { color }, textAlign: "left" }}>
         {text}
       </Typography>

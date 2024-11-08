@@ -29,7 +29,8 @@ const OnboardingContainer: React.FC<OnboardingContainerProps> = ({
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: text !== "COMPRA" ? "90vh" : "100vh",
+          height: "100vh",
+          // height: text !== "COMPRA" ? "90vh" : "100vh",
         }}
       >
         {text === "COMPRA" ? (
