@@ -6,19 +6,17 @@ interface OnboardingContainerProps {
   image: string;
   text: string;
   onClick: () => void;
-  video?: string;
 }
 
 const OnboardingContainer: React.FC<OnboardingContainerProps> = ({
   image,
   text,
   onClick,
-  video,
 }) => {
   const theme = useTheme();
   return (
-    <Box>
-      <Box sx={{ height: "90vh" }}>
+    <Box sx={{ cursor: "pointer" }} onClick={onClick}>
+      <Box sx={{ display: "flex", flexDirection: "column", height: "90vh" }}>
         <Box
           component="img"
           src={image}
@@ -31,14 +29,21 @@ const OnboardingContainer: React.FC<OnboardingContainerProps> = ({
         <Box
           sx={{
             display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             background: `linear-gradient(90deg, ${theme.palette.secondary.main} 0%, ${theme.palette.primary.main} 100%)`,
             height: "10vh",
+            padding: "2rem",
           }}
-          onClick={onClick}
         >
           <Typography
             variant="body1"
-            sx={{ color: "white", flex: 1, textAlign: "center" }}
+            sx={{
+              color: "white",
+              flex: 1,
+              fontSize: "16px",
+              fontWeight: "600",
+            }}
           >
             {text}
           </Typography>
