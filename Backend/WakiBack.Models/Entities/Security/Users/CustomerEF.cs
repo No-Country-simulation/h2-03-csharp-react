@@ -6,8 +6,11 @@ namespace WakiBack.Models;
         public int? UserEFId { get; set; }
         public UserEF? User { get; set; }
         public int? Points { get; set; }
-        #region IPublicKeyEntity
-        public Guid EntityPublicKey { get; set; }
+        public Division typeDivision{ get; set; }
+        public string? NameUser { get; set; }
+
+    #region IPublicKeyEntity
+    public Guid EntityPublicKey { get; set; }
         #endregion        
         #region IAuditEntity
         public DateTime Created { get; set; }

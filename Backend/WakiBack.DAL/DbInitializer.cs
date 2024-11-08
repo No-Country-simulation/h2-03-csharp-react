@@ -1,6 +1,9 @@
 ﻿using WakiBack.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using WakiBack.DAL;
+using System.Diagnostics.Contracts;
 
 namespace WakiBack.DAL
 {
@@ -41,6 +44,7 @@ namespace WakiBack.DAL
 
         private void InitialData()
         {
+
             #region Dev member
             // If roles are not createad, then we will create admin user as well
             var email = "rodridev@outlook.com";
@@ -165,9 +169,517 @@ namespace WakiBack.DAL
             _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
 
             #endregion
+            #region Customer  Silver
+
+            //1
+            email = "LucasH22@outlook.com";
+            dateNow = DateTime.Now;
+
+            var contact1 = new ContactEF
+            {
+                FirstName = "Marcos",
+                FirstLastName = "Burgos",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact1.FullName;
+            SetSecurityDefaults(contact1, dateNow, true);
+
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact1,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            var customer4 = new CustomerEF
+            {
+                User = user,
+                Points = 245,
+                NameUser = "BurgosM",
+                typeDivision = Division.unassigned
+            };
+
+            SetSecurityDefaults(customer4, dateNow, true);
+            _webAppContext.Customers!.Add(customer4);
+
+            //2
+            email = "pepegrillo@outlook.com";
+            dateNow = DateTime.Now;
+
+            var contact2 = new ContactEF
+            {
+                FirstName = "Pepe",
+                FirstLastName = "Grillo",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact2.FullName;
+            SetSecurityDefaults(contact2, dateNow, true);
+
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact2,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            var customer5 = new CustomerEF
+            {
+                User = user,
+                Points = 210,
+                NameUser = "pepeelgrilloNN",
+                typeDivision = Division.unassigned
+            };
+
+            SetSecurityDefaults(customer5, dateNow, true);
+            _webAppContext.Customers!.Add(customer5);
+
+            //3
+            email = "FrancoP123@outlook.com";
+            dateNow = DateTime.Now;
+
+            var contact3 = new ContactEF
+            {
+                FirstName = "Mateo",
+                FirstLastName = "Perez",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact3.FullName;
+            SetSecurityDefaults(contact3, dateNow, true);
+
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact3,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            var customer6 = new CustomerEF
+            {
+                User = user,
+                Points = 250,
+                NameUser = "Mateoo33",
+                typeDivision = Division.unassigned
+            };
+
+            SetSecurityDefaults(customer6, dateNow, true);
+            _webAppContext.Customers!.Add(customer6);
+
+            #endregion        
+            #region Customer Bronze
+
+            email = "juliandev@outlook.com";
+            dateNow = DateTime.Now;
+
+            contact = new ContactEF
+            {
+                FirstName = "Julian",
+                FirstLastName = "Torres",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact.FullName;
+
+            SetSecurityDefaults(contact, dateNow, true);
+
+            // Password hash: AQAAAAEAACcQAAAAEIJ7Rv2vR7F6tKMWXaWME0t9if+RqXU0mSUmo58ulhjDHrft/jN2mztwRTkk3KmRqg==
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            var customer = new CustomerEF
+            {
+                User = user,
+                Points = 55,
+                NameUser = "JulianNickName",
+                typeDivision = Division.unassigned
+
+            };
+
+
+
+            SetSecurityDefaults(customer, dateNow, true);
+
+            _webAppContext.Customers!.Add(customer);
+
+            email = "EzequielFernandez@outlook.com";
+            dateNow = DateTime.Now;
+
+            contact = new ContactEF
+            {
+                FirstName = "Ezequiel",
+                FirstLastName = "Fernandez",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact.FullName;
+
+            SetSecurityDefaults(contact, dateNow, true);
+
+            // Password hash: AQAAAAEAACcQAAAAEIJ7Rv2vR7F6tKMWXaWME0t9if+RqXU0mSUmo58ulhjDHrft/jN2mztwRTkk3KmRqg==
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            customer = new CustomerEF
+            {
+                User = user,
+                Points = 120,
+                NameUser = "EzeFernandez",
+                typeDivision = Division.unassigned
+
+            };
+
+
+
+            SetSecurityDefaults(customer, dateNow, true);
+
+            _webAppContext.Customers!.Add(customer);
+
+
+
+            email = "AlexGarcia@outlook.com";
+            dateNow = DateTime.Now;
+
+            contact = new ContactEF
+            {
+                FirstName = "Alex",
+                FirstLastName = "Garcia",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact.FullName;
+
+            SetSecurityDefaults(contact, dateNow, true);
+
+            // Password hash: AQAAAAEAACcQAAAAEIJ7Rv2vR7F6tKMWXaWME0t9if+RqXU0mSUmo58ulhjDHrft/jN2mztwRTkk3KmRqg==
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            customer = new CustomerEF
+            {
+                User = user,
+                Points = 65,
+                NameUser = "AlexGG",
+                typeDivision = Division.unassigned
+
+            };
+
+
+
+            SetSecurityDefaults(customer, dateNow, true);
+
+            _webAppContext.Customers!.Add(customer);
+
+            #endregion
+
+            #region Customer Gold
+
+
+            email = "jfQuintero@outlook.com";
+            dateNow = DateTime.Now;
+
+            contact = new ContactEF
+            {
+                FirstName = "Juan Fernando",
+                FirstLastName = "Quintero",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact.FullName;
+
+            SetSecurityDefaults(contact, dateNow, true);
+
+            // Password hash: AQAAAAEAACcQAAAAEIJ7Rv2vR7F6tKMWXaWME0t9if+RqXU0mSUmo58ulhjDHrft/jN2mztwRTkk3KmRqg==
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            var customer1 = new CustomerEF
+            {
+                User = user,
+                Points = 912,
+                NameUser = "Quintero912",
+                typeDivision = Division.unassigned
+            };
+
+
+
+            SetSecurityDefaults(customer1, dateNow, true);
+
+            _webAppContext.Customers!.Add(customer1);
+
+
+
+            email = "LucasH22@outlook.com";
+            dateNow = DateTime.Now;
+
+            contact = new ContactEF
+            {
+                FirstName = "Lucas",
+                FirstLastName = "Hernandez",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact.FullName;
+
+            SetSecurityDefaults(contact, dateNow, true);
+
+            // Password hash: AQAAAAEAACcQAAAAEIJ7Rv2vR7F6tKMWXaWME0t9if+RqXU0mSUmo58ulhjDHrft/jN2mztwRTkk3KmRqg==
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            var customer2 = new CustomerEF
+            {
+                User = user,
+                Points = 420,
+                NameUser = "LucasHH",
+                typeDivision = Division.unassigned
+
+            };
+
+            SetSecurityDefaults(customer2, dateNow, true);
+
+            _webAppContext.Customers!.Add(customer2);
+
+
+            email = "FrancoP123@outlook.com";
+            dateNow = DateTime.Now;
+
+            contact = new ContactEF
+            {
+                FirstName = "Franco",
+                FirstLastName = "Pereyra",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact.FullName;
+
+            SetSecurityDefaults(contact, dateNow, true);
+
+            // Password hash: AQAAAAEAACcQAAAAEIJ7Rv2vR7F6tKMWXaWME0t9if+RqXU0mSUmo58ulhjDHrft/jN2mztwRTkk3KmRqg==
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            var customer3 = new CustomerEF
+            {
+                User = user,
+                Points = 460,
+                NameUser = "AlexGG",
+                typeDivision = Division.unassigned
+
+            };
+
+
+
+            SetSecurityDefaults(customer3, dateNow, true);
+
+            _webAppContext.Customers!.Add(customer3);
+
+
+            #endregion
+
+            
+
+
+            #region Customer 0points
+
+            email = "npcjuan@outlook.com";
+            dateNow = DateTime.Now;
+
+            contact = new ContactEF
+            {
+                FirstName = "Juan",
+                FirstLastName = "Pedro",
+                ContactTypeId = (int)ContactType.Person,
+                IsMainContact = true,
+            };
+
+            contact.DisplayName = contact.FullName;
+
+            SetSecurityDefaults(contact, dateNow, true);
+
+            // Password hash: AQAAAAEAACcQAAAAEIJ7Rv2vR7F6tKMWXaWME0t9if+RqXU0mSUmo58ulhjDHrft/jN2mztwRTkk3KmRqg==
+            user = new UserEF
+            {
+                Email = email,
+                UserName = email,
+                Contact = contact,
+                EmailConfirmed = true,
+                LoginTypeId = (int)LoginType.Email,
+            };
+
+            SetSecurityDefaults(user, dateNow, true);
+
+            _userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+
+            _userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            var customer7= new CustomerEF
+            {
+                User = user,
+                Points = 0,
+                NameUser = "JuanNPC",
+                typeDivision = Division.unassigned
+            };
+
+
+
+            SetSecurityDefaults(customer7, dateNow, true);
+
+            _webAppContext.Customers!.Add(customer7);
+
+            #endregion
+
+            #region Customer notpoint assing
+
+            //email = "luisjuarez@outlook.com";
+            //dateNow = DateTime.Now;
+
+            //contact = new ContactEF
+            //{
+            //    FirstName = "Luis",
+            //    FirstLastName = "Juarez",
+            //    ContactTypeId = (int)ContactType.Person,
+            //    IsMainContact = true,
+            //};
+
+            //contact.DisplayName = contact.FullName;
+
+            //SetSecurityDefaults(contact, dateNow, true);
+
+            //// Password hash: AQAAAAEAACcQAAAAEIJ7Rv2vR7F6tKMWXaWME0t9if+RqXU0mSUmo58ulhjDHrft/jN2mztwRTkk3KmRqg==
+            //user = new UserEF
+            //{
+            //    Email = email,
+            //    UserName = email,
+            //    Contact = contact,
+            //    EmailConfirmed = true,
+            //    LoginTypeId = (int)LoginType.Email,
+            //};
+
+            //SetSecurityDefaults(user, dateNow, true);
+
+            //_userManager.CreateAsync(user, "Admin123!").GetAwaiter().GetResult();
+
+            //_userManager.AddToRoleAsync(user, UserRole.Dev.ToString()).GetAwaiter().GetResult();
+
+            //customer = new CustomerEF
+            //{
+            //    User = user,
+            //    NameUser = "LuisitoComunica",
+            //};
+
+            //SetSecurityDefaults(customer, dateNow, true);
+
+            //_webAppContext.Customers!.Add(customer);
+
+            #endregion
 
             _webAppContext.SaveChanges();
         }
+
+
+
+
 
         private void SetSecurityDefaults(IAuditEntity entity, DateTime dateNow, bool setPublicKey = false, int createdBy = 1)
         {
@@ -195,3 +707,5 @@ namespace WakiBack.DAL
     }
 
 }
+
+
