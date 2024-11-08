@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+import Modal from "@mui/material/Modal";
 import {
   Backdrop,
   Divider,
   Grid2,
-  Modal,
   Paper,
   Slide,
   Stack,
@@ -11,30 +10,30 @@ import {
   useTheme,
 } from "@mui/material";
 import { RxCross1 } from "react-icons/rx";
-import MatchesSearchBar from "../../layout/Matches/MatchesSearchBar";
-import { useMatchContext } from "../../../hooks/useMatchContext";
-import dates from "../../../utils/predictions-tab-dates";
+import PredictionsCount from "./PredictionsCount";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 import { MatchForPredictionsData } from "../../../types/MatchesTypes";
+import { useMatchContext } from "../../../hooks/useMatchContext";
 import { useDatesContext } from "../../../hooks/useDatesContext";
+import PredictionsCombinerTabs from "./PredictionsCombinedTabs";
 
-const PredictionsMatchesListModal = () => {
+const PredictionsCombinedMatchModal = ({
+  match,
+}: {
+  match: MatchForPredictionsData;
+}) => {
   const theme = useTheme();
-  const { match, matchesForPredictions, setMatchData } = useMatchContext();
+
+  const { matchesForPredictions, setMatchData, matchesForCombined } = useMatchContext();
   const { datePredictionValue } = useDatesContext();
 
   const {
+    winners,
     openModals,
     handleCloseModals,
     handleOpenModals,
-    setPredictionDataByParam,
   } = usePredictionsContext();
 
-  useEffect(() => {
-    if (match) {
-      setPredictionDataByParam(match?.entityPublicKey);
-    }
-  }, [match, setPredictionDataByParam]);
 
   const handleSetGameAndOpenNext = (match: MatchForPredictionsData) => {
     setMatchData(match);
@@ -43,7 +42,7 @@ const PredictionsMatchesListModal = () => {
 
   return (
     <Modal
-      open={openModals === 0 ? true : false}
+      open={openModals === 8 ? true : false}
       onClose={handleCloseModals}
       closeAfterTransition
       slots={{ backdrop: Backdrop }}
@@ -53,13 +52,16 @@ const PredictionsMatchesListModal = () => {
         },
       }}
     >
-      <Slide direction="up" in={openModals === 0 ? true : false}>
+      <Slide direction="up" in={openModals === 8 ? true : false}>
         <Paper
           sx={{
+            display: "flex",
+            flexDirection: "column",
             position: "absolute",
             bottom: 0,
             width: "100%",
-            height: "100vh",
+            minHeight: "75vh",
+            maxHeight: "100vh",
             bgcolor: "background.paper",
             borderRadius: 2,
             background: `linear-gradient(45deg, rgba(0, 0, 0, 0.15) 25%, rgba(0, 0, 0, 0.00) 25%, rgba(0, 0, 0, 0.00) 75%, rgba(0, 0, 0, 0.00) 75%, rgba(1, 16, 39, 0.30) 100%), linear-gradient(45deg, rgba(1, 16, 39, 0.30) 25%, rgba(1, 16, 39, 0.30) 25%, rgba(34, 41, 69, 0.30) 75%, rgba(1, 16, 39, 0.30) 75%), ${theme.palette.primary.main}`,
@@ -76,11 +78,10 @@ const PredictionsMatchesListModal = () => {
               <RxCross1 />
             </Typography>
             <Typography variant="h5" align="center">
-              {datePredictionValue &&
-                `Elige un partido de ${dates.dateFormat(datePredictionValue)}`}
+              ¿Con qué vas a combinar?
             </Typography>
             <Typography variant="subtitle1" align="center">
-              Selecciona una opción
+              Elige un partido dentro de los próximos 5 días
             </Typography>
           </Stack>
           <Divider
@@ -93,10 +94,10 @@ const PredictionsMatchesListModal = () => {
               },
             }}
           />
-          <MatchesSearchBar search="game" />
+          <PredictionsCombinerTabs />
           <Stack
             sx={{
-              height: "75vh",
+              height: 250,
               alignItems: "center",
               gap: 1,
               mt: 5,
@@ -180,10 +181,110 @@ const PredictionsMatchesListModal = () => {
                 </Stack>
               ))}
           </Stack>
+          <Divider
+            sx={{
+              my: 1,
+              "&.MuiDivider-root": {
+                borderWidth: "2px",
+                borderStyle: "solid",
+                borderImage: `linear-gradient(to right, ${theme.palette.secondary.main} -0.04%, ${theme.palette.primary.main} 99.96%) 1`,
+              },
+            }}
+          />
+          <Stack
+            sx={{
+              flexGrow: 1,
+              width: 310,
+              height: 200,
+              mx: "auto",
+              justifyContent: "center",
+              alignItems: "start",
+              color: "white",
+              gap: 1,
+              py: 1,
+              overflowY: "auto",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <Typography>Resumen:</Typography>
+            {matchesForCombined.length > 0 &&
+              matchesForCombined.map((match, index) => (
+                <div key={index}>
+                  <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
+                    <Typography noWrap sx={{ maxWidth: 120 }}>
+                      {match.teamsAPI.homeAPI.teamAPI.name}
+                    </Typography>
+                    <img
+                      src={match.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
+                      width={18}
+                      height={18}
+                    />
+                    <Typography>vs</Typography>
+                    <img
+                      src={match.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
+                      width={18}
+                      height={18}
+                    />
+                    <Typography noWrap sx={{ maxWidth: 120 }}>
+                      {match.teamsAPI.awayAPI.teamAPI.name}
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    sx={{ width: 300, justifyContent: "space-between" }}
+                  >
+                    <Typography>
+                      Resultado final:{" "}
+                      {winners[index] === "home" &&
+                        match.teamsAPI.homeAPI.teamAPI.name}
+                      {winners[index] === "draw" && "Empate"}
+                      {winners[index] === "away" &&
+                        match.teamsAPI.awayAPI.teamAPI.name}
+                    </Typography>
+                    <Typography>
+                      {winners[index] === "home" &&
+                        Math.ceil(match.oddsAPI.home * 10)}
+                      {winners[index] === "draw" &&
+                        Math.ceil(match.oddsAPI.draw * 10)}
+                      {winners[index] === "away" &&
+                        Math.ceil(match.oddsAPI.away * 10)}
+                    </Typography>
+                  </Stack>
+                </div>
+              ))}
+            {winners && (
+              <Divider
+                sx={{
+                  width: "100%",
+                  "&.MuiDivider-root": {
+                    border: "1px solid",
+                    borderColor: "primary.main",
+                  },
+                }}
+              />
+            )}
+            {winners && (
+              <Stack
+                direction="row"
+                sx={{ width: 300, justifyContent: "space-between" }}
+              >
+                <Typography variant="h6">Puntos totales</Typography>
+                <Typography variant="h6">
+                  {winners[winners.length - 1] === "home" &&
+                    Math.ceil(match.oddsAPI.home * 10)}
+                  {winners[winners.length - 1] === "draw" &&
+                    Math.ceil(match.oddsAPI.draw * 10)}
+                  {winners[winners.length - 1] === "away" &&
+                    Math.ceil(match.oddsAPI.away * 10)}
+                </Typography>
+              </Stack>
+            )}
+          </Stack>
+          {winners && <PredictionsCount />}
         </Paper>
       </Slide>
     </Modal>
   );
 };
 
-export default PredictionsMatchesListModal;
+export default PredictionsCombinedMatchModal;

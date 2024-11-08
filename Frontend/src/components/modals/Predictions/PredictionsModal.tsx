@@ -15,21 +15,48 @@ import SecondaryButton from "../../buttons/SecondaryButton";
 import PredictionsCount from "./PredictionsCount";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 import PredictionResult from "./PredictionResult";
-import { MatchForPredictionsData } from "../../../types/MatchesTypes";
+import { useMatchContext } from "../../../hooks/useMatchContext";
+import { useCountBetsContext } from "../../../hooks/useCountBetsContext";
 
-const PredictionsModal = ({ match }: { match: MatchForPredictionsData }) => {
+const PredictionsModal = () => {
   const theme = useTheme();
 
   const {
-    winner,
+    match,
+    matchesForCombined,
+    addMatchesForCombined,
+    handleCombinedMatchesReset,
+  } = useMatchContext();
+
+  const { fullBets } = useCountBetsContext();
+
+  const {
+    currentWinner,
+    winners,
+    addWinner,
+    handleCombinedReset,
     predictionType,
     openModals,
     isLoading,
     handleCloseModals,
     handleCreateBet,
+    handleOpenModals,
   } = usePredictionsContext();
 
+  const handleCombined = () => {
+    addWinner();
+    addMatchesForCombined();
+    handleOpenModals(7);
+  };
+
+  const handleCloseAndReset = () => {
+    handleCloseModals();
+    handleCombinedMatchesReset();
+    handleCombinedReset();
+  };
+
   return (
+    match && (
       <Modal
         open={openModals === 2 ? true : false}
         onClose={handleCloseModals}
@@ -61,7 +88,7 @@ const PredictionsModal = ({ match }: { match: MatchForPredictionsData }) => {
               <Typography
                 variant="h5"
                 align="right"
-                onClick={handleCloseModals}
+                onClick={handleCloseAndReset}
                 sx={{ cursor: "pointer" }}
               >
                 <RxCross1 />
@@ -85,16 +112,17 @@ const PredictionsModal = ({ match }: { match: MatchForPredictionsData }) => {
                 },
               }}
             />
-            {predictionType == "result" && <PredictionResult match={match} />}
+            {predictionType == "result" && <PredictionResult />}
             <Stack
               direction="row"
               sx={{
                 width: 300,
-                justifyContent: "space-between",
+                justifyContent: fullBets == false ? "space-between" : "center",
+                alignItems: "center",
                 my: 3,
                 mx: "auto",
                 gap: 1,
-                mt: winner ? 0 : "10vh",
+                mt: currentWinner ? 0 : "10vh",
               }}
             >
               {isLoading ? (
@@ -106,16 +134,19 @@ const PredictionsModal = ({ match }: { match: MatchForPredictionsData }) => {
                   <MainButton
                     onClick={handleCreateBet}
                     width={150}
-                    disabled={!winner ? true : false}
+                    disabled={!currentWinner ? true : false}
                   >
                     Predecir
                   </MainButton>
-                  <SecondaryButton
-                    width={150}
-                    disabled={!winner ? true : false}
-                  >
-                    Hacer combinada
-                  </SecondaryButton>
+                  {fullBets == false && (
+                    <SecondaryButton
+                      onClick={handleCombined}
+                      width={150}
+                      disabled={!currentWinner ? true : false}
+                    >
+                      Hacer combinada
+                    </SecondaryButton>
+                  )}
                 </>
               )}
             </Stack>
@@ -134,15 +165,68 @@ const PredictionsModal = ({ match }: { match: MatchForPredictionsData }) => {
               sx={{
                 flexGrow: 1,
                 width: 310,
+                height: 200,
                 mx: "auto",
-                justifyContent: "center",
+                justifyContent: "start",
                 alignItems: "start",
                 color: "white",
                 gap: 1,
-                py: 1,
+                pt: 1,
+                mt: 5,
+                pb: 10,
+                overflowY: "auto",
+                whiteSpace: "nowrap",
               }}
             >
               <Typography>Resumen:</Typography>
+              {matchesForCombined.length > 0 &&
+                matchesForCombined.map((match, index) => (
+                  <div key={index}>
+                    <Stack
+                      direction="row"
+                      sx={{ alignItems: "center", gap: 1, mb: 1 }}
+                    >
+                      <Typography noWrap sx={{ maxWidth: 120 }}>
+                        {match.teamsAPI.homeAPI.teamAPI.name}
+                      </Typography>
+                      <img
+                        src={match.teamsAPI.homeAPI.teamAPI.logoUrl || ""}
+                        width={18}
+                        height={18}
+                      />
+                      <Typography>vs</Typography>
+                      <img
+                        src={match.teamsAPI.awayAPI.teamAPI.logoUrl || ""}
+                        width={18}
+                        height={18}
+                      />
+                      <Typography noWrap sx={{ maxWidth: 120 }}>
+                        {match.teamsAPI.awayAPI.teamAPI.name}
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      sx={{ width: 300, justifyContent: "space-between" }}
+                    >
+                      <Typography noWrap sx={{ maxWidth: 250 }}>
+                        Resultado final:{" "}
+                        {winners[index] === "home" &&
+                          match.teamsAPI.homeAPI.teamAPI.name}
+                        {winners[index] === "draw" && "Empate"}
+                        {winners[index] === "away" &&
+                          match.teamsAPI.awayAPI.teamAPI.name}
+                      </Typography>
+                      <Typography>
+                        {winners[index] === "home" &&
+                          Math.ceil(match.oddsAPI.home * 10)}
+                        {winners[index] === "draw" &&
+                          Math.ceil(match.oddsAPI.draw * 10)}
+                        {winners[index] === "away" &&
+                          Math.ceil(match.oddsAPI.away * 10)}
+                      </Typography>
+                    </Stack>
+                  </div>
+                ))}
               <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
                 <Typography noWrap sx={{ maxWidth: 120 }}>
                   {match.teamsAPI.homeAPI.teamAPI.name}
@@ -162,20 +246,30 @@ const PredictionsModal = ({ match }: { match: MatchForPredictionsData }) => {
                   {match.teamsAPI.awayAPI.teamAPI.name}
                 </Typography>
               </Stack>
-              {winner && (
+              {currentWinner && (
                 <Stack
                   direction="row"
                   sx={{ width: 300, justifyContent: "space-between" }}
                 >
-                  <Typography>Resultado final:</Typography>
                   <Typography>
-                    {winner === "home" && Math.ceil(match.oddsAPI.home * 10)}
-                    {winner === "draw" && Math.ceil(match.oddsAPI.draw * 10)}
-                    {winner === "away" && Math.ceil(match.oddsAPI.away * 10)}
+                    Resultado final:{" "}
+                    {currentWinner === "home" &&
+                      match.teamsAPI.homeAPI.teamAPI.name}
+                    {currentWinner === "draw" && "Empate"}
+                    {currentWinner === "away" &&
+                      match.teamsAPI.awayAPI.teamAPI.name}
+                  </Typography>
+                  <Typography>
+                    {currentWinner === "home" &&
+                      Math.ceil(match.oddsAPI.home * 10)}
+                    {currentWinner === "draw" &&
+                      Math.ceil(match.oddsAPI.draw * 10)}
+                    {currentWinner === "away" &&
+                      Math.ceil(match.oddsAPI.away * 10)}
                   </Typography>
                 </Stack>
               )}
-              {winner && (
+              {winners && (
                 <Divider
                   sx={{
                     width: "100%",
@@ -186,25 +280,29 @@ const PredictionsModal = ({ match }: { match: MatchForPredictionsData }) => {
                   }}
                 />
               )}
-              {winner && (
-                <Stack
-                  direction="row"
-                  sx={{ width: 300, justifyContent: "space-between" }}
-                >
-                  <Typography variant="h6">Puntos totales</Typography>
+              <Stack
+                direction="row"
+                sx={{ width: 300, justifyContent: "space-between" }}
+              >
+                <Typography variant="h6">Puntos totales</Typography>
+                {matchesForCombined.length == 0 && (
                   <Typography variant="h6">
-                    {winner === "home" && Math.ceil(match.oddsAPI.home * 10)}
-                    {winner === "draw" && Math.ceil(match.oddsAPI.draw * 10)}
-                    {winner === "away" && Math.ceil(match.oddsAPI.away * 10)}
+                    {currentWinner === "home" &&
+                      Math.ceil(match.oddsAPI.home * 10)}
+                    {currentWinner === "draw" &&
+                      Math.ceil(match.oddsAPI.draw * 10)}
+                    {currentWinner === "away" &&
+                      Math.ceil(match.oddsAPI.away * 10)}
                   </Typography>
-                </Stack>
-              )}
+                )}
+              </Stack>
             </Stack>
-            {winner && <PredictionsCount />}
+            {winners && <PredictionsCount />}
           </Paper>
         </Slide>
       </Modal>
     )
+  );
 };
 
 export default PredictionsModal;

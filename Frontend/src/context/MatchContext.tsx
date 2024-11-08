@@ -19,6 +19,9 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     MatchForPredictionsData[]
   >([]);
   const [match, setMatch] = useState<MatchForPredictionsData | undefined>();
+  const [matchesForCombined, setMatchesForCombined] = useState<
+    MatchForPredictionsData[]
+  >([]);
 
   const { state } = useUserContext();
   const { datesMatchesForPredictionsValues, datesMatchesResultsValues } =
@@ -118,12 +121,25 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     }
   };
 
+  const addMatchesForCombined = () => {
+    if (match) {
+      setMatchesForCombined((prevMatches) => [...prevMatches, match]);
+    }
+  };
+
+  const handleCombinedMatchesReset = ()=>{
+    setMatchesForCombined([])
+  }
+
   return (
     <MatchContext.Provider
       value={{
         leagues,
         matchesForPredictions,
         match,
+        matchesForCombined,
+        addMatchesForCombined,
+        handleCombinedMatchesReset,
         setMatchData,
         setMatchDataByParam,
       }}

@@ -26,12 +26,13 @@ const PredictionsProvider: React.FC<PredictionsProviderProps> = ({
 
   const [bets, setBets] = useState<CreateBetList | null>(null);
 
-  const [winner, setWinner] = useState<string | null>(null);
+  const [currentWinner, setCurrentWinner] = useState<string | null>(null);
+  const [winners, setWinners] = useState<string[]>([]);
   const [predictionType, setPredictionType] = useState<string | null>(null);
   const [openModals, setOpenModals] = useState<number | boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { match } = useMatchContext();
+  const { match, matchesForCombined } = useMatchContext();
   const { state } = useUserContext();
 
   useEffect(() => {
@@ -80,37 +81,6 @@ const PredictionsProvider: React.FC<PredictionsProviderProps> = ({
     }
   };
 
-  const handleCreateBet = () => {
-    if (bets) {
-      setIsLoading(true);
-      bet
-        .createBet(bets)
-        .then((res) => {
-          if (res?.status == 200) setOpenModals(3);
-        })
-        .catch(() => setIsLoading(false))
-        .finally(() => setIsLoading(false));
-    }
-  };
-
-  const setPredictionWinner = (winner: string) => {
-    if (match) {
-      setWinner(winner);
-      setBets({
-        listMatch: [
-          {
-            matchPublicKey: match.entityPublicKey,
-            winnerPrediction: winner,
-          },
-        ],
-      });
-    }
-  };
-
-  const handlePredictionReset = () => {
-    setWinner(null);
-  };
-
   const handleOpenModals = (value: number) => {
     setOpenModals(value);
   };
@@ -124,6 +94,61 @@ const PredictionsProvider: React.FC<PredictionsProviderProps> = ({
     setPredictionType(type);
   };
 
+  const setPredictionWinner = (winner: string) => {
+    setCurrentWinner(winner);
+
+    if (match && matchesForCombined.length == 0) {
+      setBets({
+        listMatch: [
+          {
+            matchPublicKey: match.entityPublicKey,
+            winnerPrediction: winner,
+          },
+        ],
+      });
+    } else if (match && matchesForCombined.length > 0) {
+      const matches = matchesForCombined.map((match, index) => ({
+        matchPublicKey: match.entityPublicKey,
+        winnerPrediction: winners[index],
+      }));
+      matches.push({
+        matchPublicKey: match.entityPublicKey,
+        winnerPrediction: winner,
+      });
+      setBets({
+        listMatch: matches,
+      });
+    }
+  };
+
+  const handlePredictionReset = () => {
+    setCurrentWinner(null);
+  };
+
+  const addWinner = () => {
+    if (currentWinner) {
+      setWinners((prevWinners) => [...prevWinners, currentWinner]);
+      handlePredictionReset();
+    }
+  };
+
+  const handleCombinedReset = () => {
+    setWinners([]);
+  };
+
+  const handleCreateBet = () => {
+    if (bets) {
+      setIsLoading(true);
+      bet
+        .createBet(bets)
+        .then((res) => {
+          if (res?.status == 200) setOpenModals(3);
+        })
+        .catch(() => setIsLoading(false))
+        .finally(() => setIsLoading(false));
+    }
+  };
+
   return (
     <PredictionsContext.Provider
       value={{
@@ -133,9 +158,12 @@ const PredictionsProvider: React.FC<PredictionsProviderProps> = ({
         setPredictionDataByParam,
         prediction,
         bets,
-        winner,
+        currentWinner,
+        winners,
         handleCreateBet,
         setPredictionWinner,
+        addWinner,
+        handleCombinedReset,
         handlePredictionReset,
         predictionType,
         handlePredictionType,

@@ -10,7 +10,7 @@ import { useCountBetsContext } from "../../../hooks/useCountBetsContext";
 const PredictionsHeader = () => {
   const theme = useTheme();
   const { datePredictionValue } = useDatesContext();
-  const { countBets, countFutureBets } = useCountBetsContext();
+  const { countBets } = useCountBetsContext();
 
   return (
     <Box
@@ -36,9 +36,7 @@ const PredictionsHeader = () => {
           Tus predicciones
         </Typography>
         <Typography variant="h1" fontSize={62}>
-          {countBets && countBets < 5
-            ? 5 - countBets - countFutureBets
-            : 5 - countFutureBets}
+          {5 - countBets}
         </Typography>
         <Typography variant="subtitle2" sx={{ color: "primary.light" }}>
           {datePredictionValue === "Todos"

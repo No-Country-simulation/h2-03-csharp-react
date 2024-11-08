@@ -1,9 +1,21 @@
 import { Stack, Typography } from "@mui/material";
 import { FaCircle, FaRegCircle } from "react-icons/fa6";
 import { useCountBetsContext } from "../../../hooks/useCountBetsContext";
+import { useMatchContext } from "../../../hooks/useMatchContext";
+import { useEffect } from "react";
 
 const PredictionsCount = () => {
-  const { countBets } = useCountBetsContext();
+  const { countBets, handleSetFullBets } = useCountBetsContext();
+  const { matchesForCombined } = useMatchContext();
+
+  useEffect(() => {
+    const full = countBets + matchesForCombined.length + 1;
+    if (full == 5) {
+      handleSetFullBets(true);
+    } else {
+      handleSetFullBets(false);
+    }
+  }, [countBets, handleSetFullBets, matchesForCombined]);
 
   return (
     <Stack
@@ -25,12 +37,18 @@ const PredictionsCount = () => {
         direction="row"
         sx={{ color: "primary.main", gap: 1, fontSize: 10 }}
       >
-        {Array.from({ length: countBets }, (_, index) => (
-          <FaCircle key={index} />
-        ))}
-        {Array.from({ length: 5 - countBets }, (_, index) => (
+        {Array.from(
+          { length: countBets + matchesForCombined.length + 1 },
+          (_, index) => (
+            <FaCircle key={index} />
+          )
+        )}
+        {Array.from(
+          { length: 5 - countBets - matchesForCombined.length - 1 },
+          (_, index) => (
             <FaRegCircle key={index} />
-          ))}
+          )
+        )}
       </Stack>
     </Stack>
   );

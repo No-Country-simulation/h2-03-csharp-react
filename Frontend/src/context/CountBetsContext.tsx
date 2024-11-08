@@ -12,7 +12,7 @@ const CountBetsContext = createContext<CountBetsContextProps | null>(null);
 const CountBetsProvider: React.FC<CountBetsProviderProps> = ({ children }) => {
   const [countBets, setCountBets] = useState<number>(0);
   const [countFutureBets, setCountFutureBets] = useState<number>(0);
-  const [countFutureBetsByDay, setCountFutureBetsByDay] = useState<number>(0);
+  const [fullBets, setFullBets] = useState<boolean>(false)
 
   const { datePredictionValue, dateMatchValue } = useDatesContext();
   const { predictions, listMatch } = usePredictionsContext();
@@ -21,22 +21,17 @@ const CountBetsProvider: React.FC<CountBetsProviderProps> = ({ children }) => {
     const betsOfDay = predictions?.find(
       (betList) =>
         dates.formatPredictionsDate(betList.dateFirstBetOfDay) ===
-        datePredictionValue
+        datePredictionValue || dates.formatPredictionsDate(betList.dateFirstBetOfDay) === dateMatchValue
     );
     const count = betsOfDay?.countBets;
     const countFuture = betsOfDay?.countFutureBets;
-
-    const countFutureByDay = listMatch
-      ?.filter((bet) => bet.match.adjustedDate == datePredictionValue)
-
-    if (countFutureByDay) {
-      setCountFutureBetsByDay(countFutureByDay.length);
-    }
 
     if (count && countFuture) {
       setCountBets(count);
       setCountFutureBets(countFuture);
     }
+
+
   }, [datePredictionValue, predictions, listMatch, dateMatchValue]);
 
   const handleSetCountsBets = (total: number, future: number) => {
@@ -44,13 +39,18 @@ const CountBetsProvider: React.FC<CountBetsProviderProps> = ({ children }) => {
     setCountFutureBets(future);
   };
 
+  const handleSetFullBets = (set: boolean)=>{
+    setFullBets(set)
+  }
+
   return (
     <CountBetsContext.Provider
       value={{
         handleSetCountsBets,
         countBets,
         countFutureBets,
-        countFutureBetsByDay,
+        fullBets,
+        handleSetFullBets,
       }}
     >
       {children}

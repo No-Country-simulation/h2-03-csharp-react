@@ -62,6 +62,9 @@ export interface MatchContextProps {
   leagues: LeagueData[] | undefined;
   matchesForPredictions: MatchForPredictionsData[] | undefined;
   match: MatchForPredictionsData | undefined;
+  matchesForCombined: MatchForPredictionsData[];
+  addMatchesForCombined: () => void;
+  handleCombinedMatchesReset: () => void;
   setMatchData: (match: MatchForPredictionsData) => void;
   setMatchDataByParam: (param: string, prediction?: PredictionMatch[]) => void;
 }
