@@ -87,9 +87,12 @@ export interface PredictionsContextProps {
   setPredictionDataByParam: (param: string) => void;
   prediction: Prediction | null;
   bets: CreateBetList | null | undefined;
-  winner: string | null;
+  currentWinner: string | null;
+  winners: string[];
   handleCreateBet: () => void;
   setPredictionWinner: (winner: string) => void;
+  addWinner: () => void;
+  handleCombinedReset: () => void;
   handlePredictionReset: () => void;
   predictionType: string | null;
   handlePredictionType: (type: string) => void;

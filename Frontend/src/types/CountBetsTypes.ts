@@ -8,5 +8,6 @@ export interface CountBetsContextProps {
   handleSetCountsBets: (total: number, future: number) => void;
   countBets: number;
   countFutureBets: number;
-  countFutureBetsByDay: number;
+  fullBets: boolean;
+  handleSetFullBets: (set: boolean) => void;
 }

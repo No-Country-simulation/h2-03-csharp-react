@@ -7,6 +7,8 @@ import { useMatchContext } from "../../../hooks/useMatchContext";
 import GameStatsModal from "../../modals/Matches/MatchStatsModal";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
 import { useCountBetsContext } from "../../../hooks/useCountBetsContext";
+import dates from "../../../utils/predictions-tab-dates";
+import { useDatesContext } from "../../../hooks/useDatesContext";
 
 interface MatchesMatchBadgeProps {
   matchData: MatchForPredictionsData;
@@ -20,8 +22,9 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
 
   const navigate = useNavigate();
 
-  const { countFutureBetsByDay } = useCountBetsContext();
-  const { setMatchData, match } = useMatchContext();
+  const { setMatchData } = useMatchContext();
+  const { countBets, countFutureBets } = useCountBetsContext();
+  const { dateMatchValue } = useDatesContext();
   const {
     setPredictionWinner,
     openModals,
@@ -44,14 +47,15 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
     event: React.MouseEvent<HTMLSpanElement>,
     selected: string
   ) => {
-    if (match?.winner == "tbd" || countFutureBetsByDay !== 2) {
+    if (
+      (dates.dateFormat(dateMatchValue) == "Hoy" && countBets !== 5) ||
+      (dates.dateFormat(dateMatchValue) !== "Hoy" && countFutureBets !== 1)
+    ) {
+      event.stopPropagation();
       setMatchData(matchData);
       setPredictionWinner(selected);
       handlePredictionType("result");
       handleOpenModals(2);
-      event.stopPropagation();
-    } else if (countFutureBetsByDay == 2) {
-      handleOpenModals(6)
     }
   };
 

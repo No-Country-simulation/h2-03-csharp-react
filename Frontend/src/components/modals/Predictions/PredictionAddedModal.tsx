@@ -1,9 +1,11 @@
 import { Backdrop, Fade, Modal, Stack, Typography } from "@mui/material";
 import check from "../../../assets/icons/check.svg";
 import { usePredictionsContext } from "../../../hooks/usePredictionsContext";
+import { useMatchContext } from "../../../hooks/useMatchContext";
 
 const PredictionAddedModal = () => {
   const { openModals, handleCloseModals } = usePredictionsContext();
+  const { matchesForCombined } = useMatchContext();
 
   return (
     <Modal
@@ -35,9 +37,12 @@ const PredictionAddedModal = () => {
             gap: 1,
           }}
         >
-          <Typography align="center"><img src={check} width={70} height={70} /></Typography>
+          <Typography align="center">
+            <img src={check} width={70} height={70} />
+          </Typography>
           <Typography variant="h6" align="center">
-            Se ha añadido tu predicción
+            {matchesForCombined.length == 0 && "Se ha añadido tu predicción"}
+            {matchesForCombined.length > 0 && "Se ha añadido tu combinada"}
           </Typography>
         </Stack>
       </Fade>

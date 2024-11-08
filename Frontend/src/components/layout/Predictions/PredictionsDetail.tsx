@@ -15,6 +15,8 @@ import { useDatesContext } from "../../../hooks/useDatesContext";
 import PredictionLimitModal from "../../modals/Predictions/PredictionLimitModal";
 import { useCountBetsContext } from "../../../hooks/useCountBetsContext";
 import dates from "../../../utils/predictions-tab-dates";
+import PredictionsCombinedModal from "../../modals/Predictions/PredictionsCombinedModal";
+import PredictionsCombinedMatchModal from "../../modals/Predictions/PredictionsCombinedMatchModal";
 
 const PredictionsDetail = () => {
   const [hasOpened, setHasOpened] = useState(false);
@@ -22,18 +24,14 @@ const PredictionsDetail = () => {
 
   const { match } = useMatchContext();
   const { datePredictionValue } = useDatesContext();
-  const { countBets, countFutureBets, countFutureBetsByDay } =
-    useCountBetsContext();
+  const { countBets, countFutureBets } = useCountBetsContext();
 
   useEffect(() => {
     const calcFutureBet = () => {
-      const currentDate = new Date();
-      const currentFormatedDate = dates.formatPredictionsDate(
-        currentDate.toString()
-      );
       if (
-        countFutureBetsByDay == 2 &&
-        datePredictionValue !== currentFormatedDate &&
+        countFutureBets == 1 &&
+        datePredictionValue !== "Todos" &&
+        dates.dateFormat(datePredictionValue) !== "Hoy" &&
         !hasOpened
       ) {
         handleOpenModals(6);
@@ -47,13 +45,7 @@ const PredictionsDetail = () => {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [
-    countFutureBets,
-    hasOpened,
-    handleOpenModals,
-    datePredictionValue,
-    countFutureBetsByDay,
-  ]);
+  }, [countFutureBets, hasOpened, handleOpenModals, datePredictionValue]);
 
   return (
     <Box
@@ -73,7 +65,11 @@ const PredictionsDetail = () => {
         {datePredictionValue !== "Todos" && (
           <MainButton
             onClick={() => handleOpenModals(0)}
-            disabled={countBets === 5 || countFutureBetsByDay === 2}
+            disabled={
+              countBets === 5 ||
+              (countFutureBets == 1 &&
+                dates.dateFormat(datePredictionValue) !== "Hoy")
+            }
           >
             Hacer predicción
           </MainButton>
@@ -97,8 +93,10 @@ const PredictionsDetail = () => {
       <PredictionsDetailActive />
       {datePredictionValue === "Todos" && <PredictionsDetailRecord />}
       <PredictionsGamesListModal />
-      <PredictionsByDayModal />
-      {match && <PredictionsModal match={match} />}
+      {match && <PredictionsModal />}
+      {match && <PredictionsCombinedModal match={match} />}
+      {match && <PredictionsCombinedMatchModal match={match} />}
+      {match && <PredictionsByDayModal />}
       <PredictionAddedModal />
       <ComingSoonModal />
       <PredictionStopModal />
