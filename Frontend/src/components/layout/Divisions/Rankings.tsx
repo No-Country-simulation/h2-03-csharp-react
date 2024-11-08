@@ -18,7 +18,7 @@ const Rankings = () => {
   const [currentUserData] = useState<UserData>({
     division: "bronze",
     name: "Usuario",
-    points: 35,
+    points: 120,
   });
 
   const [division, setDivision] = useState<UserData["division"]>(

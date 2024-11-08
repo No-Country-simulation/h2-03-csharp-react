@@ -17,30 +17,22 @@ const ProfileData = () => {
         width: "100%",
       }}
     >
-      <Typography variant="body2">Nombre</Typography>
+      <Typography variant="h5">Cambiar contraseña</Typography>
+      <Typography variant="body2">Contraseña</Typography>
       <TextField
         variant="outlined"
-        placeholder="Introduce tu nombre"
+        placeholder="Introduce tu nueva contraseña"
         sx={{
           backgroundColor: "white",
           borderRadius: "10px",
           width: "100%",
         }}
       />
-      <Typography variant="body2">Apellido</Typography>
+      <Typography variant="h5">Datos de envío</Typography>
+      <Typography variant="body2">Dirección</Typography>
       <TextField
         variant="outlined"
-        placeholder="Introduce tu apellido"
-        sx={{
-          backgroundColor: "white",
-          borderRadius: "10px",
-          width: "100%",
-        }}
-      />
-      <Typography variant="body2">Email</Typography>
-      <TextField
-        variant="outlined"
-        placeholder="Introduce tu email"
+        placeholder="Introduce tu dirección"
         sx={{
           backgroundColor: "white",
           borderRadius: "10px",
@@ -51,16 +43,6 @@ const ProfileData = () => {
       <TextField
         variant="outlined"
         placeholder="Introduce tu número de teléfono"
-        sx={{
-          backgroundColor: "white",
-          borderRadius: "10px",
-          width: "100%",
-        }}
-      />
-      <Typography variant="body2">Provincia</Typography>
-      <TextField
-        variant="outlined"
-        placeholder="Introduce tu provincia"
         sx={{
           backgroundColor: "white",
           borderRadius: "10px",

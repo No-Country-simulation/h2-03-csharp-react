@@ -5,7 +5,7 @@ import RewardsDivisionsCard from "./RewardsDivisionsCard";
 
 const Rewards = () => {
   const userData = {
-    points: 200,
+    points: 120,
     division: "bronze",
     pointsToNextDivision: 300,
   };
