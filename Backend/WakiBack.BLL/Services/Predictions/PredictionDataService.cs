@@ -112,6 +112,7 @@ namespace WakiBack.BLL
                             dbMatch.OddsAPI = apiMatch.OddsAPI;
                             dbMatch.HomeFtGoals = apiMatch.HomeFtGoals;
                             dbMatch.AwayFtGoals = apiMatch.AwayFtGoals;
+                            dbMatch.Time = apiMatch.Time;
                                         
                             await _unitOfWork.Matches.UpdateData(dbMatch); // Actualización en la base de datos
                             _logger.LogInformation($"Se actualizo el match con id : {dbMatch.MatchId}");                           
