@@ -25,17 +25,19 @@ const initialState: UserState = {
 
 const userReducer = (state: UserState, action: UserAction): UserState => {
   switch (action.type) {
-    case "LOGIN_SUCCESS":
-      localStorage.setItem("token", JSON.stringify(action.payload));
-      return {
-        ...state,
+    case "LOGIN_SUCCESS": {
+      const userData = {
         token: action.payload.token,
         email: action.payload.email,
         username: action.payload.username,
       };
-    case "LOGOUT":
-      localStorage.removeItem("token");
+      localStorage.setItem("user", JSON.stringify(userData));
+      return userData;
+    }
+    case "LOGOUT": {
+      localStorage.removeItem("user");
       return initialState;
+    }
     default:
       return state;
   }
@@ -52,7 +54,7 @@ export const useUserContext = () => useContext(UserContext);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const storedUser = localStorage.getItem("userToken");
+  const storedUser = localStorage.getItem("user");
   const initialStateWithStorage = storedUser
     ? JSON.parse(storedUser)
     : initialState;
