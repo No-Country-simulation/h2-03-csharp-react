@@ -13,8 +13,10 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    a {
+    a,
+    p {
       color: black;
+      cursor: pointer;
       font-weight: bold;
       text-decoration: none;
     }
@@ -27,11 +29,19 @@
     }
   }
   h3 {
-    font-size: 3rem;
-    font-weight: bold;
-    margin: 0 0 5% 3%;
-    line-height: 0.5;
+    background: linear-gradient(
+      to left,
+      var(--secondary-color),
+      var(--tertiary-color)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 64px;
+    font-weight: 900;
+    margin: 0 0 10% 3%;
   }
+
   hr {
     width: 100%;
     border: 2px solid var(--secondary-color);
@@ -85,7 +95,7 @@
   color: white;
   opacity: 0.3;
   text-decoration: none;
-  gap: 5px
+  gap: 5px;
 }
 
 .selected {

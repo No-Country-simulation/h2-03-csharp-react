@@ -19,6 +19,7 @@ import ScrollToTop from "./components/layout/ScrollToTop";
 import TokensPage from "./pages/TokensPage";
 import { DatesProvider } from "./context/DatesContext";
 import { CountBetsProvider } from "./context/CountBetsContext";
+import Onboarding from "./pages/Onboarding";
 
 function App() {
   return (
@@ -33,7 +34,9 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/ingresar" element={<Login />} />
+                    <Route path="/onboarding" element={<Onboarding />} />
                     <Route path="/" element={<ProtectedRoutes />}>
+                      {/* <Route path="/onboarding" element={<Onboarding />} /> */}
                       <Route
                         path="/predicciones"
                         element={<PredictionsPage />}

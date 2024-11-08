@@ -7,13 +7,23 @@ import userDataIcon from "../../../assets/user-data-icon.svg";
 import walletIcon from "../../../assets/wallet-icon.svg";
 import { useTheme } from "@mui/material/styles";
 import bottomBG from "../../../assets/profile-body-bot-bg.svg";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../../hooks/UserContext";
 
 interface ProfileHomeBodyProps {
   onClick: (setView: string) => void;
 }
 
 const ProfileHomeBody: React.FC<ProfileHomeBodyProps> = ({ onClick }) => {
+  const navigate = useNavigate();
+  const { dispatch } = useUserContext();
   const theme = useTheme();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+  };
 
   return (
     <Box
@@ -106,7 +116,7 @@ const ProfileHomeBody: React.FC<ProfileHomeBodyProps> = ({ onClick }) => {
         <ProfileHeaderTab
           icon={walletIcon}
           text="Cerrar sesión"
-          onClick={() => onClick("profileSettings")}
+          onClick={() => handleLogout()}
         ></ProfileHeaderTab>
       </Paper>
     </Box>
