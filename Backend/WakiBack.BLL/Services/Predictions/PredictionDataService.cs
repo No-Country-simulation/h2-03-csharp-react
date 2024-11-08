@@ -102,12 +102,12 @@ namespace WakiBack.BLL
                             .SelectMany(stage => stage.MatchList!)
                             .FirstOrDefault(m => m.MatchId == dbMatch.MatchId);
 
-                        if (apiMatch != null && dbMatch.Winner == "tbd")
+                        if (apiMatch != null && dbMatch.Winner == "tbd" && apiMatch.Winner != "tbd")
                         {
                                
 
                             dbMatch.StageAPI = apiMatch.StageAPI;
-                            dbMatch.TeamsAPI = apiMatch.TeamsAPI;                            
+                            dbMatch.TeamsAPI = apiMatch.TeamsAPI;
                             dbMatch.Winner = apiMatch.Winner;
                             dbMatch.OddsAPI = apiMatch.OddsAPI;
                             dbMatch.HomeFtGoals = apiMatch.HomeFtGoals;
