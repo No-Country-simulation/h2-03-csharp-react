@@ -29,7 +29,7 @@ const PredictionsDetail = () => {
   useEffect(() => {
     const calcFutureBet = () => {
       if (
-        countFutureBets == 1 &&
+        countFutureBets == 2 &&
         datePredictionValue !== "Todos" &&
         dates.dateFormat(datePredictionValue) !== "Hoy" &&
         !hasOpened
@@ -67,7 +67,7 @@ const PredictionsDetail = () => {
             onClick={() => handleOpenModals(0)}
             disabled={
               countBets === 5 ||
-              (countFutureBets == 1 &&
+              (countFutureBets == 2 &&
                 dates.dateFormat(datePredictionValue) !== "Hoy")
             }
           >

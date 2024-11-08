@@ -59,7 +59,7 @@ const PredictionsMatchesListModal = () => {
             position: "absolute",
             bottom: 0,
             width: "100%",
-            height: "100vh",
+            height: "95vh",
             bgcolor: "background.paper",
             borderRadius: 2,
             background: `linear-gradient(45deg, rgba(0, 0, 0, 0.15) 25%, rgba(0, 0, 0, 0.00) 25%, rgba(0, 0, 0, 0.00) 75%, rgba(0, 0, 0, 0.00) 75%, rgba(1, 16, 39, 0.30) 100%), linear-gradient(45deg, rgba(1, 16, 39, 0.30) 25%, rgba(1, 16, 39, 0.30) 25%, rgba(34, 41, 69, 0.30) 75%, rgba(1, 16, 39, 0.30) 75%), ${theme.palette.primary.main}`,

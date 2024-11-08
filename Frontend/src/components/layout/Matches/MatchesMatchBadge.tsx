@@ -49,7 +49,7 @@ const MatchesMatchBadge: React.FC<MatchesMatchBadgeProps> = ({ matchData }) => {
   ) => {
     if (
       (dates.dateFormat(dateMatchValue) == "Hoy" && countBets !== 5) ||
-      (dates.dateFormat(dateMatchValue) !== "Hoy" && countFutureBets !== 1)
+      (dates.dateFormat(dateMatchValue) !== "Hoy" && countFutureBets !== 2)
     ) {
       event.stopPropagation();
       setMatchData(matchData);
