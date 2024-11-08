@@ -102,7 +102,7 @@ namespace WakiBack.BLL
                             .SelectMany(stage => stage.MatchList!)
                             .FirstOrDefault(m => m.MatchId == dbMatch.MatchId);
 
-                        if (apiMatch != null && dbMatch.Winner == "tbd" && apiMatch.Winner != "tbd")
+                        if (apiMatch != null && dbMatch.Winner == "tbd")
                         {
                                
 
