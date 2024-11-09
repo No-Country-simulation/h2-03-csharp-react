@@ -48,7 +48,7 @@ namespace WakiBack.DAL
                     command = command
                     .Where(e => e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%") ||
                         e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%") ||
-                        e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
+                        e.Deleted == null && e.Winner == "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.AwayAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
                      .Include(m => m.StageAPI)
                     .ThenInclude(m => m.LeagueAPI)
                     .ThenInclude(m => m.Country)
@@ -89,7 +89,7 @@ namespace WakiBack.DAL
                     command = command
                     .Where(e => e.Deleted == null && e.Winner == "tbd" && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%") ||
                         e.Deleted == null && e.Winner == "tbd" && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%") ||
-                        e.Deleted == null && e.Winner == "tbd" && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
+                        e.Deleted == null && e.Winner == "tbd" && EF.Functions.Like(e.TeamsAPI!.AwayAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
                      .Include(m => m.StageAPI)
                     .ThenInclude(m => m.LeagueAPI)
                     .ThenInclude(m => m.Country)
@@ -158,7 +158,7 @@ namespace WakiBack.DAL
                     command = command
                     .Where(e => e.Deleted == null && e.Winner != "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%") ||
                         e.Deleted == null && e.Winner != "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%") ||
-                        e.Deleted == null && e.Winner != "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
+                        e.Deleted == null && e.Winner != "tbd" && e.LeagueId == leagueId && EF.Functions.Like(e.TeamsAPI!.AwayAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
                     .Include(m => m.StageAPI)
                     .ThenInclude(m => m.LeagueAPI)
                     .ThenInclude(m => m.Country)                    
@@ -199,7 +199,7 @@ namespace WakiBack.DAL
                     command = command
                     .Where(e => e.Deleted == null && e.Winner != "tbd" && EF.Functions.Like(e.DisplayName!, "%" + model.SearchString + "%") ||
                         e.Deleted == null && e.Winner != "tbd" && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%") ||
-                        e.Deleted == null && e.Winner != "tbd" && EF.Functions.Like(e.TeamsAPI!.HomeAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
+                        e.Deleted == null && e.Winner != "tbd" && EF.Functions.Like(e.TeamsAPI!.AwayAPI!.TeamAPI!.Name, "%" + model.SearchString + "%"))
                      .Include(m => m.StageAPI)
                     .ThenInclude(m => m.LeagueAPI)
                     .ThenInclude(m => m.Country)

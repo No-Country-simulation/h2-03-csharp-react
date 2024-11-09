@@ -54,7 +54,7 @@ namespace WakiBack.BLL
 
         public async Task<BusinessResponse> UpdateDatabase()
         {
-            _logger.LogInformation("The credit card database update process is in progress.");
+            _logger.LogInformation("The database update process is in progress.");
 
            // var checkLeague = await _unitOfWork.Leagues.GetAllAsync();
            // var leagueList = await GetAllFromAPI();
@@ -107,11 +107,12 @@ namespace WakiBack.BLL
                                
 
                             dbMatch.StageAPI = apiMatch.StageAPI;
-                            dbMatch.TeamsAPI = apiMatch.TeamsAPI;                            
+                            dbMatch.TeamsAPI = apiMatch.TeamsAPI;
                             dbMatch.Winner = apiMatch.Winner;
                             dbMatch.OddsAPI = apiMatch.OddsAPI;
                             dbMatch.HomeFtGoals = apiMatch.HomeFtGoals;
                             dbMatch.AwayFtGoals = apiMatch.AwayFtGoals;
+                            dbMatch.Time = apiMatch.Time;
                                         
                             await _unitOfWork.Matches.UpdateData(dbMatch); // Actualización en la base de datos
                             _logger.LogInformation($"Se actualizo el match con id : {dbMatch.MatchId}");                           
