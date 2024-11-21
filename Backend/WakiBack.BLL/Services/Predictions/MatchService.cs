@@ -30,6 +30,12 @@ namespace WakiBack.BLL
             return _mapper.Map<IEnumerable<ShowMatchAPIVM>>(items);
         }
 
+        public async Task<IEnumerable<ShowMatchAPIVM>> GetAllResultsPaginatedAsync(PaginationVM<MatchAPI, ShowMatchAPIVM> model, int? leagueId)
+        {
+            var items = await _unitOfWork.Matches.GetAllResultsPaginatedAsync(model, leagueId);
+
+            return _mapper.Map<IEnumerable<ShowMatchAPIVM>>(items);
+        }
 
 
     }

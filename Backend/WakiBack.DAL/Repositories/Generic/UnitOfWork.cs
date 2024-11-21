@@ -12,6 +12,8 @@ namespace WakiBack.DAL
         ITeamAPIRepository TeamAPI {  get; }
         ITeamsAPIRepository TeamsAPI { get; }
         IPredictionRepository Predictions { get; }
+        IBetRepository Bets { get; }
+        ITokenRepository Tokens { get; }
 
         #region Methods
         void Save();
@@ -33,6 +35,8 @@ namespace WakiBack.DAL
         public ITeamAPIRepository  TeamAPI { get; private set; }
         public ITeamsAPIRepository TeamsAPI { get; private set; }
         public IPredictionRepository Predictions { get; private set; }
+        public IBetRepository Bets { get; private set; }
+        public ITokenRepository Tokens { get; private set; }
         public UnitOfWork(WebAppContext webAppContext)
         {
             _webAppContext = webAppContext;
@@ -44,6 +48,8 @@ namespace WakiBack.DAL
             TeamAPI = new TeamAPIRepository(webAppContext);
             TeamsAPI = new TeamsAPIRepository(webAppContext);
             Predictions = new PredictionRepository(webAppContext);
+            Bets = new BetRepository(webAppContext);
+            Tokens = new TokenRepository(webAppContext);
         }
 
         #region Methods        

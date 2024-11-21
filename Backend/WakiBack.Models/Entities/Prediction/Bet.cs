@@ -12,7 +12,8 @@ namespace WakiBack.Models
         public Prediction? Prediction { get; set; }
         public List<MatchPrediction>? ListMatch { get; set; }        
         public double? RatioOfPredictionCombined { get; set; }
-        public bool? CheckforWin {  get; set; } 
+        public bool? CheckforWin {  get; set; }
+        public string? Win { get; set; } //"tbd", "win" or "lose"
 
         #region IPublicKeyEntity
         public Guid EntityPublicKey { get; set; }

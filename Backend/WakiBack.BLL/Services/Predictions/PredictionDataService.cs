@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net;
+using System.Text.RegularExpressions;
 using WakiBack.DAL;
 using WakiBack.Models;
 using WakiBack.Models.APIRequest;
@@ -53,7 +54,7 @@ namespace WakiBack.BLL
 
         public async Task<BusinessResponse> UpdateDatabase()
         {
-            _logger.LogInformation("The credit card database update process is in progress.");
+            _logger.LogInformation("The database update process is in progress.");
 
            // var checkLeague = await _unitOfWork.Leagues.GetAllAsync();
            // var leagueList = await GetAllFromAPI();
@@ -80,6 +81,17 @@ namespace WakiBack.BLL
                      .ToList();
 
                     if (matchesToUpdate.Count == 0 ) _logger.LogInformation("No Updates");
+                    
+
+                    var betToPay = await _unitOfWork.Bets.GetAllBetsForCheckWin();
+                    var customers = await _unitOfWork.Customers.GetAllAsync();
+
+                    // Crear un Lookup de predicciones por public key de los partidos
+                    var predictionsLookup = betToPay
+                        .SelectMany(bet => bet.ListMatch!, (bet, prediction) => new { bet, prediction })
+                        .ToLookup(bp => bp.prediction.MatchPublicKey, bp => new { bp.bet, bp.prediction });
+
+
                     // Actualizar los matches que necesitan ser modificados
                     foreach (var dbMatch in matchesToUpdate)
                     {
@@ -95,15 +107,60 @@ namespace WakiBack.BLL
                                
 
                             dbMatch.StageAPI = apiMatch.StageAPI;
-                            dbMatch.TeamsAPI = apiMatch.TeamsAPI;                            
+                            dbMatch.TeamsAPI = apiMatch.TeamsAPI;
                             dbMatch.Winner = apiMatch.Winner;
                             dbMatch.OddsAPI = apiMatch.OddsAPI;
                             dbMatch.HomeFtGoals = apiMatch.HomeFtGoals;
                             dbMatch.AwayFtGoals = apiMatch.AwayFtGoals;
+                            dbMatch.Time = apiMatch.Time;
                                         
                             await _unitOfWork.Matches.UpdateData(dbMatch); // Actualización en la base de datos
                             _logger.LogInformation($"Se actualizo el match con id : {dbMatch.MatchId}");                           
                         }
+
+                        if (predictionsLookup.Contains(dbMatch.EntityPublicKey))
+                        {
+                            // Obtener todas las predicciones de apuestas asociadas a este partido
+                            var relatedPredictions = predictionsLookup[dbMatch.EntityPublicKey];
+                            var betsToUpdate = await _unitOfWork.Bets.GetAllAsync();
+
+                            foreach (var bp in relatedPredictions)
+                            {
+                                var countMatchPredictions = bp.bet.ListMatch!.Count();
+                                // Evaluar si el Winner del partido coincide con la predicción del usuario
+                                if (bp.prediction.WinnerPrediction == dbMatch.Winner)
+                                {                                    
+                                    bp.prediction.WinPrediction = "Win";                                    
+                                }
+                                else
+                                {
+                                    bp.prediction.WinPrediction = "Lose";                                    
+                                }
+
+                                var winningPredictionsCount = bp.bet.ListMatch!.Count(m => m.WinPrediction == "Win");
+                                var losePredictionsCount = bp.bet.ListMatch!.Count(m => m.WinPrediction == "Lose");
+                                var totalPredictionsCount = winningPredictionsCount + losePredictionsCount;
+
+                                // Comparar el conteo de "Win" con el total de MatchPredictions
+                                if (winningPredictionsCount == countMatchPredictions && bp.bet.CheckforWin != true)
+                                {
+                                    bp.bet.Win = "Win"; // Asignar "Win" en bet si todos coinciden
+                                    bp.bet.CheckforWin = true;
+                                    bp.bet.Prediction!.CustomerEF!.Points += Convert.ToInt32(bp.bet.RatioOfPredictionCombined!.Value * 10 * bp.bet.ListMatch!.Count());
+                                }
+                                else if(totalPredictionsCount == countMatchPredictions && bp.bet.CheckforWin != true)
+                                {
+                                    bp.bet.Win = "Lose"; // Opcional: Asignar "Lose" si no todos coinciden
+                                    bp.bet.CheckforWin = true;
+                                }
+
+                                betsToUpdate.ToList().Add(bp.bet);
+
+                            }
+                            //guardar lista de apuestas actualizadas
+                            await _unitOfWork.Bets.UpdateListBets(betsToUpdate.ToList());
+                        }
+
                     }
 
                     await _unitOfWork.SaveAsync();
@@ -133,6 +190,7 @@ namespace WakiBack.BLL
             var existingTeamAPIList = await _unitOfWork.TeamAPI.GetAllAsync();
             var teamAPIList = new List<TeamAPI>();
             var processedTeamIds = new HashSet<int>(existingTeamAPIList.Select(t => t.TeamId));
+            var teamDbList  = existingTeamAPIList.ToList();
 
             var soccerAPIBaseUrl = _configuration["SoccerAPIBaseUrl"];
             var soccerAPIKey = _configuration["SoccerAPIKey"];
@@ -169,7 +227,7 @@ namespace WakiBack.BLL
                                         Name = string.IsNullOrEmpty(item.LeagueName) ? null : item.LeagueName,
                                         LeagueId = item.LeagueId,
                                         Country = item.Country != null ? ValidationHelper.CleanCountry(item.Country) : null,
-                                        StageList = item.Stage != null ? ValidationHelper.CleanStage(item, processedTeamIds, teamAPIList) : null,
+                                        StageList = item.Stage != null ? ValidationHelper.CleanStage(item, processedTeamIds, teamAPIList, teamDbList) : null,
                                        
                                     };
 
@@ -214,7 +272,7 @@ namespace WakiBack.BLL
                 return cleanCountry;
             }
 
-            public static List<StageAPI> CleanStage(Welcome welcome, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList)
+            public static List<StageAPI> CleanStage(Welcome welcome, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList, List<TeamAPI> teamDbList)
             {
                 var cleanListStage = new List<StageAPI>();
 
@@ -226,7 +284,7 @@ namespace WakiBack.BLL
                         StageId = element.StageId,
                         Name = string.IsNullOrEmpty(element.StageName) ? null : element.StageName,
                         IsActive = string.IsNullOrEmpty(element.IsActive) ? null : element.IsActive,
-                        MatchList = element.Matches != null ? ValidationHelper.CleanMatches(element, welcome, processedTeamIds, teamAPIList) : null
+                        MatchList = element.Matches != null ? ValidationHelper.CleanMatches(element, welcome, processedTeamIds, teamAPIList, teamDbList) : null
                     };
 
                     cleanListStage.Add(item);
@@ -234,7 +292,7 @@ namespace WakiBack.BLL
                 return cleanListStage;
             }
 
-            public static List<MatchAPI> CleanMatches(Stage stage, Welcome welcome, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList)
+            public static List<MatchAPI> CleanMatches(Stage stage, Welcome welcome, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList, List<TeamAPI> teamDbList)
             {
                 var cleanListMatches = new List<MatchAPI>();
 
@@ -250,11 +308,11 @@ namespace WakiBack.BLL
                         {
                             HomeAPI = new HomeAPI()
                             {
-                                TeamAPI = element.Teams!.Home != null ? ValidationHelper.CleanTeamHome(element.Teams.Home, processedTeamIds, teamAPIList).TeamAPI : null,
+                                TeamAPI = element.Teams!.Home != null ? ValidationHelper.CleanTeamHome(element.Teams.Home, processedTeamIds, teamAPIList, teamDbList).TeamAPI : null,
                             },
                             AwayAPI = new AwayAPI()
                             {
-                                TeamAPI = element.Teams.Away != null ? ValidationHelper.CleanTeamAway(element.Teams.Away, processedTeamIds, teamAPIList).TeamAPI : null
+                                TeamAPI = element.Teams.Away != null ? ValidationHelper.CleanTeamAway(element.Teams.Away, processedTeamIds, teamAPIList, teamDbList).TeamAPI : null
                             }
                         },                                              
                         Winner = string.IsNullOrEmpty(element.Winner) ? null : element.Winner,
@@ -273,7 +331,7 @@ namespace WakiBack.BLL
             }
          
 
-            public static HomeAPI CleanTeamHome(Team team, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList)
+            public static HomeAPI CleanTeamHome(Team team, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList, List<TeamAPI> teamDbList)
             {
                 var homeResult = new HomeAPI();
 
@@ -295,7 +353,8 @@ namespace WakiBack.BLL
                 else
                 {
 
-                    var teamResult  = teamAPIList.FirstOrDefault(t => t.TeamId == team.Id!.Value);
+                    var teamResult  = teamDbList.FirstOrDefault(t => t.TeamId == team.Id!.Value);
+                    if (teamResult == null) teamResult = teamAPIList.FirstOrDefault(t => t.TeamId == team.Id!.Value);
 
                     homeResult.TeamAPI = teamResult;
 
@@ -305,7 +364,7 @@ namespace WakiBack.BLL
                 
             }
 
-            public static AwayAPI CleanTeamAway(Team team, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList)
+            public static AwayAPI CleanTeamAway(Team team, HashSet<int> processedTeamIds, List<TeamAPI> teamAPIList, List<TeamAPI> teamDbList)
             {
                 var awayResult = new AwayAPI();
 
@@ -326,8 +385,9 @@ namespace WakiBack.BLL
                 }
                 else
                 {
-
-                    var teamResult = teamAPIList.FirstOrDefault(t => t.TeamId == team.Id!.Value);
+                    
+                    var teamResult = teamDbList.FirstOrDefault(t => t.TeamId == team.Id!.Value);
+                    if (teamResult == null) teamResult = teamAPIList.FirstOrDefault(t => t.TeamId == team.Id!.Value);
 
                     awayResult.TeamAPI = teamResult;
 

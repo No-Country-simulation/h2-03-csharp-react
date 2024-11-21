@@ -10,5 +10,6 @@ namespace WakiBack.DAL
         Task<IEnumerable<MatchAPI>> GetPaginatedAsync(PaginationVM<MatchAPI, ShowMatchAPIVM> model, int? leagueId);
         Task UpdateData(MatchAPI match);
         Task<MatchAPI> GetFirstOrDefaultMatchAsync(Expression<Func<MatchAPI, bool>> expression);
+        Task<IEnumerable<MatchAPI>> GetAllResultsPaginatedAsync(PaginationVM<MatchAPI, ShowMatchAPIVM> model, int? leagueId);
     }
 }

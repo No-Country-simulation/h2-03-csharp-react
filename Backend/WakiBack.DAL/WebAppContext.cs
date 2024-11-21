@@ -30,6 +30,7 @@ namespace WakiBack.DAL
         public DbSet<TeamAPI>? TeamAPI { get; set; }
         public DbSet<AwayAPI>? AwayAPI { get; set; }
         public DbSet<HomeAPI>? HomeAPI { get; set; }
+        public DbSet<TokenEntity>? Tokens { get; set; }
 
         #endregion
         #region Configuration        

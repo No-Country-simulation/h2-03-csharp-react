@@ -16,10 +16,9 @@ namespace WakiBack.Models;
             CreateMap<ShowAwayAPIVM, AwayAPI>().ReverseMap();
             CreateMap<ShowHomeAPIVM, HomeAPI>().ReverseMap();
             CreateMap<ShowCountryVM, CountryAPI>().ReverseMap();
-            CreateMap<ShowDataDivisionVM, CustomerEF>().ReverseMap();
-
-
-        CreateMap<Prediction, ShowPredictionVM>()
+           
+           CreateMap<ShowDataDivisionVM, CustomerEF>().ReverseMap();
+             CreateMap<Prediction, ShowPredictionVM>()
             .ForMember(dest => dest.BetList, opt => opt.MapFrom(src => src.BetList))
             .ForMember(dest => dest.CountBets, opt => opt.MapFrom(src => src.CountBets))
             .ForMember(dest => dest.DateFirstBetOfDay, opt => opt.MapFrom(src => src.DateFirstBetOfDay))
@@ -35,7 +34,11 @@ namespace WakiBack.Models;
             .ForMember(dest => dest.WinnerPrediction, opt => opt.MapFrom(src => src.WinnerPrediction))
             .ForMember(dest => dest.RatioOfPrediction, opt => opt.MapFrom(src => src.RatioOfPrediction))
             .ForMember(dest => dest.EntityPublicKey, opt => opt.MapFrom(src => src.EntityPublicKey));
-
+            CreateMap<ShowPredictionVM, Prediction>().ReverseMap();
+            CreateMap<ShowBetVM, Bet>().ReverseMap();
+            CreateMap<ShowMatchPredictionVM, MatchPrediction>().ReverseMap();
+            CreateMap<ShowTokenVM, TokenEntity>().ReverseMap();
+            CreateMap<CreateTokenVM, TokenEntity>().ReverseMap();
         }
     }
 

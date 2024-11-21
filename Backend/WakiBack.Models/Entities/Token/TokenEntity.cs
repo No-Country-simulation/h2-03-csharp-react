@@ -1,18 +1,19 @@
-﻿
-
+﻿using RunnersApp.DomainModel;
 
 namespace WakiBack.Models
 {
-    public class Prediction : IAuditEntity, IPublicKeyEntity
+    public class TokenEntity : IAuditEntity, IPublicKeyEntity, IDisplayNameEntity, IIdentifierEntity
     {
-        public int Id { get; set; }
-        public DateTime DateFirstBetOfDay { get; set; } // every 24 hours is new prediction for every customer
-        public int? CustomerEFId { get; set; }
-        public virtual CustomerEF? CustomerEF { get; set; }
-        public int CountBets { get; set; } = 0;
-        public int CountFutureBets { get; set; } = 0;
-        public List<Bet>? BetList { get; set; }
-        public bool ExistPreviously {  get; set; }
+        public int Id { get; set; }   
+        public string? Name { get; set; }
+        public Logros? Logros { get; set; }
+        public double? Cantidad { get; set; }
+
+        public string? DisplayName
+        {
+            get => Name; 
+            set => Name = value;
+        }
         #region IPublicKeyEntity
         public Guid EntityPublicKey { get; set; }
         #endregion        
@@ -27,5 +28,6 @@ namespace WakiBack.Models
         public DateTime? Locked { get; set; }
         public int? LockedBy { get; set; }
         #endregion
+
     }
 }

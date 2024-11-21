@@ -13,6 +13,7 @@ namespace WakiBack.Models
         public MatchAPI? Match { get; set; }
         public Guid? MatchPublicKey { get; set; }        
         public string? WinnerPrediction { get; set; } //home, draw, away
+        public string? WinPrediction { get; set; } //tbd, win, lose
         public string? OverUnderScorePrediction {  get; set; }        
         public double? RatioOfPrediction { get; set; }
        

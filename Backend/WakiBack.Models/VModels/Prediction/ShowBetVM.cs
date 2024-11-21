@@ -19,10 +19,11 @@ namespace WakiBack.Models
             get
             {                
                 return RatioOfPredictionCombined.HasValue && ListMatch != null && ListMatch.Count > 1
-                    ? Math.Round( RatioOfPredictionCombined.Value * 10 * ListMatch.Count , 2)
-                    : Math.Round(RatioOfPredictionCombined!.Value * 10, 2);
+                    ? Math.Ceiling( RatioOfPredictionCombined.Value * 10 * ListMatch.Count)
+                    : Math.Ceiling( RatioOfPredictionCombined!.Value * 10);
             }
         }
         public bool? CheckforWin { get; set; }
+        public string? Win { get; set; } //"tbd", "win" or "lose"
     }
 }

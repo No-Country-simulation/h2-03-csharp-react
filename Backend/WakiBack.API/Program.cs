@@ -24,8 +24,13 @@ namespace WakiBack.API
 
             builder.Services.AddDbContext<WebAppContext>(options => options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly("WakiBack.DAL")
-            ));
+                sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly("WakiBack.DAL");
+                    sqlOptions.CommandTimeout(120); // Establece el tiempo de espera a 120 segundos
+                }
+
+            ) );
 
             //Adding jwt service to program pipeline
             builder.Services.AddJWTTokenServices(builder.Configuration);
@@ -175,6 +180,7 @@ namespace WakiBack.API
                 builder.Services.AddScoped<ILeagueService, LeagueService>();
                 builder.Services.AddScoped<IPredictionService, PredictionService>();
 
+                builder.Services.AddScoped<ITokenService, TokenService>();
                 builder.Services.AddScoped<IDivisionService, DivisionService>();
 
             }

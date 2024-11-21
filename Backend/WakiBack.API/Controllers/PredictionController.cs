@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Globalization;
 using System.Net;
+using System.Runtime.InteropServices;
 using WakiBack.BLL;
 using WakiBack.Models;
 
@@ -87,6 +89,58 @@ namespace WakiBack.API.Controllers
         }
 
 
+        //Test deploy Time Zone
+        [HttpGet]
+
+        public async Task<test> GetTimeHourTestServer()
+        {
+            var matchDateTest = "04/11/2024";
+
+            var time = "00:00";
+
+            var marchDatesArray = matchDateTest.Split("/");
+
+            var day = marchDatesArray[0];
+
+            var month = marchDatesArray[1];
+
+            var year = marchDatesArray[2];
+
+            var resultNewDate = month + "/" + day + "/" + year + " " + time;
+
+            var esaa = DateTime.TryParse(resultNewDate, out DateTime matchTime);
+
+
+
+                DateTime currentDate = DateTime.UtcNow.Date;
+            bool test = false;
+
+            if (DateTime.Compare(matchTime.Date, currentDate) == 0)
+            {
+                test = true;
+            }
+
+            var testObject = new DateTime[]
+            {
+                currentDate,
+                matchTime,
+            };
+
+
+            var testVM = new test()
+            {
+                Dates = testObject,
+                testBool = test
+            };            
+
+
+
+            return testVM;
+           
+
+        }
+
+
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Customer")]
         public async Task<IActionResult> CreateBet(CreateBetVM model)
@@ -140,8 +194,12 @@ namespace WakiBack.API.Controllers
                 }
             }
             return BadRequest();
-        }     
+        }
 
-
+        public class test
+        {
+            public DateTime[] Dates { get; set; }
+            public bool testBool { get; set; }
+        }
     }
 }
