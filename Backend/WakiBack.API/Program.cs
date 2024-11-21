@@ -179,8 +179,9 @@ namespace WakiBack.API
                 builder.Services.AddScoped<IMatchService, MatchService>();
                 builder.Services.AddScoped<ILeagueService, LeagueService>();
                 builder.Services.AddScoped<IPredictionService, PredictionService>();
-                builder.Services.AddScoped<ITokenService, TokenService>();
 
+                builder.Services.AddScoped<ITokenService, TokenService>();
+                builder.Services.AddScoped<IDivisionService, DivisionService>();
 
             }
 
